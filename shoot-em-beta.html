@@ -37,7 +37,7 @@
 
 <body>
 	
-	<canvas id="GWar" width="1200" height="1200"></canvas>
+	<canvas id="GWar" width="1200" height="600"></canvas>
 
 	<script>
 		var
@@ -49,8 +49,8 @@
 			screenHeight = 1200
 
 			playerRadius = 10
-			playerStartX = screenWidth / 2
-			playerStartY = screenHeight / 2
+			playerStartX = canvas.width / 2
+			playerStartY = canvas.height / 2
 			playerAccel = 0.1
 			playerSlowRate = 1.04
 			playerHitBoxRadius = playerRadius
@@ -473,9 +473,9 @@
 			}
 			ctx.font = "bolder 12px Arial";
 			ctx.fillStyle = lineColor;
-			ctx.fillText("Lives: " + playerLives, 20 + playerX - screenWidth / 2, 30 + playerY - screenHeight / 2);
-			ctx.fillText("Points: " + playerPoints, 20 + playerX - screenWidth / 2, 50 + playerY - screenHeight / 2);
-			ctx.fillText("Super: " + powerUpsLeft, 20 + playerX - screenWidth / 2, 70 + playerY - screenHeight / 2);
+			ctx.fillText("Lives: " + playerLives, 20 + playerX - canvas.width / 2, 30 + playerY - canvas.height / 2);
+			ctx.fillText("Points: " + playerPoints, 20 + playerX - canvas.width / 2, 50 + playerY - canvas.height / 2);
+			ctx.fillText("Super: " + powerUpsLeft, 20 + playerX - canvas.width / 2, 70 + playerY - canvas.height / 2);
 		}
 		
 		var interval = setInterval(draw, 1);
