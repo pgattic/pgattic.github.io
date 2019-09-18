@@ -67,6 +67,10 @@
 			badGuyColor = "green"
 			bulletColor = "blue"
 			lineColor = "black"
+			powerUpColor = "blue"
+			
+			kToPowerUp = 2
+			powerUpSize = 20
 
 		var
 			mouseX = playerStartX
@@ -81,6 +85,13 @@
 			playerXVel = 0
 			playerYVel = 0
 			spawnVariable = 0
+
+			powerUpX = [0]
+			powerUpY = [0]
+			powerUpAlive = [false]
+			powerUpsSpawned = 0
+			powerUpVar = 0
+//			powerUpRotation = 0
 			
 			bulletX = [0]
 			bulletY = [0]
@@ -262,7 +273,7 @@
 				if (bulletAlive[i]) {
 					ctx.beginPath();
 					ctx.moveTo(bulletX[i], bulletY[i]);
-					ctx.lineTo(bulletX[i] + bulletDX[i] * 10, bulletY[i] + bulletDY[i] * 10);
+					ctx.lineTo(bulletX[i] + bulletDX[i] * (30 / bulletSpeed), bulletY[i] + bulletDY[i] * (30 / bulletSpeed));
 					ctx.lineWidth = 8;
 					ctx.strokeStyle = bulletColor;
 					ctx.stroke();
@@ -345,12 +356,24 @@
 						}
 						badGuysKilled++;
 						spawnVariable++;
+						powerUpVar++;
 						playerPoints = playerPoints + badGuyPtValue;
+						powerUpCheck();
 					}
 				}
 			}
 		}
-			
+		
+		function powerUpCheck() {
+			if (powerUpVar >= kToPowerUp) {
+				powerUpVar = 0;
+				powerUpAlive[powerUpsSpawned] = true;
+				powerUpX[powerUpsSpawned] = Math.random() * (canvas.width - powerUpSize) - powerUpSize;
+				powerUpY[powerUpsSpawned] = Math.random() * (canvas.height - powerUpSize) - powerUpSize;
+				powerUpsSpawned++;
+			}
+		}
+		
 		function drawLine() {
 			ctx.beginPath();
 			ctx.moveTo(playerX, playerY);
@@ -390,6 +413,25 @@
 			ctx.closePath();
 			}
 		
+		function drawPowerUp() {
+			for (let i = 0; i < powerUpsSpawned; i++) {
+				if (powerUpAlive[i]) {
+					ctx.beginPath();
+//					ctx.rect(powerUpX[i], powerUpY[i], powerUpSize, powerUpSize);
+//					ctx.translate(powerUpX[i] + (powerUpSize / 2), powerUpY[i] + (powerUpSize / 2));
+//					ctx.rotate(Math.PI / 180 + powerUpRotation);
+//					ctx.translate(-(powerUpX[i] + (powerUpSize / 2)), -(powerUpY[i] + (powerUpSize / 2)));
+					ctx.fillStyle = powerUpColor;
+					ctx.fillRect(powerUpX[i], powerUpY[i], powerUpSize, powerUpSize);
+					ctx.closePath();
+				}
+				if (Math.abs((powerUpX[i] + (powerUpSize / 2)) - playerX) < powerUpSize && Math.abs((powerUpY[i] + (powerUpSize / 2)) - playerY) < powerUpSize && powerUpAlive[i]) {
+					playerLives++;
+					powerUpAlive[i] = false;
+				}
+			}
+		}
+		
 		function draw() {
 			clearCanvas();
 			if (!isPaused) {
@@ -404,7 +446,9 @@
 				drawLine();
 				playerKill();
 				drawPlayer();
+				drawPowerUp();
 				superTimer--;
+//				powerUpRotation++;
 			}
 			else {
 				makeCursor();
