@@ -12,7 +12,7 @@
 		gtag('config', 'UA-114106362-3');
 	</script>
 
-	<title>Shoot 'Em! - SaveState's Web Games</title>
+	<title>Shoot 'Em! Beta - SaveState's Web Games</title>
 	<meta charset="utf-8" />
 	<meta name="description" content="SaveState's Web Games">
 	<meta name="author" content="Preston Corless, SaveState">
@@ -35,13 +35,16 @@
 	</style>
 </head>
 
-<body>
+<body style="height: 100%; margin: 0;">
 	
-	<canvas id="GWar" width="1200" height="600"></canvas>
+	<canvas id="GWar" width="100%" height="100%"></canvas>
 
 	<script>
 		var
 			canvas = document.getElementById("GWar")
+			dimension = [document.documentElement.clientWidth, document.documentElement.clientHeight];
+			canvas.width = dimension[0];
+			canvas.height = dimension[1];
 			ctx = canvas.getContext("2d")
 			
 		const
