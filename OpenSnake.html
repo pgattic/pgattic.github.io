@@ -2,34 +2,40 @@
 <html>
 
 <head>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-114106362-3"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-114106362-3');
+	</script>
+
 	<meta charset="utf-8" />
 	<title>OpenSnake v2</title>
-	<style>
-		* {
-			padding: 0;
-			margin: 0;
-		}
-
-		canvas {
-			background: #eeeeee;
-			display: block;
-			margin: 0 auto;
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			-ms-transform: translate(-50%, -50%);
-			transform: translate(-50%, -50%);
-		}
-	</style>
 </head>
 
 <body>
 	
-	<canvas id="Snake" width="1200" height="600"></canvas>
 
+<div class="wrapper" style="margin: 0 auto; width: 1366px; position: relative;">
+	<canvas style="background-color:#eeeeee" id="Snake" width="1200" height="600" align="right"></canvas>
+	<div class="controls" style="position: absolute; top:0; left:0;">
+
+		<h2>Controls</h2>
+
+		<button class="btn" onclick="initBuffers(1)">Man</button>
+		<p>Go through wall: <input type="checkbox" id="gTWall"  onclick="goThroughWallToggle()"></p>
+		<p>Go through body: <input type="checkbox" id="gTBody"  onclick="goThroughBodyToggle()"></p>
+
+		<br><br>Use the mouse to rotate the view.
+
+   </div>
+</div>
 	<script>
 
-		const // user-friendly constants
+		var // user-friendly vars
 			gameSpeed = 75 // Milliseconds per frame. Therefore, a higher number is a slower game.
 			unit = 24 // The unit used for calculating the width of the player's body and the size of the food. It is recommended to be a factor of 600.
 			playerHeadColor = "#0095DD"
@@ -59,9 +65,20 @@
 			playerLength = initialPlayerLength
 			bodyX = [x]
 			bodyY = [y]
+			isPaused = true
 
-		drawFood();
+		//PLAYER SETTINGS
+		function goThroughWallToggle() {
+			var checkBox = document.getElementById("gTWall");
+			goThroughWall = checkBox.checked;
+		}
 
+		function goThroughBodyToggle() {
+			var checkBox = document.getElementById("gTBody");
+			goThroughBody = checkBox.checked;
+		}
+		
+		//INPUT
 		document.addEventListener("keydown", keyDownHandler, false);
 
 		function keyDownHandler(e) {
@@ -81,8 +98,13 @@
 			if ((playerDirectionTemp == up && playerDirection !== down) || (playerDirectionTemp == down && playerDirection !== up) || (playerDirectionTemp == left && playerDirection !== right) || (playerDirectionTemp == right && playerDirection !== left)) {
 			playerDirection = playerDirectionTemp;
 			}
+			if (e.key == "e" || e.key == "Enter") {
+				isPaused = !isPaused;
+			}
 		}
 
+		
+		//GAME ENGINE
 		function drawHead() {
 			ctx.beginPath();
 			ctx.rect(x, y, unit, unit);
@@ -125,8 +147,18 @@
 
 		function gameOver() {
 			alert("Game Over!\nFood Eaten: " + score + "\nLength: " + playerLength);
-			document.location.reload();
-			clearInterval(interval); // Needed for Chrome to end game	
+			canvas = document.getElementById("Snake")
+			ctx = canvas.getContext("2d")
+			x = 0
+			y = 0
+			playerDirection = right
+			foodX = ((Math.floor(Math.random() * (canvas.width/unit))) * unit) + unit / 2
+			foodY = ((Math.floor(Math.random() * (canvas.height/unit))) * unit) + unit / 2
+			score = 0
+			playerLength = initialPlayerLength
+			bodyX = [x]
+			bodyY = [y]
+			isPaused = false
 		}
 
 		function suicideCheck() {
@@ -181,27 +213,34 @@
 		
 		function draw() {
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
-			bodyX[0] = x;
-			bodyY[0] = y;
-			for (let i = playerLength - 1; i > 0; i--) {
-				bodyX[i] = bodyX[i - 1];
-				bodyY[i] = bodyY[i - 1];
+			if (!isPaused) {
+				bodyX[0] = x;
+				bodyY[0] = y;
+				for (let i = playerLength - 1; i > 0; i--) {
+					bodyX[i] = bodyX[i - 1];
+					bodyY[i] = bodyY[i - 1];
+				}
+				if (playerDirection == up) {
+					y = y - unit;
+				} else if (playerDirection == down) {
+					y = y + unit;
+				} else if (playerDirection == left) {
+					x = x - unit;
+				} else {
+					x = x + unit;
+				}
+				drawHead();
+				drawBody();
+				drawFood();
+				suicideCheck();
+				boundsCheck();
+				foodCheck();
+				drawScore();
 			}
-			if (playerDirection == up) {
-				y = y - unit;
-			} else if (playerDirection == down) {
-				y = y + unit;
-			} else if (playerDirection == left) {
-				x = x - unit;
-			} else {
-				x = x + unit;
+			else {
+				drawHead();
+				drawBody();
 			}
-			drawHead();
-			drawBody();
-			suicideCheck();
-			boundsCheck();
-			foodCheck();
-			drawScore();
 		}
 		var interval = setInterval(draw, gameSpeed);
 	</script>
