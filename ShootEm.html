@@ -102,7 +102,7 @@
 
 		function getClick() {
 			if (!isPaused) {
-				if (superTimer > 0) {
+				if (superTimer < 0) {
 					for (let i = bulletsLoaded + 1; i > 0; i--) {
 						bulletX[i] = bulletX[i - 1];
 						bulletY[i] = bulletY[i - 1];
@@ -164,6 +164,7 @@
 			if (e.key == "e") {
 				if (!isPaused) {
 					if (powerUpsLeft > 0) {
+						superTimer = 250;
 						powerUpsLeft--;
 						for (let i = 1; i < Math.floor(canvas.width / 20); i++) {
 							bulletX[bulletsLoaded] = 10;
@@ -174,7 +175,6 @@
 							bulletAlive[bulletsLoaded] = true;
 							bulletsLoaded++;
 						}
-						superTimer = 1000;
 					}
 				}
 			}
