@@ -451,6 +451,24 @@
 			}
 		}
 		
+		function drawMiniMap() {
+			ctx.beginPath();
+			ctx.rect(((canvas.width / 2) - 175) + playerX, ((canvas.height / 2) - 175) + playerY, screenWidth / 10, screenHeight / 10);
+			ctx.strokeStyle = lineColor;
+			ctx.stroke();
+			ctx.closePath();
+			ctx.beginPath()
+			ctx.rect(((((canvas.width / 2) - 175) + playerX * 1.1) - canvas.width / 20), ((((canvas.height / 2) - 175) + playerY * 1.1) - canvas.height / 20), canvas.width / 10, canvas.height / 10);
+			ctx.strokeStyle = bulletColor;
+			ctx.stroke();
+			ctx.closePath();
+			ctx.beginPath();
+			ctx.arc((((canvas.width / 2) - 175) + playerX * 1.1), (((canvas.height / 2) - 175) + playerY * 1.1), playerRadius / 5, 0, Math.PI * 2, false);
+			ctx.fillStyle = playerColor;
+			ctx.fill();
+			ctx.closePath();
+		}
+		
 		function draw() {
 			clearCanvas();
 			if (!isPaused) {
@@ -467,6 +485,7 @@
 				playerKill();
 				drawPlayer();
 				drawPowerUp();
+				drawMiniMap()
 				superTimer--;
 			}
 			else {
