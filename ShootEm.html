@@ -46,9 +46,9 @@
 			badGuyRadius = 10
 			badGuySpeed = 0.5
 			badGuyHitBoxRadius = badGuyRadius * 2
-			badGuySpawnConstant = 300
+			badGuySpawnConstant = 250
 			badGuyPtValue = 100
-			badGuyWaitLimit = 100
+			badGuyWaitLimit = 60
 
 			playerColor = "red"
 			badGuyColor = "green"
@@ -75,6 +75,7 @@
 			bulletTimer = [0]
 			bulletsLoaded = 0
 			bulletAlive = [false]
+			superTimer = -1
 			
 			badGuyX = [5]
 			badGuyY = [5]
@@ -101,24 +102,26 @@
 
 		function getClick() {
 			if (!isPaused) {
-				for (let i = bulletsLoaded + 1; i > 0; i--) {
-					bulletX[i] = bulletX[i - 1];
-					bulletY[i] = bulletY[i - 1];
-					bulletDX[i] = bulletDX[i - 1];
-					bulletDY[i] = bulletDY[i - 1];
-					bulletTimer[i] = bulletTimer[i - 1];
-					bulletAlive[i] = bulletAlive[i - 1];
+				if (superTimer > 0) {
+					for (let i = bulletsLoaded + 1; i > 0; i--) {
+						bulletX[i] = bulletX[i - 1];
+						bulletY[i] = bulletY[i - 1];
+						bulletDX[i] = bulletDX[i - 1];
+						bulletDY[i] = bulletDY[i - 1];
+						bulletTimer[i] = bulletTimer[i - 1];
+						bulletAlive[i] = bulletAlive[i - 1];
+					}
+					bulletAlive[0] = true;
+					bulletsLoaded++;
+					let bulletRise = mouseY - playerY;
+					let bulletRun = mouseX - playerX;
+					let bulletDZ = Math.sqrt(Math.pow(bulletRun, 2) + Math.pow(bulletRise, 2));
+					bulletTimer[0] = ((canvas.width + canvas.height) / 2) * Math.sqrt(2);
+					bulletDY[0] = (bulletRise / bulletDZ) * bulletSpeed;
+					bulletDX[0] = (bulletRun / bulletDZ) * bulletSpeed;
+					bulletX[0] = playerX;
+					bulletY[0] = playerY;
 				}
-				bulletAlive[0] = true;
-				bulletsLoaded++;
-				let bulletRise = mouseY - playerY;
-				let bulletRun = mouseX - playerX;
-				let bulletDZ = Math.sqrt(Math.pow(bulletRun, 2) + Math.pow(bulletRise, 2));
-				bulletTimer[0] = ((canvas.width + canvas.height) / 2) * Math.sqrt(2);
-				bulletDY[0] = (bulletRise / bulletDZ) * bulletSpeed;
-				bulletDX[0] = (bulletRun / bulletDZ) * bulletSpeed;
-				bulletX[0] = playerX;
-				bulletY[0] = playerY;
 			}
 		}
 		
@@ -171,6 +174,7 @@
 							bulletAlive[bulletsLoaded] = true;
 							bulletsLoaded++;
 						}
+						superTimer = 1000;
 					}
 				}
 			}
@@ -371,6 +375,7 @@
 				drawLine();
 				playerKill();
 				drawPlayer();
+				superTimer--;
 			}
 			else {
 				makeCursor();
