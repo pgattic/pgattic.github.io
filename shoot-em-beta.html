@@ -261,23 +261,30 @@
 			if (playerX + playerRadius > screenWidth) { 
 				playerXVel = 0;
 				playerX--;
+				ctx.translate(1, 0)
 			}
 			if (playerX - playerRadius < 0) { 
 				playerXVel = 0;
 				playerX++;
+				ctx.translate(-1, 0)
 			}
 			if (playerY + playerRadius > screenHeight) { 
 				playerYVel = 0;
 				playerY--;
+				ctx.translate(0, 1)
 			}
 			if (playerY - playerRadius < 0) { 
 				playerYVel = 0;
 				playerY++;
+				ctx.translate(0, -1)
 			}
 		}
 		
 		function animateBullet() {
 			for (let i = 0; i < bulletsLoaded; i++) {
+				if (bulletX[i] < 0 || bulletX[i] > screenWidth || bulletY[i] < 0 || bulletX[i] > screenWidth) {
+					bulletAlive[i] = false;
+				}
 				if (bulletAlive[i]) {
 					ctx.beginPath();
 					ctx.moveTo(bulletX[i], bulletY[i]);
