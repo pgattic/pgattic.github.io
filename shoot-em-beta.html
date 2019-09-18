@@ -363,19 +363,15 @@
 						spawnVariable++;
 						powerUpVar++;
 						playerPoints = playerPoints + badGuyPtValue;
-						powerUpCheck();
+						if (powerUpVar >= kToPowerUp) {
+							powerUpVar = 0;
+							powerUpAlive[powerUpsSpawned] = true;
+							powerUpX[powerUpsSpawned] = badGuyX[i] - powerUpSize / 2;
+							powerUpY[powerUpsSpawned] = badGuyY[i] - powerUpSize / 2;
+							powerUpsSpawned++;
+						}
 					}
 				}
-			}
-		}
-		
-		function powerUpCheck() {
-			if (powerUpVar >= kToPowerUp) {
-				powerUpVar = 0;
-				powerUpAlive[powerUpsSpawned] = true;
-				powerUpX[powerUpsSpawned] = Math.random() * (screenWidth - powerUpSize) - powerUpSize;
-				powerUpY[powerUpsSpawned] = Math.random() * (screenHeight - powerUpSize) - powerUpSize;
-				powerUpsSpawned++;
 			}
 		}
 		
@@ -403,7 +399,7 @@
 		function playerKill() {
 			for (let i = 1; i < badGuysLoaded + 1; i++) {
 				if (Math.abs(badGuyX[i] - playerX) < playerHitBoxRadius && Math.abs(badGuyY[i] - playerY) < playerHitBoxRadius) {
-					ctx.translate((playerX - screenWidth / 2), (playerY - screenHeight / 2));
+					ctx.translate(playerX - canvas.width / 2, playerY - canvas.height / 2);
 					mouseX = mouseX - (playerX - screenWidth / 2)
 					mouseY = mouseY - (playerY - screenHeight / 2)
 					playerLives--;
