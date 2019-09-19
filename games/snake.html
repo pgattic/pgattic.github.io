@@ -16,7 +16,7 @@
 	<link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
 
 
-	<title>OpenSnake v2 - SaveState's Web Games</title>
+	<title>Snake - SaveState's Web Games</title>
 	<meta charset="utf-8" />
 	<meta name="description" content="SaveState's Web Games">
 	<meta name="author" content="Preston Corless, SaveState">
@@ -25,17 +25,12 @@
 <body>
 	
 
-<div class="wrapper" style="margin: 0 auto; width: 1366px; position: relative;">
+<div class="wrapper" style="margin: 0 auto; width: 1200px; position: relative;">
 	<canvas style="background-color:#eeeeee" id="Snake" width="1200" height="600" align="right"></canvas>
 	<div class="controls" style="position: absolute; top:0; left:0;">
 
-		<h2>Controls</h2>
-
-		<button class="btn" onclick="initBuffers(1)">Man</button>
 		<p>Go through wall: <input type="checkbox" id="gTWall"  onclick="goThroughWallToggle()"></p>
 		<p>Go through body: <input type="checkbox" id="gTBody"  onclick="goThroughBodyToggle()"></p>
-
-		<br><br>Use the mouse to rotate the view.
 
    </div>
 </div>
