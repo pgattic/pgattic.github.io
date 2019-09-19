@@ -15,14 +15,121 @@
 	<link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
 	<link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
 
-
 	<title>Home - SaveState's Web Games</title>
-	<meta charset="utf-8" />
+	<meta charset="UTF-8">
 	<meta name="description" content="SaveState's Web Games">
 	<meta name="keywords" content="HTML, CSS, XML, JavaScript, Coding, ROM, Hack, SaveState, Web, Games, YeetBall, ShootEm, yeet, ball, shoot, em, OpenSnake, open, snake">
 	<meta name="author" content="Preston Corless, SaveState">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta http-equiv="Refresh" content="0; url=https://pgattic.github.io/home.html" />
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+	<style>
+		.w3-sidebar a {font-family: "Roboto", sans-serif}
+		body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
+	</style>
 </head>
+<body class="w3-content" style="max-width:1200px">
+	<!-- Sidebar/menu -->
+	<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
+		<div class="w3-container w3-display-container w3-padding-16">
+			<i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
+			<h3 class="w3-wide"><b>SaveState</b></h3>
+		</div>
+		<div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
+			<a href="#" class="w3-bar-item w3-button w3-light-grey"><i class="fa fa-caret-right w3-margin-right"></i>Home</a>
+			<a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
+				Games <i class="fa fa-caret-down"></i>
+			</a>
+			<div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium">
+				<a href="snake.html" class="w3-bar-item w3-button">Snake</a>
+				<a href="shoot-em.html" class="w3-bar-item w3-button">Shoot 'Em!</a>
+				<a href="shoot-em-classic.html" class="w3-bar-item w3-button">Shoot 'Em! Classic</a>
+			</div>
+		<!--<a href="#" class="w3-bar-item w3-button">Next Page</a> -->
+		</div>
+	</nav>
+
+	<!-- Top menu on small screens -->
+	<header class="w3-bar w3-top w3-hide-large w3-black w3-xlarge">
+		<div class="w3-bar-item w3-padding-24 w3-wide">SaveState</div>
+		<a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding-24 w3-right" onclick="w3_open()"><i class="fa fa-bars"></i></a>
+	</header>
+
+	<!-- Overlay effect when opening sidebar on small screens -->
+	<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+	<!-- !PAGE CONTENT! -->
+	<div class="w3-main" style="margin-left:250px">
+
+		<!-- Push down content on small screens -->
+		<div class="w3-hide-large" style="margin-top:83px"></div>
+		
+		<!-- Top header -->
+		<header class="w3-container w3-xlarge">
+			<p class="w3-left">Home</p>
+			<p class="w3-right">
+			</p>
+		</header>
+
+		<!-- Image header -->
+		<div class="w3-display-container w3-container">
+			<img src="code2.png" alt="Code" style="width:100%">
+			<div class="w3-display-topleft w3-text-white" style="padding:24px 48px">
+				<h1 class="w3-jumbo w3-hide-small">Welcome</h1>
+				<h2 class="w3-hide-large w3-hide-medium">Welcome</h2>
+				<h2 class="w3-hide-small">to my coding site</h2>
+			</div>
+		</div>
+
+		<div class="w3-container w3-text-grey" id="About Me" style="padding:24px 48px">
+			<h2>About Me</h2>
+			<p>Hello people! I am SaveState, but my real name is Preston. I am an Eagle Scout, and a former competitive gymnast. I also am a member of the <a href="https://www.churchofjesuschrist.org" target="_blank" style="color:green;">Church of Jesus Christ of Latter-Day Saints</a>. I am currently a senior in high school, and I've been interested in coding for a really long time. I aspire to study computer science in college, and make a job out of it. Thank you for visiting my site!</p>
+			<p>You can find me on:</p>
+			<ul>
+				<li><a href="https://discord.gg/bym96ZG" target="_blank" style="color:#1f9e45;">Discord</a></li>
+				<li><a href="https://savestateroms.weebly.com/" target="_blank" style="color:#1f9e45;">My Rom Hacking website</a></li>
+				<li><a href="https://www.romhacking.net/community/5210/" target="_blank" style="color:#1f9e45;">RomHacking.net</a></li>
+				<li><a href="https://www.youtube.com/channel/UCfcUAR7o362pS5Yy_82G1rw?view_as=subscriber" target="_blank" style="color:#1f9e45;">YouTube</a></li>
+			</ul>
+
+		</div>
+
+		<!-- Footer -->
+
+		<div class="w3-black w3-center w3-padding-24">2019 SaveState</div>
+
+		<!-- End page content -->
+	</div>
+
+	<script>
+	// Accordion 
+	function myAccFunc() {
+		var x = document.getElementById("demoAcc");
+		if (x.className.indexOf("w3-show") == -1) {
+			x.className += " w3-show";
+		} else {
+			x.className = x.className.replace(" w3-show", "");
+		}
+	}
+
+	// Click on the "Jeans" link on page load to open the accordion for demo purposes
+	document.getElementById("myBtn").click();
+
+
+	// Open and close sidebar
+	function w3_open() {
+		document.getElementById("mySidebar").style.display = "block";
+		document.getElementById("myOverlay").style.display = "block";
+	}
+	 
+	function w3_close() {
+		document.getElementById("mySidebar").style.display = "none";
+		document.getElementById("myOverlay").style.display = "none";
+	}
+	</script>
+
+</body>
 </html>

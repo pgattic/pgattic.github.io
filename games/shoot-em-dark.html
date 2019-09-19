@@ -27,7 +27,7 @@
 		}
 
 		canvas {
-			background: #eeeeee;
+			background: #111111;
 			display: block;
 			margin: 0 auto;
 			position: absolute;
@@ -71,21 +71,21 @@
 			badGuyHitBoxRadius = badGuyRadius * 1.5
 			badGuySpawnConstant = 300
 			badGuyPtValue = 100
-			badGuyWaitLimit = 80
+			badGuyWaitLimit = 100
 
-			playerColor = "tomato"
+			playerColor = "darkred"
 			playerOutlineColor = "red"
-			badGuyColor = "lightgreen"
+			badGuyColor = "darkgreen"
 			badGuyOutlineColor = "green"
 			bulletColor = "blue"
-			lineColor = "black"
-			powerUpColor = "lightblue"
+			lineColor = "white"
+			powerUpColor = "darkblue"
 			powerUpOutlineColor = "blue"
-			bgColor = "white"
+			bgColor = "black"
 			miniMapColor = "blue"
-			gridColor = "lightgray"
+			gridColor = "darkorchid"
 			
-			kToPowerUp = 50
+			kToPowerUp = 40
 			powerUpSize = 20
 			
 		var
@@ -107,7 +107,6 @@
 			powerUpAlive = [false]
 			powerUpsSpawned = 0
 			powerUpVar = 0
-			superBulletSpeed = 20
 			
 			bulletX = [0]
 			bulletY = [0]
@@ -219,7 +218,7 @@
 							}
 							bulletX[0] = 10;
 							bulletY[0] = (gapBetweenSuperBullets * i) - 10;
-							bulletDX[0] = superBulletSpeed;
+							bulletDX[0] = 5;
 							bulletDY[0] = 0;
 							bulletTimer[0] = 1200;
 							bulletAlive[0] = true;
@@ -228,9 +227,6 @@
 						}
 					}
 				}
-			}
-			if (e.key == " ") {
-				getClick();
 			}
 		}
 		
@@ -318,7 +314,7 @@
 
 		function animateBullet() {
 			for (let i = 0; i < bulletsLoaded; i++) {
-				if (bulletX[i] < 0 || bulletX[i] > screenWidth || bulletY[i] < 0 || bulletY[i] > screenHeight) {
+				if (bulletX[i] < 0 || bulletX[i] > screenWidth || bulletY[i] < 0 || bulletX[i] > screenWidth) {
 					bulletAlive[i] = false;
 				}
 				if (bulletAlive[i]) {
