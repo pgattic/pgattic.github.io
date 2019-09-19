@@ -71,7 +71,7 @@
 			badGuyHitBoxRadius = badGuyRadius * 1.5
 			badGuySpawnConstant = 300
 			badGuyPtValue = 100
-			badGuyWaitLimit = 100
+			badGuyWaitLimit = 80
 
 			playerColor = "tomato"
 			playerOutlineColor = "red"
@@ -107,6 +107,7 @@
 			powerUpAlive = [false]
 			powerUpsSpawned = 0
 			powerUpVar = 0
+			superBulletSpeed = 20
 			
 			bulletX = [0]
 			bulletY = [0]
@@ -218,7 +219,7 @@
 							}
 							bulletX[0] = 10;
 							bulletY[0] = (gapBetweenSuperBullets * i) - 10;
-							bulletDX[0] = 5;
+							bulletDX[0] = superBulletSpeed;
 							bulletDY[0] = 0;
 							bulletTimer[0] = 1200;
 							bulletAlive[0] = true;
@@ -452,7 +453,6 @@
 					playerXVel = 0;
 					playerYVel = 0;
 					badGuyWait = 500;
-					spawnVariable = 0;
 					for (let i = 1; i < badGuysLoaded + 1; i++) {
 						badGuyAlive[i] = false;
 					}
