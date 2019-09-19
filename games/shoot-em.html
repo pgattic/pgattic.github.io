@@ -27,7 +27,7 @@
 		}
 
 		canvas {
-			background: #eeeeee;
+			background: #111111;
 			display: block;
 			margin: 0 auto;
 			position: absolute;
@@ -67,11 +67,17 @@
 			badGuyPtValue = 100
 			badGuyWaitLimit = 100
 
-			playerColor = "red"
-			badGuyColor = "green"
+			playerColor = "darkred"
+			playerOutlineColor = "red"
+			badGuyColor = "darkgreen"
+			badGuyOutlineColor = "green"
 			bulletColor = "blue"
-			lineColor = "black"
-			powerUpColor = "blue"
+			lineColor = "white"
+			powerUpColor = "darkblue"
+			powerUpOutlineColor = "blue"
+			bgColor = "black"
+			miniMapColor = "blue"
+			gridColor = "darkorchid"
 			
 			kToPowerUp = 30
 			powerUpSize = 20
@@ -271,13 +277,35 @@
 			}
 		}
 		
+		function drawBG() {
+			ctx.beginPath();
+			ctx.rect(0, 0, canvas.width, canvas.height);
+			ctx.fillStyle = bgColor;
+			ctx.fill();
+			ctx.closePath();
+			for (let i = 1; i < 8; i++) {
+				ctx.beginPath();
+				ctx.moveTo((canvas.width / 8) * i, 0);
+				ctx.lineTo((canvas.width / 8) * i, canvas.height);
+				ctx.lineWidth = 3;
+				ctx.strokeStyle = gridColor;
+				ctx.stroke();
+				ctx.beginPath();
+				ctx.moveTo(0, (canvas.height / 4) * i);
+				ctx.lineTo(canvas.width, (canvas.height / 4) * i);
+				ctx.lineWidth = 3;
+				ctx.strokeStyle = gridColor;
+				ctx.stroke();
+			}
+		}
+		
 		function animateBullet() {
 			for (let i = 0; i < bulletsLoaded; i++) {
 				if (bulletAlive[i]) {
 					ctx.beginPath();
 					ctx.moveTo(bulletX[i], bulletY[i]);
-					ctx.lineTo(bulletX[i] + bulletDX[i] * (30 / bulletSpeed), bulletY[i] + bulletDY[i] * (30 / bulletSpeed));
-					ctx.lineWidth = 8;
+					ctx.lineTo(bulletX[i] + bulletDX[i] * (50 / bulletSpeed), bulletY[i] + bulletDY[i] * (50 / bulletSpeed));
+					ctx.lineWidth = 12;
 					ctx.strokeStyle = bulletColor;
 					ctx.stroke();
 					bulletX[i] = bulletX[i] + bulletDX[i];
@@ -335,13 +363,15 @@
 					badGuyX[i] = badGuyX[i] + badGuyDX;
 					badGuyY[i] = badGuyY[i] + badGuyDY;
 					ctx.beginPath();
+					ctx.arc(badGuyX[i], badGuyY[i], badGuyRadius + 3, 0, Math.PI * 2, false);
+					ctx.fillStyle = badGuyOutlineColor;
+					ctx.fill();
+					ctx.closePath();
+					ctx.beginPath();
 					ctx.arc(badGuyX[i], badGuyY[i], badGuyRadius, 0, Math.PI * 2, false);
 					ctx.fillStyle = badGuyColor;
 					ctx.fill();
 					ctx.closePath();
-//					ctx.moveTo(5, 5);
-//					ctx.lineTo(7, 7);
-//					ctx.lineTo(3, 7);
 				}
 				else {
 					badGuyX[i] = 5000;
@@ -395,7 +425,6 @@
 					playerXVel = 0;
 					playerYVel = 0;
 					badGuyWait = 500;
-					spawnVariable = 0;
 					for (let i = 1; i < badGuysLoaded + 1; i++) {
 						badGuyAlive[i] = false;
 					}
@@ -409,6 +438,11 @@
 		}
 		
 		function drawPlayer() {
+			ctx.beginPath();
+			ctx.arc(playerX, playerY, playerRadius + 3, 0, Math.PI * 2, false);
+			ctx.fillStyle = playerOutlineColor;
+			ctx.fill();
+			ctx.closePath();
 			ctx.beginPath();
 			ctx.arc(playerX, playerY, playerRadius, 0, Math.PI * 2, false);
 			ctx.fillStyle = playerColor;
@@ -424,6 +458,11 @@
 //					ctx.translate(powerUpX[i] + (powerUpSize / 2), powerUpY[i] + (powerUpSize / 2));
 //					ctx.rotate(Math.PI / 180 + powerUpRotation);
 //					ctx.translate(-(powerUpX[i] + (powerUpSize / 2)), -(powerUpY[i] + (powerUpSize / 2)));
+					ctx.beginPath();
+					ctx.fillStyle = powerUpOutlineColor;
+					ctx.fillRect(powerUpX[i] - 3, powerUpY[i] - 3, powerUpSize + 6, powerUpSize + 6);
+					ctx.closePath();
+					ctx.beginPath();
 					ctx.fillStyle = powerUpColor;
 					ctx.fillRect(powerUpX[i], powerUpY[i], powerUpSize, powerUpSize);
 					ctx.closePath();
@@ -442,6 +481,7 @@
 				calcPlayerCoord();
 				acceleratePlayer();
 				doBoundary();
+				drawBG();
 				animateBullet();
 				badGuyKill();
 				drawBadGuy();
@@ -455,6 +495,7 @@
 			}
 			else {
 				makeCursor();
+				drawBG();
 				drawPlayer();
 				ctx.font = "bolder 72px Arial";
 				ctx.fillStyle = lineColor;
