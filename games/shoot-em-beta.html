@@ -85,7 +85,7 @@
 			miniMapColor = "blue"
 			gridColor = "lightgray"
 			
-			kToPowerUp = 30
+			kToPowerUp = 50
 			powerUpSize = 20
 			
 		var
@@ -315,7 +315,7 @@
 
 		function animateBullet() {
 			for (let i = 0; i < bulletsLoaded; i++) {
-				if (bulletX[i] < 0 || bulletX[i] > screenWidth || bulletY[i] < 0 || bulletX[i] > screenWidth) {
+				if (bulletX[i] < 0 || bulletX[i] > screenWidth || bulletY[i] < 0 || bulletY[i] > screenHeight) {
 					bulletAlive[i] = false;
 				}
 				if (bulletAlive[i]) {
