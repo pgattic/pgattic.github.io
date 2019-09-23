@@ -21,14 +21,14 @@ const
 	bulletSpeed = 5
 	gapBetweenSuperBullets = 30
 
-	badGuyRadius = 10
-	badGuySpeed = 0.5
-	badGuyHitBoxRadius = badGuyRadius * 1.5
-	badGuySpawnConstant = 300
-	badGuyPtValue = 100
-	badGuyWaitLimit = 80
+	enemyRadius = 10
+	enemySpeed = 0.5
+	enemyHitBoxRadius = enemyRadius * 1.5
+	enemySpawnConstant = 300
+	enemyPtValue = 100
+	enemyWaitLimit = 80
 
-	kToPowerUp = 50
+	kToPowerUp = 40
 	powerUpSize = 20
 	
 var
@@ -39,17 +39,20 @@ var
 	leftPressed = false
 	rightPressed = false
 	
-	playerX = playerStartX
-	playerY = playerStartY
-	playerXVel = 0
-	playerYVel = 0
-	spawnVariable = 0
+	player = {
+		x : playerStartX,
+		y : playerStartY,
+		xVel : 0,
+		yVel : 0,
+	}
+	powerUp = {
+		x : [0],
+		y : [0],
+		alive : [false],
+		numSpawned : 0,
+		wait : 0,
+	}
 
-	powerUpX = [0]
-	powerUpY = [0]
-	powerUpAlive = [false]
-	powerUpsSpawned = 0
-	powerUpVar = 0
 	superBulletSpeed = 20
 	
 	bulletX = [0]
@@ -62,12 +65,13 @@ var
 	bulletSuper = [false]
 	superTimer = -1
 	
-	badGuyX = [5]
-	badGuyY = [5]
-	badGuyWait = 500
-	badGuysLoaded = 1
-	badGuysKilled = 1
-	badGuyAlive = [false]
+	enemyX = [5]
+	enemyY = [5]
+	enemysLoaded = 1
+	enemysKilled = 1
+	enemyAlive = [false]
+	enemySpawnRate = 0
+	enemyWait = 500
 	
 	isPaused = false
 	playerLives = 3
@@ -81,8 +85,8 @@ document.addEventListener("keydown", getKeys, false);
 document.addEventListener("keyup", unGetKeys, false);
 
 function getMouse(e) {
-   mouseX = e.clientX - canvas.offsetLeft + playerX;
-   mouseY = e.clientY - canvas.offsetTop + playerY;
+   mouseX = e.clientX - canvas.offsetLeft + player.x;
+   mouseY = e.clientY - canvas.offsetTop + player.y;
 }
 
 function getClick() {
@@ -100,14 +104,14 @@ function getClick() {
 			}
 			bulletAlive[0] = true;
 			bulletSuper[0] = false;
-			let bulletRise = mouseY - playerY;
-			let bulletRun = mouseX - playerX;
+			let bulletRise = mouseY - player.y;
+			let bulletRun = mouseX - player.x;
 			let bulletDZ = Math.sqrt(Math.pow(bulletRun, 2) + Math.pow(bulletRise, 2));
 			bulletTimer[0] = ((screenWidth + screenHeight) / 2) * Math.sqrt(2);
 			bulletDY[0] = (bulletRise / bulletDZ) * bulletSpeed;
 			bulletDX[0] = (bulletRun / bulletDZ) * bulletSpeed;
-			bulletX[0] = playerX;
-			bulletY[0] = playerY;
+			bulletX[0] = player.x;
+			bulletY[0] = player.y;
 		}
 	}
 }
@@ -119,7 +123,6 @@ function getKeys(e) {
 	if (e.key == "Down" || e.key == "ArrowDown" || e.key == "s") {
 		downPressed = true;
 	}
-	
 	if (e.key == "Left" || e.key == "ArrowLeft" || e.key == "a") {
 		leftPressed = true;
 	}
@@ -191,48 +194,48 @@ function makeCursor() {
 
 function acceleratePlayer() {
 	if (upPressed) {
-		playerYVel = playerYVel - playerAccel;
+		player.yVel = player.yVel - playerAccel;
 	}
 	if (downPressed) {
-		playerYVel = playerYVel + playerAccel;
+		player.yVel = player.yVel + playerAccel;
 	}
 	if (leftPressed) {
-		playerXVel = playerXVel - playerAccel;
+		player.xVel = player.xVel - playerAccel;
 	}
 	if (rightPressed) {
-		playerXVel = playerXVel + playerAccel;
+		player.xVel = player.xVel + playerAccel;
 	}
-	playerYVel = playerYVel / playerSlowRate;
-	playerXVel = playerXVel / playerSlowRate;
+	player.yVel = player.yVel / playerSlowRate;
+	player.xVel = player.xVel / playerSlowRate;
 }
 
 function calcPlayerCoord() {
-	ctx.translate(-playerXVel, -playerYVel)
-	playerX = playerX + playerXVel;
-	playerY = playerY + playerYVel;
-	mouseX = mouseX + playerXVel;
-	mouseY = mouseY + playerYVel;
+	ctx.translate(-player.xVel, -player.yVel)
+	player.x = player.x + player.xVel;
+	player.y = player.y + player.yVel;
+	mouseX = mouseX + player.xVel;
+	mouseY = mouseY + player.yVel;
 }
 
 function doBoundary() {
-	if (playerX + playerRadius > screenWidth) { 
-		playerXVel = 0;
-		playerX--;
+	if (player.x + playerRadius > screenWidth) { 
+		player.xVel = 0;
+		player.x--;
 		ctx.translate(1, 0)
 	}
-	if (playerX - playerRadius < 0) { 
-		playerXVel = 0;
-		playerX++;
+	if (player.x - playerRadius < 0) { 
+		player.xVel = 0;
+		player.x++;
 		ctx.translate(-1, 0)
 	}
-	if (playerY + playerRadius > screenHeight) { 
-		playerYVel = 0;
-		playerY--;
+	if (player.y + playerRadius > screenHeight) { 
+		player.yVel = 0;
+		player.y--;
 		ctx.translate(0, 1)
 	}
-	if (playerY - playerRadius < 0) { 
-		playerYVel = 0;
-		playerY++;
+	if (player.y - playerRadius < 0) { 
+		player.yVel = 0;
+		player.y++;
 		ctx.translate(0, -1)
 	}
 }
@@ -285,87 +288,87 @@ function animateBullet() {
 }
 
 function drawBadGuy() {
-	badGuyWait--;
-	if (badGuyWait == 0) {
-		badGuysLoaded++;
-		for (let i = badGuysLoaded; i > 0; i--) {
-			badGuyX[i] = badGuyX[i - 1];
-			badGuyY[i] = badGuyY[i - 1];
-			badGuyAlive[i] = badGuyAlive[i - 1];
+	enemyWait--;
+	if (enemyWait == 0) {
+		enemysLoaded++;
+		for (let i = enemysLoaded; i > 0; i--) {
+			enemyX[i] = enemyX[i - 1];
+			enemyY[i] = enemyY[i - 1];
+			enemyAlive[i] = enemyAlive[i - 1];
 		}
 		let onTop = Math.floor(Math.random() * 4);
 		if (onTop == 0) {
-			badGuyX[1] = badGuyRadius;
-			badGuyY[1] = screenHeight * Math.random();
+			enemyX[1] = enemyRadius;
+			enemyY[1] = screenHeight * Math.random();
 		}
 		else if (onTop == 1) {
-			badGuyX[1] = screenWidth - badGuyRadius;
-			badGuyY[1] = screenHeight * Math.random();
+			enemyX[1] = screenWidth - enemyRadius;
+			enemyY[1] = screenHeight * Math.random();
 		}
 		else if (onTop == 2) {
-			badGuyX[1] = screenWidth * Math.random();
-			badGuyY[1] = badGuyRadius;
+			enemyX[1] = screenWidth * Math.random();
+			enemyY[1] = enemyRadius;
 		}
 		else if (onTop == 3) {
-			badGuyX[1] = screenWidth * Math.random();
-			badGuyY[1] = screenHeight - badGuyRadius;
+			enemyX[1] = screenWidth * Math.random();
+			enemyY[1] = screenHeight - enemyRadius;
 		}
-		badGuyAlive[1] = true;
-		badGuyWait = badGuySpawnConstant - (spawnVariable * 5);
-		if (badGuyWait < badGuyWaitLimit) {
-			badGuyWait = badGuyWaitLimit;
+		enemyAlive[1] = true;
+		enemyWait = enemySpawnConstant - (enemySpawnRate * 5);
+		if (enemyWait < enemyWaitLimit) {
+			enemyWait = enemyWaitLimit;
 		}
 	}
-	for (let i = 1; i < badGuysLoaded + 1; i++) {
-		if (badGuyAlive[i]) {
-			let badGuyRise = playerY - badGuyY[i];
-			let badGuyRun = playerX - badGuyX[i];
-			let badGuyDZ = Math.sqrt(Math.pow(badGuyRun, 2) + Math.pow(badGuyRise, 2));
-			let badGuyDY = (badGuyRise / badGuyDZ) * badGuySpeed;
-			let badGuyDX = (badGuyRun / badGuyDZ) * badGuySpeed;
-			badGuyX[i] = badGuyX[i] + badGuyDX;
-			badGuyY[i] = badGuyY[i] + badGuyDY;
+	for (let i = 1; i < enemysLoaded + 1; i++) {
+		if (enemyAlive[i]) {
+			let enemyRise = player.y - enemyY[i];
+			let enemyRun = player.x - enemyX[i];
+			let enemyDZ = Math.sqrt(Math.pow(enemyRun, 2) + Math.pow(enemyRise, 2));
+			let enemyDY = (enemyRise / enemyDZ) * enemySpeed;
+			let enemyDX = (enemyRun / enemyDZ) * enemySpeed;
+			enemyX[i] = enemyX[i] + enemyDX;
+			enemyY[i] = enemyY[i] + enemyDY;
 			ctx.beginPath();
-			ctx.arc(badGuyX[i], badGuyY[i], badGuyRadius + 3, 0, Math.PI * 2, false);
-			ctx.fillStyle = badGuyOutlineColor;
+			ctx.arc(enemyX[i], enemyY[i], enemyRadius + 3, 0, Math.PI * 2, false);
+			ctx.fillStyle = enemyOutlineColor;
 			ctx.fill();
 			ctx.closePath();
 			ctx.beginPath();
-			ctx.arc(badGuyX[i], badGuyY[i], badGuyRadius, 0, Math.PI * 2, false);
-			ctx.fillStyle = badGuyColor;
+			ctx.arc(enemyX[i], enemyY[i], enemyRadius, 0, Math.PI * 2, false);
+			ctx.fillStyle = enemyColor;
 			ctx.fill();
 			ctx.closePath();
 
 			ctx.beginPath();
-			ctx.arc((((canvas.width / 2) - screenWidth / 8) + playerX + badGuyX[i] / 10), (((canvas.height / 2) - screenHeight / 8) + playerY + badGuyY[i] / 10), badGuyRadius / 5, 0, Math.PI * 2, false);
-			ctx.fillStyle = badGuyOutlineColor;
+			ctx.arc((((canvas.width / 2) - screenWidth / 8) + player.x + enemyX[i] / 10), (((canvas.height / 2) - screenHeight / 8) + player.y + enemyY[i] / 10), enemyRadius / 5, 0, Math.PI * 2, false);
+			ctx.fillStyle = enemyOutlineColor;
 			ctx.fill();
 			ctx.closePath();
 		}
 		else {
-			badGuyX[i] = 5000;
+			enemyX[i] = 5000;
 		}
 	}
 }
 
-function badGuyKill() {
-	for (let i = 1; i < badGuysLoaded; i++) {
+function enemyKill() {
+	for (let i = 1; i < enemysLoaded; i++) {
 		for (let e = 0; e < bulletsLoaded; e++) {
-			if ((Math.abs(bulletX[e] - badGuyX[i]) < badGuyHitBoxRadius && Math.abs(bulletY[e] - badGuyY[i]) < badGuyHitBoxRadius) && badGuyAlive[i] && bulletAlive[e]) {
-				badGuyAlive[i] = false;
+			if ((Math.abs(bulletX[e] - enemyX[i]) < enemyHitBoxRadius && Math.abs(bulletY[e] - enemyY[i]) < enemyHitBoxRadius) && enemyAlive[i] && bulletAlive[e]) {
+				enemyAlive[i] = false;
 				if (!bulletSuper[e]) {
 					bulletAlive[e] = false;
 				}
-				badGuysKilled++;
-				spawnVariable++;
-				powerUpVar++;
-				playerPoints = playerPoints + badGuyPtValue;
-				if (powerUpVar >= kToPowerUp) {
-					powerUpVar = 0;
-					powerUpAlive[powerUpsSpawned] = true;
-					powerUpX[powerUpsSpawned] = badGuyX[i] - powerUpSize / 2;
-					powerUpY[powerUpsSpawned] = badGuyY[i] - powerUpSize / 2;
-					powerUpsSpawned++;
+				enemysKilled++;
+				enemySpawnRate++;
+				powerUp.wait++;
+				playerPoints = playerPoints + enemyPtValue;
+				if (powerUp.wait >= kToPowerUp) {
+					powerUp.wait = 0;
+					powerUp.alive[powerUp.numSpawned] = true;
+					powerUp.x[powerUp.numSpawned] = enemyX[i] - powerUpSize / 2;
+					powerUp.y[powerUp.numSpawned] = enemyY[i] - powerUpSize / 2;
+					powerUp.numSpawned++;
 				}
 			}
 		}
@@ -374,7 +377,7 @@ function badGuyKill() {
 
 function drawLine() {
 	ctx.beginPath();
-	ctx.moveTo(playerX, playerY);
+	ctx.moveTo(player.x, player.y);
 	ctx.lineTo(mouseX, mouseY);
 	ctx.lineWidth = 1;
 	ctx.strokeStyle = lineColor;
@@ -394,22 +397,23 @@ function drawBorder() {
 }
 
 function playerKill() {
-	for (let i = 1; i < badGuysLoaded + 1; i++) {
-		if (Math.abs(badGuyX[i] - playerX) < playerHitBoxRadius && Math.abs(badGuyY[i] - playerY) < playerHitBoxRadius) {
-			ctx.translate(playerX - canvas.width / 2, playerY - canvas.height / 2);
-			mouseX = mouseX - (playerX - screenWidth / 2)
-			mouseY = mouseY - (playerY - screenHeight / 2)
+	for (let i = 1; i < enemysLoaded + 1; i++) {
+		if (Math.abs(enemyX[i] - player.x) < playerHitBoxRadius && Math.abs(enemyY[i] - player.y) < playerHitBoxRadius) {
+			ctx.translate(player.x - canvas.width / 2, player.y - canvas.height / 2);
+			mouseX = mouseX - (player.x - screenWidth / 2)
+			mouseY = mouseY - (player.y - screenHeight / 2)
 			playerLives--;
-			playerX = playerStartX;
-			playerY = playerStartY;
-			playerXVel = 0;
-			playerYVel = 0;
-			badGuyWait = 500;
-			for (let i = 1; i < badGuysLoaded + 1; i++) {
-				badGuyAlive[i] = false;
+			player.x = playerStartX;
+			player.y = playerStartY;
+			player.xVel = 0;
+			player.yVel = 0;
+			enemyWait = 500;
+			enemySpawnRate = Math.round(enemySpawnRate / 2);
+			for (let i = 1; i < enemysLoaded + 1; i++) {
+				enemyAlive[i] = false;
 			}
 			if (playerLives == 0) {
-				alert("Game Over!\nYou killed " + (badGuysKilled - 1) + " enemies.");
+				alert("Game Over!\nYou killed " + (enemysKilled - 1) + " enemies.");
 				document.location.reload();
 				clearInterval(interval);
 			}
@@ -419,39 +423,44 @@ function playerKill() {
 
 function drawPlayer() {
 	ctx.beginPath();
-	ctx.arc(playerX, playerY, playerRadius + 3, 0, Math.PI * 2, false);
+	ctx.arc(player.x, player.y, playerRadius + 3, 0, Math.PI * 2, false);
 	ctx.fillStyle = playerOutlineColor;
 	ctx.fill();
 	ctx.closePath();
 	ctx.beginPath();
-	ctx.arc(playerX, playerY, playerRadius, 0, Math.PI * 2, false);
+	ctx.arc(player.x, player.y, playerRadius, 0, Math.PI * 2, false);
 	ctx.fillStyle = playerColor;
 	ctx.fill();
 	ctx.closePath();
 	}
 
 function drawPowerUp() {
-	for (let i = 0; i < powerUpsSpawned; i++) {
-		if (powerUpAlive[i]) {
+	for (let i = 0; i < powerUp.numSpawned; i++) {
+		if (powerUp.alive[i]) {
 			ctx.beginPath();
 			ctx.fillStyle = powerUpOutlineColor;
-			ctx.fillRect(powerUpX[i] - 3, powerUpY[i] - 3, powerUpSize + 6, powerUpSize + 6);
+			ctx.fillRect(powerUp.x[i] - 3, powerUp.y[i] - 3, powerUpSize + 6, powerUpSize + 6);
 			ctx.closePath();
 			ctx.beginPath();
 			ctx.fillStyle = powerUpColor;
-			ctx.fillRect(powerUpX[i], powerUpY[i], powerUpSize, powerUpSize);
+			ctx.fillRect(powerUp.x[i], powerUp.y[i], powerUpSize, powerUpSize);
 			ctx.closePath();
 		}
-		if (Math.abs((powerUpX[i] + (powerUpSize / 2)) - playerX) < powerUpSize && Math.abs((powerUpY[i] + (powerUpSize / 2)) - playerY) < powerUpSize && powerUpAlive[i]) {
-			playerLives++;
-			powerUpAlive[i] = false;
+		if (Math.abs((powerUp.x[i] + (powerUpSize / 2)) - player.x) < powerUpSize && Math.abs((powerUp.y[i] + (powerUpSize / 2)) - player.y) < powerUpSize && powerUp.alive[i]) {
+			if (Math.random() >= 0.5) {
+				playerLives++;
+			}
+			else {
+				powerUpsLeft++;
+			}
+			powerUp.alive[i] = false;
 		}
 	}
 }
 
 function drawMiniMap() {
 	ctx.beginPath();
-	ctx.rect(((canvas.width / 2) - screenWidth / 8) + playerX, ((canvas.height / 2) - screenHeight / 8) + playerY, screenWidth / 10, screenHeight / 10);
+	ctx.rect(((canvas.width / 2) - screenWidth / 8) + player.x, ((canvas.height / 2) - screenHeight / 8) + player.y, screenWidth / 10, screenHeight / 10);
 	ctx.fillStyle = bgColor;
 	ctx.fill();
 	ctx.lineWidth = 1;
@@ -460,36 +469,36 @@ function drawMiniMap() {
 	ctx.closePath();
 	for (let i = 1; i < 8; i++) {
 		ctx.beginPath();
-		ctx.moveTo(((canvas.width / 2) - screenWidth / 8) + playerX + (screenWidth / 80) * i, ((canvas.height / 2) - screenHeight / 8) + playerY);
-		ctx.lineTo(((canvas.width / 2) - screenWidth / 8) + playerX + (screenWidth / 80) * i, ((canvas.height / 2) - screenHeight / 8) + playerY + (screenWidth / 10));
+		ctx.moveTo(((canvas.width / 2) - screenWidth / 8) + player.x + (screenWidth / 80) * i, ((canvas.height / 2) - screenHeight / 8) + player.y);
+		ctx.lineTo(((canvas.width / 2) - screenWidth / 8) + player.x + (screenWidth / 80) * i, ((canvas.height / 2) - screenHeight / 8) + player.y + (screenWidth / 10));
 		ctx.lineWidth = 1;
 		ctx.strokeStyle = gridColor;
 		ctx.stroke();
 
 		ctx.beginPath();
-		ctx.moveTo(((canvas.width / 2) - screenWidth / 8) + playerX, ((canvas.height / 2) - screenHeight / 8) + playerY + (screenHeight / 80) * i);
-		ctx.lineTo(((canvas.width / 2) - screenWidth / 8) + playerX + (screenWidth / 10), ((canvas.height / 2) - screenHeight / 8) + playerY + (screenHeight / 80) * i);
+		ctx.moveTo(((canvas.width / 2) - screenWidth / 8) + player.x, ((canvas.height / 2) - screenHeight / 8) + player.y + (screenHeight / 80) * i);
+		ctx.lineTo(((canvas.width / 2) - screenWidth / 8) + player.x + (screenWidth / 10), ((canvas.height / 2) - screenHeight / 8) + player.y + (screenHeight / 80) * i);
 		ctx.lineWidth = 1;
 		ctx.strokeStyle = gridColor;
 		ctx.stroke();
 	}
 	ctx.beginPath()
-	ctx.rect(((((canvas.width / 2) - screenWidth / 8) + playerX * 1.1) - canvas.width / 20), ((((canvas.height / 2) - screenHeight / 8) + playerY * 1.1) - canvas.height / 20), canvas.width / 10, canvas.height / 10);
+	ctx.rect(((((canvas.width / 2) - screenWidth / 8) + player.x * 1.1) - canvas.width / 20), ((((canvas.height / 2) - screenHeight / 8) + player.y * 1.1) - canvas.height / 20), canvas.width / 10, canvas.height / 10);
 	ctx.lineWidth = 1;
 	ctx.strokeStyle = miniMapColor;
 	ctx.stroke();
 	ctx.closePath();
 	ctx.beginPath();
-	ctx.arc((((canvas.width / 2) - screenWidth / 8) + playerX * 1.1), (((canvas.height / 2) - screenHeight / 8) + playerY * 1.1), playerRadius / 5, 0, Math.PI * 2, false);
+	ctx.arc((((canvas.width / 2) - screenWidth / 8) + player.x * 1.1), (((canvas.height / 2) - screenHeight / 8) + player.y * 1.1), playerRadius / 5, 0, Math.PI * 2, false);
 	ctx.fillStyle = playerOutlineColor;
 	ctx.fill();
 	ctx.closePath();
 	
-	for (let i = 1; i < badGuysLoaded + 1; i++) {
-		if (badGuyAlive[i]) {
+	for (let i = 1; i < enemysLoaded + 1; i++) {
+		if (enemyAlive[i]) {
 			ctx.beginPath();
-			ctx.arc((((canvas.width / 2) - screenWidth / 8) + playerX + badGuyX[i] / 10), (((canvas.height / 2) - screenHeight / 8) + playerY + badGuyY[i] / 10), badGuyRadius / 5, 0, Math.PI * 2, false);
-			ctx.fillStyle = badGuyOutlineColor;
+			ctx.arc((((canvas.width / 2) - screenWidth / 8) + player.x + enemyX[i] / 10), (((canvas.height / 2) - screenHeight / 8) + player.y + enemyY[i] / 10), enemyRadius / 5, 0, Math.PI * 2, false);
+			ctx.fillStyle = enemyOutlineColor;
 			ctx.fill();
 			ctx.closePath();
 		}
@@ -505,9 +514,9 @@ function draw() {
 		doBoundary();
 		drawBG();
 		animateBullet();
-		badGuyKill();
+		enemyKill();
 		drawBadGuy();
-		badGuyKill();
+		enemyKill();
 		drawLine();
 		drawBorder();
 		playerKill();
@@ -524,13 +533,13 @@ function draw() {
 		drawMiniMap();
 		ctx.font = "bolder 72px Arial";
 		ctx.fillStyle = lineColor;
-		ctx.fillText("PAUSED", playerX - 150, playerY);
+		ctx.fillText("PAUSED", player.x - 150, player.y);
 	}
 	ctx.font = "16px Arial";
 	ctx.fillStyle = lineColor;
-	ctx.fillText("Lives: " + playerLives, 20 + playerX - canvas.width / 2, 30 + playerY - canvas.height / 2);
-	ctx.fillText("Points: " + playerPoints, 20 + playerX - canvas.width / 2, 54 + playerY - canvas.height / 2);
-	ctx.fillText("Super: " + powerUpsLeft, 20 + playerX - canvas.width / 2, 78 + playerY - canvas.height / 2);
+	ctx.fillText("Lives: " + playerLives, 20 + player.x - canvas.width / 2, 30 + player.y - canvas.height / 2);
+	ctx.fillText("Points: " + playerPoints, 20 + player.x - canvas.width / 2, 54 + player.y - canvas.height / 2);
+	ctx.fillText("Super: " + powerUpsLeft, 20 + player.x - canvas.width / 2, 78 + player.y - canvas.height / 2);
 }
 
 var interval = setInterval(draw, 1);

@@ -241,7 +241,7 @@ function drawBG() {
 	}
 }
 
-function animateBullet() {
+function drawBullet() {
 	for (let i = 0; i < bulletsLoaded; i++) {
 		if (bulletAlive[i]) {
 			ctx.beginPath();
@@ -253,11 +253,12 @@ function animateBullet() {
 			bulletX[i] = bulletX[i] + bulletDX[i];
 			bulletY[i] = bulletY[i] + bulletDY[i];
 		}
-		else {
-			bulletX[i] = 4000;
-		}
 		bulletTimer[i]--;
 		if (bulletTimer[i] <= 0) {
+			bulletX[i] = NaN;
+			bulletY[i] = NaN;
+			bulletDX[i] = NaN;
+			bulletDY[i] = NaN;
 			bulletsLoaded--;
 		}
 	}
@@ -333,19 +334,15 @@ function badGuyKill() {
 				spawnVariable++;
 				powerUpVar++;
 				playerPoints = playerPoints + badGuyPtValue;
-				powerUpCheck();
+				if (powerUpVar >= kToPowerUp) {
+					powerUpVar = 0;
+					powerUpAlive[powerUpsSpawned] = true;
+					powerUpX[powerUpsSpawned] = badGuyX[i];
+					powerUpY[powerUpsSpawned] = badGuyY[i];
+					powerUpsSpawned++;
+				}
 			}
 		}
-	}
-}
-
-function powerUpCheck() {
-	if (powerUpVar >= kToPowerUp) {
-		powerUpVar = 0;
-		powerUpAlive[powerUpsSpawned] = true;
-		powerUpX[powerUpsSpawned] = Math.random() * (canvas.width - powerUpSize) - powerUpSize;
-		powerUpY[powerUpsSpawned] = Math.random() * (canvas.height - powerUpSize) - powerUpSize;
-		powerUpsSpawned++;
 	}
 }
 
@@ -367,6 +364,7 @@ function playerKill() {
 			playerXVel = 0;
 			playerYVel = 0;
 			badGuyWait = 500;
+			enemySpawnRate = Math.round(enemySpawnRate / 2);
 			for (let i = 1; i < badGuysLoaded + 1; i++) {
 				badGuyAlive[i] = false;
 			}
@@ -406,7 +404,12 @@ function drawPowerUp() {
 			ctx.closePath();
 		}
 		if (Math.abs((powerUpX[i] + (powerUpSize / 2)) - playerX) < powerUpSize && Math.abs((powerUpY[i] + (powerUpSize / 2)) - playerY) < powerUpSize && powerUpAlive[i]) {
-			playerLives++;
+			if (Math.random() >= 0.5) {
+				playerLives++;
+			}
+			else {
+				powerUpsLeft++;
+			}
 			powerUpAlive[i] = false;
 		}
 	}
@@ -420,7 +423,7 @@ function draw() {
 		acceleratePlayer();
 		doBoundary();
 		drawBG();
-		animateBullet();
+		drawBullet();
 		badGuyKill();
 		drawBadGuy();
 		badGuyKill();
