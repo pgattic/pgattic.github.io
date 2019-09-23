@@ -410,6 +410,9 @@ function playerKill() {
 			player.xVel = 0;
 			player.yVel = 0;
 			enemyWait = 500;
+			for (i = 0; i <= bulletsLoaded; i++) {
+				bulletTimer[i] = 0;
+			}
 			enemySpawnRate = Math.round(enemySpawnRate / 2);
 			for (let i = 1; i < enemysLoaded + 1; i++) {
 				enemyAlive[i] = false;
