@@ -14,12 +14,12 @@ const
 	bulletSpeed = 5
 	gapBetweenSuperBullets = 30
 
-	badGuyRadius = 10
-	badGuySpeed = 0.5
-	badGuyHitBoxRadius = badGuyRadius * 1.5
-	badGuySpawnConstant = 300
-	badGuyPtValue = 100
-	badGuyWaitLimit = 80
+	enemyRadius = 10
+	enemySpeed = 0.5
+	enemyHitBoxRadius = enemyRadius * 1.5
+	enemySpawnConstant = 300
+	enemyPtValue = 100
+	enemyWaitLimit = 80
 	
 	kToPowerUp = 40
 	powerUpSize = 20
@@ -54,12 +54,12 @@ var
 	bulletSuper = [false]
 	superTimer = -1
 	
-	badGuyX = [5]
-	badGuyY = [5]
-	badGuyWait = 500
-	badGuysLoaded = 1
-	badGuysKilled = 1
-	badGuyAlive = [false]
+	enemyX = [5]
+	enemyY = [5]
+	enemyWait = 500
+	enemysLoaded = 1
+	enemysKilled = 1
+	enemyAlive = [false]
 	
 	isPaused = false
 	playerLives = 3
@@ -265,80 +265,80 @@ function drawBullet() {
 }
 
 function drawBadGuy() {
-	badGuyWait--;
-	if (badGuyWait == 0) {
-		badGuysLoaded++;
-		for (let i = badGuysLoaded; i > 0; i--) {
-			badGuyX[i] = badGuyX[i - 1];
-			badGuyY[i] = badGuyY[i - 1];
-			badGuyAlive[i] = badGuyAlive[i - 1];
+	enemyWait--;
+	if (enemyWait == 0) {
+		enemysLoaded++;
+		for (let i = enemysLoaded; i > 0; i--) {
+			enemyX[i] = enemyX[i - 1];
+			enemyY[i] = enemyY[i - 1];
+			enemyAlive[i] = enemyAlive[i - 1];
 		}
 		let onTop = Math.floor(Math.random() * 4);
 		if (onTop == 0) {
-			badGuyX[1] = badGuyRadius;
-			badGuyY[1] = canvas.height * Math.random();
+			enemyX[1] = enemyRadius;
+			enemyY[1] = canvas.height * Math.random();
 		}
 		else if (onTop == 1) {
-			badGuyX[1] = canvas.width - badGuyRadius;
-			badGuyY[1] = canvas.height * Math.random();
+			enemyX[1] = canvas.width - enemyRadius;
+			enemyY[1] = canvas.height * Math.random();
 		}
 		else if (onTop == 2) {
-			badGuyX[1] = canvas.width * Math.random();
-			badGuyY[1] = badGuyRadius;
+			enemyX[1] = canvas.width * Math.random();
+			enemyY[1] = enemyRadius;
 		}
 		else if (onTop == 3) {
-			badGuyX[1] = canvas.width * Math.random();
-			badGuyY[1] = canvas.height - badGuyRadius;
+			enemyX[1] = canvas.width * Math.random();
+			enemyY[1] = canvas.height - enemyRadius;
 		}
-		badGuyAlive[1] = true;
-		badGuyWait = badGuySpawnConstant - (spawnVariable * 5);
-		if (badGuyWait < badGuyWaitLimit) {
-			badGuyWait = badGuyWaitLimit;
+		enemyAlive[1] = true;
+		enemyWait = enemySpawnConstant - (spawnVariable * 5);
+		if (enemyWait < enemyWaitLimit) {
+			enemyWait = enemyWaitLimit;
 		}
 	}
-	for (let i = 1; i < badGuysLoaded + 1; i++) {
-		if (badGuyAlive[i]) {
-			let badGuyRise = playerY - badGuyY[i];
-			let badGuyRun = playerX - badGuyX[i];
-			let badGuyDZ = Math.sqrt(Math.pow(badGuyRun, 2) + Math.pow(badGuyRise, 2));
-			let badGuyDY = (badGuyRise / badGuyDZ) * badGuySpeed;
-			let badGuyDX = (badGuyRun / badGuyDZ) * badGuySpeed;
-			badGuyX[i] = badGuyX[i] + badGuyDX;
-			badGuyY[i] = badGuyY[i] + badGuyDY;
+	for (let i = 1; i < enemysLoaded + 1; i++) {
+		if (enemyAlive[i]) {
+			let enemyRise = playerY - enemyY[i];
+			let enemyRun = playerX - enemyX[i];
+			let enemyDZ = Math.sqrt(Math.pow(enemyRun, 2) + Math.pow(enemyRise, 2));
+			let enemyDY = (enemyRise / enemyDZ) * enemySpeed;
+			let enemyDX = (enemyRun / enemyDZ) * enemySpeed;
+			enemyX[i] = enemyX[i] + enemyDX;
+			enemyY[i] = enemyY[i] + enemyDY;
 			ctx.beginPath();
-			ctx.arc(badGuyX[i], badGuyY[i], badGuyRadius + 3, 0, Math.PI * 2, false);
-			ctx.fillStyle = badGuyOutlineColor;
+			ctx.arc(enemyX[i], enemyY[i], enemyRadius + 3, 0, Math.PI * 2, false);
+			ctx.fillStyle = enemyOutlineColor;
 			ctx.fill();
 			ctx.closePath();
 			ctx.beginPath();
-			ctx.arc(badGuyX[i], badGuyY[i], badGuyRadius, 0, Math.PI * 2, false);
-			ctx.fillStyle = badGuyColor;
+			ctx.arc(enemyX[i], enemyY[i], enemyRadius, 0, Math.PI * 2, false);
+			ctx.fillStyle = enemyColor;
 			ctx.fill();
 			ctx.closePath();
 		}
 		else {
-			badGuyX[i] = 5000;
+			enemyX[i] = 5000;
 		}
 	}
 }
 
-function badGuyKill() {
-	for (let i = 1; i < badGuysLoaded; i++) {
+function enemyKill() {
+	for (let i = 1; i < enemysLoaded; i++) {
 		for (let e = 0; e < bulletsLoaded; e++) {
-			if ((Math.abs(bulletX[e] - badGuyX[i]) < badGuyHitBoxRadius && Math.abs(bulletY[e] - badGuyY[i]) < badGuyHitBoxRadius) && badGuyAlive[i] && bulletAlive[e]) {
-				badGuyAlive[i] = false;
+			if ((Math.abs(bulletX[e] - enemyX[i]) < enemyHitBoxRadius && Math.abs(bulletY[e] - enemyY[i]) < enemyHitBoxRadius) && enemyAlive[i] && bulletAlive[e]) {
+				enemyAlive[i] = false;
 				if (!bulletSuper[e]) {
 					bulletAlive[e] = false;
 				}
-				badGuysKilled++;
+				enemysKilled++;
 				spawnVariable++;
 				powerUpVar++;
-				playerPoints = playerPoints + badGuyPtValue;
+				playerPoints = playerPoints + enemyPtValue;
 				if (powerUpVar >= kToPowerUp) {
 					powerUpVar = 0;
 					powerUpAlive[powerUpsSpawned] = true;
-					powerUpX[powerUpsSpawned] = badGuyX[i];
-					powerUpY[powerUpsSpawned] = badGuyY[i];
+					powerUpX[powerUpsSpawned] = enemyX[i];
+					powerUpY[powerUpsSpawned] = enemyY[i];
 					powerUpsSpawned++;
 				}
 			}
@@ -356,20 +356,20 @@ function drawLine() {
 }
 
 function playerKill() {
-	for (let i = 1; i < badGuysLoaded + 1; i++) {
-		if (Math.abs(badGuyX[i] - playerX) < playerHitBoxRadius && Math.abs(badGuyY[i] - playerY) < playerHitBoxRadius) {
+	for (let i = 1; i < enemysLoaded + 1; i++) {
+		if (Math.abs(enemyX[i] - playerX) < playerHitBoxRadius && Math.abs(enemyY[i] - playerY) < playerHitBoxRadius) {
 			playerLives--;
 			playerX = playerStartX;
 			playerY = playerStartY;
 			playerXVel = 0;
 			playerYVel = 0;
-			badGuyWait = 500;
+			enemyWait = 500;
 			enemySpawnRate = Math.round(enemySpawnRate / 2);
-			for (let i = 1; i < badGuysLoaded + 1; i++) {
-				badGuyAlive[i] = false;
+			for (let i = 1; i < enemysLoaded + 1; i++) {
+				enemyAlive[i] = false;
 			}
 			if (playerLives == 0) {
-				alert("Game Over!\nYou killed " + (badGuysKilled - 1) + " enemies.");
+				alert("Game Over!\nYou killed " + (enemysKilled - 1) + " enemies.");
 				document.location.reload();
 				clearInterval(interval);
 			}
@@ -424,9 +424,9 @@ function draw() {
 		doBoundary();
 		drawBG();
 		drawBullet();
-		badGuyKill();
+		enemyKill();
 		drawBadGuy();
-		badGuyKill();
+		enemyKill();
 		drawLine();
 		playerKill();
 		drawPlayer();

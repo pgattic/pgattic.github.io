@@ -11,8 +11,8 @@ const
 	screenHeight = 1200
 
 	playerRadius = 10
-	playerStartX = canvas.width / 2
-	playerStartY = canvas.height / 2
+	playerStartX = screenWidth / 2
+	playerStartY = screenHeight / 2
 	playerAccel = 0.1
 	playerSlowRate = 1.04
 	playerHitBoxRadius = playerRadius
@@ -32,13 +32,15 @@ const
 	powerUpSize = 20
 	
 var
-	mouseX = playerStartX
-	mouseY = playerStartY
+	mouseX = canvas.width / 2
+	mouseY = canvas.height / 2
 	upPressed = false
 	downPressed = false
 	leftPressed = false
 	rightPressed = false
-	
+
+ctx.translate((canvas.width - screenWidth) / 2, (canvas.height - screenHeight) / 2);
+
 	player = {
 		x : playerStartX,
 		y : playerStartY,
@@ -399,7 +401,7 @@ function drawBorder() {
 function playerKill() {
 	for (let i = 1; i < enemysLoaded + 1; i++) {
 		if (Math.abs(enemyX[i] - player.x) < playerHitBoxRadius && Math.abs(enemyY[i] - player.y) < playerHitBoxRadius) {
-			ctx.translate(player.x - canvas.width / 2, player.y - canvas.height / 2);
+			ctx.translate(player.x - screenWidth / 2, player.y - screenHeight / 2);
 			mouseX = mouseX - (player.x - screenWidth / 2)
 			mouseY = mouseY - (player.y - screenHeight / 2)
 			playerLives--;
