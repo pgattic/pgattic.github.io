@@ -165,6 +165,9 @@ function unGetKeys(e) {
 			}
 		}
 	}
+	if (e.key == " ") {
+		getClick();
+	}
 }
 
 function clearCanvas() {
