@@ -1,0 +1,13 @@
+https://pgattic.github.io/
+https://pgattic.github.io/snake.html
+https://pgattic.github.io/multiplayer-snake.html
+https://pgattic.github.io/shoot-em.html
+https://pgattic.github.io/shoot-em-classic.html
+https://pgattic.github.io/about-me.html
+https://pgattic.github.io/index.html
+https://pgattic.github.io/games/snake.html
+https://pgattic.github.io/games/multiplayer-snake.html
+https://pgattic.github.io/games/shoot-em.html
+https://pgattic.github.io/games/shoot-em-dark.html
+https://pgattic.github.io/games/shoot-em-classic.html
+https://pgattic.github.io/games/shoot-em-classic-dark.html
