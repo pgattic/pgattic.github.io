@@ -82,7 +82,7 @@ var
 document.addEventListener("keydown", keyDownHandler, false);
 
 function keyDownHandler(e) {
-	if (player1.inGame && !player1.keyPressed) {
+	if (player1.inGame) {// && !player1.keyPressed
 		if (e.key == "w" || e.key == "W") {
 			playerDirectionTemp = up;
 		}
@@ -98,10 +98,10 @@ function keyDownHandler(e) {
 		if ((playerDirectionTemp == up && player1.direction !== down) || (playerDirectionTemp == down && player1.direction !== up) || (playerDirectionTemp == left && player1.direction !== right) || (playerDirectionTemp == right && player1.direction !== left)) {
 			player1.direction = playerDirectionTemp;
 		}
-		player1.keyPressed = true;
+//		player1.keyPressed = true;
 	}
 	playerDirectionTemp = 5;
-	if (player2.inGame && !player2.keyPressed) {
+	if (player2.inGame) {// && !player2.keyPressed
 		if (e.key == "t" || e.key == "T") {
 			playerDirectionTemp = up;
 		}
@@ -117,10 +117,10 @@ function keyDownHandler(e) {
 		if ((playerDirectionTemp == up && player2.direction !== down) || (playerDirectionTemp == down && player2.direction !== up) || (playerDirectionTemp == left && player2.direction !== right) || (playerDirectionTemp == right && player2.direction !== left)) {
 			player2.direction = playerDirectionTemp;
 		}
-		player2.keyPressed = true;
+//		player2.keyPressed = true;
 	}
 	playerDirectionTemp = 5;
-	if (player3.inGame && !player3.keyPressed) {
+	if (player3.inGame) {// && !player3.keyPressed
 		if (e.key == "i" || e.key == "I") {
 			playerDirectionTemp = up;
 		}
@@ -136,10 +136,10 @@ function keyDownHandler(e) {
 		if ((playerDirectionTemp == up && player3.direction !== down) || (playerDirectionTemp == down && player3.direction !== up) || (playerDirectionTemp == left && player3.direction !== right) || (playerDirectionTemp == right && player3.direction !== left)) {
 			player3.direction = playerDirectionTemp;
 		}
-		player3.keyPressed = true;
+//		player3.keyPressed = true;
 	}
 	playerDirectionTemp = 5;
-	if (player4.inGame && !player4.keyPressed) {
+	if (player4.inGame) {// && !player4.keyPressed
 		if (e.key == "Up" || e.key == "ArrowUp") {
 			playerDirectionTemp = up;
 		}
@@ -155,7 +155,7 @@ function keyDownHandler(e) {
 		if ((playerDirectionTemp == up && player4.direction !== down) || (playerDirectionTemp == down && player4.direction !== up) || (playerDirectionTemp == left && player4.direction !== right) || (playerDirectionTemp == right && player4.direction !== left)) {
 			player4.direction = playerDirectionTemp;
 		}
-		player4.keyPressed = true;
+//		player4.keyPressed = true;
 	}
 	playerDirectionTemp = 5;
 	if (e.key == "1") {
@@ -406,9 +406,9 @@ function drawFood() {
 }
 
 function drawScore(playerN) {
-ctx.font = "bolder "+((unit / 2) + 4)+"px Arial";
-ctx.fillStyle = scoreColor;
-ctx.fillText(playerN.length, playerN.x + (unit / 12), playerN.y + (unit / 2) + (unit / 12));
+	ctx.font = "bolder "+((unit / 2) + 4)+"px Arial";
+	ctx.fillStyle = scoreColor;
+	ctx.fillText(playerN.length, playerN.x, playerN.y + (unit / 2) + (unit / 24));
 }
 
 function draw() {
@@ -476,10 +476,10 @@ function draw() {
 			drawBody(player4);
 		}
 	}
-	player1.keyPressed = false;
-	player2.keyPressed = false;
-	player3.keyPressed = false;
-	player4.keyPressed = false;
+//	player1.keyPressed = false;
+//	player2.keyPressed = false;
+//	player3.keyPressed = false;
+//	player4.keyPressed = false;
 }
 
 var interval = setInterval(draw, gameSpeed);

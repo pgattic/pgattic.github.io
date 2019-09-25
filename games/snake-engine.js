@@ -47,7 +47,7 @@ function keyDownHandler(e) {
 		playerDirectionTemp = right;
 	}
 	if ((playerDirectionTemp == up && playerDirection !== down) || (playerDirectionTemp == down && playerDirection !== up) || (playerDirectionTemp == left && playerDirection !== right) || (playerDirectionTemp == right && playerDirection !== left)) {
-	playerDirection = playerDirectionTemp;
+		playerDirection = playerDirectionTemp;
 	}
 	if (e.key == "e" || e.key == "Enter") {
 		isPaused = !isPaused;
