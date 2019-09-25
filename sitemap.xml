@@ -16,12 +16,12 @@
 		<priority>0.80</priority>
 	</url>
 	<url>
-		<loc>https://pgattic.github.io/shoot-em.html</loc>
+		<loc>https://pgattic.github.io/yeet-ball.html</loc>
 		<lastmod>2019-09-24</lastmod>
 		<priority>0.80</priority>
 	</url>
 	<url>
-		<loc>https://pgattic.github.io/shoot-em-classic.html</loc>
+		<loc>https://pgattic.github.io/yeet-ball-classic.html</loc>
 		<lastmod>2019-09-24</lastmod>
 		<priority>0.80</priority>
 	</url>
@@ -46,22 +46,22 @@
 		<priority>0.64</priority>
 	</url>
 	<url>
-		<loc>https://pgattic.github.io/games/shoot-em.html</loc>
+		<loc>https://pgattic.github.io/games/yeet-ball.html</loc>
 		<lastmod>2019-09-24</lastmod>
 		<priority>0.64</priority>
 	</url>
 	<url>
-		<loc>https://pgattic.github.io/games/shoot-em-dark.html</loc>
+		<loc>https://pgattic.github.io/games/yeet-ball-dark.html</loc>
 		<lastmod>2019-09-24</lastmod>
 		<priority>0.64</priority>
 	</url>
 	<url>
-		<loc>https://pgattic.github.io/games/shoot-em-classic.html</loc>
+		<loc>https://pgattic.github.io/games/yeet-ball-classic.html</loc>
 		<lastmod>2019-09-24</lastmod>
 		<priority>0.64</priority>
 	</url>
 	<url>
-		<loc>https://pgattic.github.io/games/shoot-em-classic-dark.html</loc>
+		<loc>https://pgattic.github.io/games/yeet-ball-classic-dark.html</loc>
 		<lastmod>2019-09-24</lastmod>
 		<priority>0.64</priority>
 	</url>
