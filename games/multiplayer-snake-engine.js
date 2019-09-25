@@ -78,6 +78,10 @@ var
 	foodY = ((Math.floor(Math.random() * (canvas.height/unit))) * unit) + unit / 2
 	isPaused = false
 
+if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
+	alert('Are you on mobile? This game was created for PC users only, sorry!')
+}
+
 //INPUT
 document.addEventListener("keydown", keyDownHandler, false);
 

@@ -80,6 +80,9 @@ ctx.translate((canvas.width - screenWidth) / 2, (canvas.height - screenHeight) /
 	powerUpsLeft = 3
 	playerPoints = 0		
 
+if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
+	alert('Are you on mobile? This game was created for PC users only, sorry!')
+}
 
 document.addEventListener("mousemove", getMouse, false);
 document.addEventListener("click", getClick, false);
