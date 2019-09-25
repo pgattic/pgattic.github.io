@@ -1,0 +1,13 @@
+https://pgattic.github.io/
+https://pgattic.github.io/snake.html
+https://pgattic.github.io/multiplayer-snake.html
+https://pgattic.github.io/yeet-ball.html
+https://pgattic.github.io/yeet-ball-classic.html
+https://pgattic.github.io/about-me.html
+https://pgattic.github.io/index.html
+https://pgattic.github.io/games/snake.html
+https://pgattic.github.io/games/multiplayer-snake.html
+https://pgattic.github.io/games/yeet-ball.html
+https://pgattic.github.io/games/yeet-ball-dark.html
+https://pgattic.github.io/games/yeet-ball-classic.html
+https://pgattic.github.io/games/yeet-ball-classic-dark.html
