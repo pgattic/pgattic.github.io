@@ -36,6 +36,13 @@
 	<style>
 		.w3-sidebar a {font-family: "Roboto", sans-serif}
 		body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
+		.clearfix {
+			overflow: auto;
+		}
+
+		.thumb {
+			float: left;
+		}
 	</style>
 </head>
 <body class="w3-content" style="max-width:1200px">
@@ -93,9 +100,26 @@
 
 		<div class="w3-container w3-text-grey" id="About Me" style="padding:24px 48px">
 			<h2>Welcome to my coding site!</h2>
-			<p>Here is where I will put all of my coding projects that I make. As of now, I am coding all of my games in JavaScript. If you have any suggestions on what I should do next, you can <a href="mailto:pgattic@gmail.com" target="_blank" style="color:green;">email me</a>, or if you know me personally, just talk to me in person, that would make things easier.</p>
+			<p>Here is where I will put all of the coding projects that I make. As of now, I am coding all of my games in JavaScript. If you have any suggestions on what I should do next, you can <a href="mailto:pgattic@gmail.com" target="_blank" style="color:green;">email me</a>, or if you know me personally, just talk to me in person, that would make things easier.</p>
 			<p>Please check out my games, I've worked really hard on them and I think you will appreciate playing them.</p>
 			<p>Lastly, thank you so much for visiting! I hope you'll enjoy it here and maybe come back later, too!</p>
+			<h2>My games:</h2>
+			<div class="clearfix">
+				<p><img class="thumb" src="snake-thumb.png" alt="snake"><strong><a href="snake.html" style="color:green;">Snake</a></strong></p>
+				<p>This is a classic snake game. If you've played snake before, you know what this is. The main objective is to eat the food that spawns in play, which makes you grow longer. How long can your snake grow?<br>Players: <img src="player.png"></p>
+			</div>
+			<div class="clearfix">
+				<p><img class="thumb" src="multiplayer-snake-thumb.png" alt="multisnake"><strong><a href="multiplayer-snake.html" style="color:green;">Multiplayer Snake</a></strong></p>
+				<p>So, you've mastered the game of snake? Let's see how you do against your friends! Yep, that's right! This snake game allows up to 4 people to play at the same time, using one keyboard!<br>Players: <img src="player.png"> - <img src="player.png"><img src="player.png"><img src="player.png"><img src="player.png"></p>
+			</div>
+			<div class="clearfix">
+				<p><img class="thumb" src="shoot-em-thumb.png" alt="shootem"><strong><a href="shoot-em.html" style="color:green;">Shoot 'Em!</a></strong></p>
+				<p>The idea for this game was one of my own creation. In it, you play as the red ball, and you try to survive as long as you can by shooting those green balls. How long can you last?<br>Players: <img src="player.png"></p>
+			</div>
+			<div class="clearfix">
+				<p><img class="thumb" src="shoot-em-classic-thumb.png" alt="shootemclassic"><strong><a href="shoot-em-classic.html" style="color:green;">Shoot 'Em! Classic</a></strong></p>
+				<p>This is what Shoot 'Em! was like before it got that major screen-scrolling update. For those of you enjoyed that version more than the new one, I've decided to leave that old version up for you to play!<br>Players: <img src="player.png"></p>
+			</div>
 		</div>
 		
 		<div align="center">
