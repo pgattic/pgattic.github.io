@@ -22,6 +22,9 @@
 	<link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
 	<link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<SCRIPT LANGUAGE="JavaScript" SRC="ads.js"></SCRIPT>
+	<link rel="stylesheet" type="text/css" href="ads.css" />
 	<title>Home - SaveState's Web Games</title>
 	<meta charset="UTF-8">
 	<meta name="description" content="SaveState's Web Games">
@@ -43,31 +46,9 @@
 		.thumb {
 			float: left;
 		}
-		.adBanner {
-			background-color: transparent;
-			height: 1px;
-			width: 1px;
-		}
 	</style>
 </head>
 <body class="w3-content" style="max-width:1200px">
-	<!-- AdBlock Detector -->
-	<div id="wrapfabtest">
-		<div class="adBanner">
-		</div>
-	</div>
-
-	<script>
-		$(document).ready(function(){
-			if($("#wrapfabtest").height() > 0) {
-				alert('No AdBlock :)');
-				
-			} else {
-				alert('AdBlock Detected ');
-				
-			}
-		});
-	</script>
 	<!-- Sidebar/menu -->
 	<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
 		<div class="w3-container w3-display-container w3-padding-16">
