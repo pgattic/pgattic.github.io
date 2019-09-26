@@ -291,20 +291,20 @@ function suicideCheck() {
 		}
 		for (let i = 1; i < player1.length; i++) {
 			if (player1.bodyX[i] == player2.x && player1.bodyY[i] == player2.y) {
+				player1.length += 5 * (Math.ceil(player2.length / 10));
 				gameOver(player2);
-				player1.length += 5;
 			}
 		}
 		for (let i = 1; i < player1.length; i++) {
 			if (player1.bodyX[i] == player3.x && player1.bodyY[i] == player3.y) {
+				player1.length += 5 * (Math.ceil(player3.length / 10));
 				gameOver(player3);
-				player1.length += 5;
 			}
 		}
 		for (let i = 1; i < player1.length; i++) {
 			if (player1.bodyX[i] == player4.x && player1.bodyY[i] == player4.y) {
+				player1.length += 5 * (Math.ceil(player4.length / 10));
 				gameOver(player4);
-				player1.length += 5;
 			}
 		}
 	}
@@ -318,20 +318,20 @@ function suicideCheck() {
 		}
 		for (let i = 1; i < player2.length; i++) {
 			if (player2.bodyX[i] == player1.x && player2.bodyY[i] == player1.y) {
+				player2.length += 5 * (Math.ceil(player1.length / 10));
 				gameOver(player1);
-				player2.length += 5;
 			}
 		}
 		for (let i = 1; i < player2.length; i++) {
 			if (player2.bodyX[i] == player3.x && player2.bodyY[i] == player3.y) {
+				player2.length += 5 * (Math.ceil(player3.length / 10));
 				gameOver(player3);
-				player2.length += 5;
 			}
 		}
 		for (let i = 1; i < player2.length; i++) {
 			if (player2.bodyX[i] == player4.x && player2.bodyY[i] == player4.y) {
+				player2.length += 5 * (Math.ceil(player4.length / 10));
 				gameOver(player4);
-				player2.length += 5;
 			}
 		}
 	}
@@ -345,20 +345,20 @@ function suicideCheck() {
 		}
 		for (let i = 1; i < player3.length; i++) {
 			if (player3.bodyX[i] == player1.x && player3.bodyY[i] == player1.y) {
+				player3.length += 5 * (Math.ceil(player1.length / 10));
 				gameOver(player1);
-				player3.length += 5;
 			}
 		}
 		for (let i = 1; i < player3.length; i++) {
 			if (player3.bodyX[i] == player2.x && player3.bodyY[i] == player2.y) {
+				player3.length += 5 * (Math.ceil(player2.length / 10));
 				gameOver(player2);
-				player3.length += 5;
 			}
 		}
 		for (let i = 1; i < player3.length; i++) {
 			if (player3.bodyX[i] == player4.x && player3.bodyY[i] == player4.y) {
+				player3.length += 5 * (Math.ceil(player4.length / 10));
 				gameOver(player4);
-				player3.length += 5;
 			}
 		}
 	}
