@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset	xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
-		<loc>https://pgattic.github.io/</loc>
+		<loc>https://pgattic.github.io</loc>
 		<lastmod>2019-09-24</lastmod>
 		<priority>1.00</priority>
 	</url>
@@ -29,11 +29,6 @@
 		<loc>https://pgattic.github.io/about-me</loc>
 		<lastmod>2019-09-24</lastmod>
 		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://pgattic.github.io/index</loc>
-		<lastmod>2019-09-24</lastmod>
-		<priority>0.64</priority>
 	</url>
 	<url>
 		<loc>https://pgattic.github.io/games/snake</loc>
