@@ -36,46 +36,6 @@
 		<priority>0.80</priority>
 	</url>
 	<url>
-		<loc>https://pgattic.github.io/games/snake</loc>
-		<lastmod>2019-09-24</lastmod>
-		<priority>0.64</priority>
-	</url>
-	<url>
-		<loc>https://pgattic.github.io/games/multiplayer-snake</loc>
-		<lastmod>2019-09-24</lastmod>
-		<priority>0.64</priority>
-	</url>
-	<url>
-		<loc>https://pgattic.github.io/games/yeet-ball</loc>
-		<lastmod>2019-09-24</lastmod>
-		<priority>0.64</priority>
-	</url>
-	<url>
-		<loc>https://pgattic.github.io/games/yeet-ball-dark</loc>
-		<lastmod>2019-09-24</lastmod>
-		<priority>0.64</priority>
-	</url>
-	<url>
-		<loc>https://pgattic.github.io/games/yeet-ball-classic</loc>
-		<lastmod>2019-09-24</lastmod>
-		<priority>0.64</priority>
-	</url>
-	<url>
-		<loc>https://pgattic.github.io/games/yeet-ball-classic-dark</loc>
-		<lastmod>2019-09-24</lastmod>
-		<priority>0.64</priority>
-	</url>
-	<url>
-		<loc>https://pgattic.github.io/games/pong</loc>
-		<lastmod>2019-10-01</lastmod>
-		<priority>0.64</priority>
-	</url>
-	<url>
-		<loc>https://pgattic.github.io/games/2p-pong</loc>
-		<lastmod>2019-10-01</lastmod>
-		<priority>0.64</priority>
-	</url>
-	<url>
 		<loc>https://pgattic.github.io/noor-game/yeet-noor</loc>
 		<lastmod>2019-09-24</lastmod>
 		<priority>0.64</priority>
