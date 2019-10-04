@@ -10,6 +10,22 @@ const
 	screenWidth = 1200
 	screenHeight = 1200
 
+	pauseWidth = 40
+	pauseX = canvas.width - pauseWidth
+	pauseY = 0
+
+	superWidth = 40
+	superX = canvas.width - superWidth - pauseWidth
+	superY = 0
+
+	dPadRadius = 75
+	dPadX = dPadRadius + 30
+	dPadY = canvas.height - dPadRadius - 30
+
+	dPad2Radius = 75
+	dPad2X = canvas.width - (dPad2Radius + 30)
+	dPad2Y = canvas.height - dPad2Radius - 30
+
 	playerRadius = 10
 	playerStartX = screenWidth / 2
 	playerStartY = screenHeight / 2
@@ -34,10 +50,14 @@ const
 var
 	mouseX = canvas.width / 2
 	mouseY = canvas.height / 2
+	mouseUIX = 0
+	mouseUIY = 0
 	upPressed = false
 	downPressed = false
 	leftPressed = false
 	rightPressed = false
+	dTouchX = dPadX
+	dTouchY = dPadY
 
 ctx.translate((canvas.width - screenWidth) / 2, (canvas.height - screenHeight) / 2);
 
@@ -80,121 +100,117 @@ ctx.translate((canvas.width - screenWidth) / 2, (canvas.height - screenHeight) /
 	powerUpsLeft = 3
 	playerPoints = 0		
 
-if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
-	window.location.href = 'https://pgattic.github.io/games/yeet-ball-mobile';
-}
+document.addEventListener("touchmove", touchMoveHandler, false);
+document.addEventListener("touchstart", touchHandler, false);
+document.addEventListener("touchend", touchEndHandler, false);
 
-document.addEventListener("mousemove", getMouse, false);
-document.addEventListener("click", getClick, false);
-document.addEventListener("keydown", getKeys, false);
-document.addEventListener("keyup", unGetKeys, false);
-
-function getMouse(e) {
-   mouseX = e.clientX - canvas.offsetLeft + player.x;
-   mouseY = e.clientY - canvas.offsetTop + player.y;
-}
-
-function getClick() {
-	if (!isPaused) {
-		if (superTimer < 0) {
-			bulletsLoaded++;
-			for (let i = bulletsLoaded; i > 0; i--) {
-				bulletX[i] = bulletX[i - 1];
-				bulletY[i] = bulletY[i - 1];
-				bulletDX[i] = bulletDX[i - 1];
-				bulletDY[i] = bulletDY[i - 1];
-				bulletTimer[i] = bulletTimer[i - 1];
-				bulletAlive[i] = bulletAlive[i - 1];
-				bulletSuper[i] = bulletSuper[i - 1];
-			}
-			bulletAlive[0] = true;
-			bulletSuper[0] = false;
-			let bulletRise = mouseY - player.y;
-			let bulletRun = mouseX - player.x;
-			let bulletDZ = Math.sqrt(Math.pow(bulletRun, 2) + Math.pow(bulletRise, 2));
-			bulletTimer[0] = ((screenWidth + screenHeight) / 2) * Math.sqrt(2);
-			bulletDY[0] = (bulletRise / bulletDZ) * bulletSpeed;
-			bulletDX[0] = (bulletRun / bulletDZ) * bulletSpeed;
-			bulletX[0] = player.x;
-			bulletY[0] = player.y;
-		}
-	}
-}
-
-function getKeys(e) {
-	if (e.key == "Up" || e.key == "ArrowUp" || e.key == "w") {
-		upPressed = true;
-	}
-	if (e.key == "Down" || e.key == "ArrowDown" || e.key == "s") {
-		downPressed = true;
-	}
-	if (e.key == "Left" || e.key == "ArrowLeft" || e.key == "a") {
-		leftPressed = true;
-	}
-	if (e.key == "Right" || e.key == "ArrowRight" || e.key == "d") {
-		rightPressed = true;
-	}
-	if (e.key == "q") {
-		isPaused = !isPaused;
-	}
-}
-
-function unGetKeys(e) {
-	if (e.key == "Up" || e.key == "ArrowUp" || e.key == "w") {
-		upPressed = false;
-	}
-	else if (e.key == "Down" || e.key == "ArrowDown" || e.key == "s") {
-		downPressed = false;
-	}
-	
-	if (e.key == "Left" || e.key == "ArrowLeft" || e.key == "a") {
-		leftPressed = false;
-	}
-	else if (e.key == "Right" || e.key == "ArrowRight" || e.key == "d") {
-		rightPressed = false;
-	}
-	if (e.key == "e") {
+function touchMoveHandler(e) {
+	var touches = e.changedTouches;
+	for(var i=0; i < e.changedTouches.length; i++) {
+		var touchId = e.changedTouches[i].identifier;
+		var touchX = e.changedTouches[i].pageX;
+		var touchY = e.changedTouches[i].pageY;
 		if (!isPaused) {
-			if (powerUpsLeft > 0) {
-				superTimer = 250;
-				powerUpsLeft--;
-				for (let i = 1; i < Math.floor(screenWidth / gapBetweenSuperBullets); i++) {
-					for (let i = bulletsLoaded + 1; i > 0; i--) {
-						bulletX[i] = bulletX[i - 1];
-						bulletY[i] = bulletY[i - 1];
-						bulletDX[i] = bulletDX[i - 1];
-						bulletDY[i] = bulletDY[i - 1];
-						bulletTimer[i] = bulletTimer[i - 1];
-						bulletAlive[i] = bulletAlive[i - 1];
-						bulletSuper[i] = bulletSuper[i - 1];
-					}
-					bulletX[0] = 10;
-					bulletY[0] = (gapBetweenSuperBullets * i) - 10;
-					bulletDX[0] = superBulletSpeed;
-					bulletDY[0] = 0;
-					bulletTimer[0] = 1200;
-					bulletAlive[0] = true;
-					bulletSuper[0] = true;
-					bulletsLoaded++;
+			if (Math.abs(touchX - dPadX) <= dPadRadius && Math.abs(touchY - dPadY) <= dPadRadius) {
+				dTouchX = touchX + player.x - canvas.width / 2;
+				dTouchY = touchY + player.y - canvas.height / 2;
+				if (touchY - dPadY <= 25) {
+					upPressed = true;
+				} else {
+					upPressed = false;
+				}
+				if (dPadY - touchY <= 25) {
+					downPressed = true;
+				} else {
+					downPressed = false;
+				}
+				if (touchX - dPadX <= 25) {
+					leftPressed = true;
+				} else {
+					leftPressed = false;
+				}
+				if (dPadX - touchX <= 25) {
+					rightPressed = true;
+				} else {
+					rightPressed = false;
 				}
 			}
 		}
 	}
-	if (e.key == " ") {
-		getClick();
+}
+
+function touchHandler(e) {
+	var touches = e.changedTouches;
+	for(var i=0; i < e.changedTouches.length; i++) {
+		var touchId = e.changedTouches[i].identifier;
+		var touchX = e.changedTouches[i].pageX;
+		var touchY = e.changedTouches[i].pageY;
+		if (touchX >= pauseX && touchY >= 0 && touchY <= pauseWidth) {
+			isPaused = !isPaused;
+		}
+		if (touchX >= superX && touchX <= superX + pauseWidth && touchY >= 0 && touchY <= pauseWidth) {
+			if (!isPaused) {
+				if (powerUpsLeft > 0) {
+					superTimer = 250;
+					powerUpsLeft--;
+					for (let i = 1; i < Math.floor(screenWidth / gapBetweenSuperBullets); i++) {
+						for (let i = bulletsLoaded + 1; i > 0; i--) {
+							bulletX[i] = bulletX[i - 1];
+							bulletY[i] = bulletY[i - 1];
+							bulletDX[i] = bulletDX[i - 1];
+							bulletDY[i] = bulletDY[i - 1];
+							bulletTimer[i] = bulletTimer[i - 1];
+							bulletAlive[i] = bulletAlive[i - 1];
+							bulletSuper[i] = bulletSuper[i - 1];
+						}
+						bulletX[0] = 10;
+						bulletY[0] = (gapBetweenSuperBullets * i) - 10;
+						bulletDX[0] = superBulletSpeed;
+						bulletDY[0] = 0;
+						bulletTimer[0] = 1200;
+						bulletAlive[0] = true;
+						bulletSuper[0] = true;
+						bulletsLoaded++;
+					}
+				}
+			}
+		}
+		if (!isPaused) {
+			if (Math.abs(touchX - dPad2X) <= dPad2Radius && Math.abs(touchY - dPad2Y) <= dPad2Radius && superTimer < 0) {
+				bulletsLoaded++;
+				for (let i = bulletsLoaded; i > 0; i--) {
+					bulletX[i] = bulletX[i - 1];
+					bulletY[i] = bulletY[i - 1];
+					bulletDX[i] = bulletDX[i - 1];
+					bulletDY[i] = bulletDY[i - 1];
+					bulletTimer[i] = bulletTimer[i - 1];
+					bulletAlive[i] = bulletAlive[i - 1];
+					bulletSuper[i] = bulletSuper[i - 1];
+				}
+				bulletAlive[0] = true;
+				bulletSuper[0] = false;
+				let bulletRise = touchY - dPad2Y;
+				let bulletRun = touchX - dPad2X;
+				let bulletDZ = Math.sqrt(Math.pow(bulletRun, 2) + Math.pow(bulletRise, 2));
+				bulletTimer[0] = ((screenWidth + screenHeight) / 2) * Math.sqrt(2);
+				bulletDY[0] = (bulletRise / bulletDZ) * bulletSpeed;
+				bulletDX[0] = (bulletRun / bulletDZ) * bulletSpeed;
+				bulletX[0] = player.x;
+				bulletY[0] = player.y;
+			}
+		}
 	}
+}
+
+function touchEndHandler() {
+	upPressed = false;
+	downPressed = false;
+	leftPressed = false;
+	rightPressed = false;
 }
 
 function clearCanvas() {
 	ctx.clearRect(-screenWidth / 2, -screenHeight / 2, screenWidth * 2.5, screenHeight * 2.5);
-}
-
-function makeCrosshair() {
-	document.getElementById("GWar").style.cursor = "crosshair";
-}
-
-function makeCursor() {
-	document.getElementById("GWar").style.cursor = "default";
 }
 
 function acceleratePlayer() {
@@ -218,6 +234,8 @@ function calcPlayerCoord() {
 	ctx.translate(-player.xVel, -player.yVel)
 	player.x = player.x + player.xVel;
 	player.y = player.y + player.yVel;
+	dTouchX += player.xVel
+	dTouchY += player.yVel
 	mouseX = mouseX + player.xVel;
 	mouseY = mouseY + player.yVel;
 }
@@ -380,15 +398,6 @@ function enemyKill() {
 	}
 }
 
-function drawLine() {
-	ctx.beginPath();
-	ctx.moveTo(player.x, player.y);
-	ctx.lineTo(mouseX, mouseY);
-	ctx.lineWidth = 1;
-	ctx.strokeStyle = lineColor;
-	ctx.stroke();
-}
-
 function drawBorder() {
 	ctx.beginPath();
 	ctx.moveTo(0, 0);
@@ -422,8 +431,57 @@ function playerKill() {
 			}
 			if (playerLives == 0) {
 				alert("Game Over!\nYou killed " + (enemysKilled - 1) + " enemies.");
-				document.location.reload();
-				clearInterval(interval);
+
+				mouseX = canvas.width / 2
+				mouseY = canvas.height / 2
+				mouseUIX = 0
+				mouseUIY = 0
+				upPressed = false
+				downPressed = false
+				leftPressed = false
+				rightPressed = false
+				dTouchX = dPadX
+				dTouchY = dPadY
+
+				ctx.setTransform(1, 0, 0, 1, 0, 0);
+				ctx.translate((canvas.width - screenWidth) / 2, (canvas.height - screenHeight) / 2);
+
+				player.x = playerStartX
+				player.y = playerStartY
+				player.xVel = 0
+				player.yVel = 0
+
+				powerUp.x = [0]
+				powerUp.y = [0]
+				powerUp.alive = [false]
+				powerUp.numSpawned = 0
+				powerUp.wait = 0
+				
+				superBulletSpeed = 20
+				
+				bulletX = [0]
+				bulletY = [0]
+				bulletDX = [0]
+				bulletDY = [0]
+				bulletTimer = [0]
+				bulletsLoaded = 0
+				bulletAlive = [false]
+				bulletSuper = [false]
+				superTimer = -1
+				
+				enemyX = [5]
+				enemyY = [5]
+				enemysLoaded = 1
+				enemysKilled = 1
+				enemyAlive = [false]
+				enemySpawnRate = 0
+				enemyWait = 500
+				
+				isPaused = false
+				playerLives = 3
+				powerUpsLeft = 3
+				playerPoints = 0		
+
 			}
 		}
 	}
@@ -490,7 +548,7 @@ function drawMiniMap() {
 		ctx.strokeStyle = gridColor;
 		ctx.stroke();
 	}
-	ctx.beginPath()
+	ctx.beginPath();
 	ctx.rect(((((canvas.width / 2) - screenWidth / 8) + player.x * 1.1) - canvas.width / 20), ((((canvas.height / 2) - screenHeight / 8) + player.y * 1.1) - canvas.height / 20), canvas.width / 10, canvas.height / 10);
 	ctx.lineWidth = 1;
 	ctx.strokeStyle = miniMapColor;
@@ -513,10 +571,54 @@ function drawMiniMap() {
 	}
 }
 
+function drawPause() {
+	ctx.beginPath();
+	ctx.rect(pauseX + player.x - canvas.width / 2, pauseY + player.y - canvas.height / 2, pauseWidth, pauseWidth);
+	ctx.lineWidth = 1;
+	ctx.strokeStyle = miniMapColor;
+	ctx.stroke();
+	ctx.closePath();
+	
+	ctx.beginPath();
+	ctx.rect(superX + player.x - canvas.width / 2, superY + player.y - canvas.height / 2, pauseWidth, pauseWidth);
+	ctx.lineWidth = 1;
+	ctx.strokeStyle = "red";
+	ctx.stroke();
+	ctx.closePath();
+}
+
+function drawDPad() {
+	ctx.beginPath();
+	ctx.arc(player.x - canvas.width / 2 + dPadX, player.y - canvas.height / 2 + dPadY, dPadRadius, 0, Math.PI * 2, false)
+	ctx.lineWidth = 1;
+	ctx.strokeStyle = miniMapColor;
+	ctx.stroke();
+	ctx.closePath();
+
+	ctx.beginPath();
+	ctx.arc(dTouchX, dTouchY, dPadRadius / 2, 0, Math.PI * 2, false)
+	ctx.lineWidth = 1;
+	ctx.strokeStyle = miniMapColor;
+	ctx.stroke();
+	ctx.closePath();
+
+	ctx.beginPath();
+	ctx.arc(player.x - canvas.width / 2 + dPad2X, player.y - canvas.height / 2 + dPad2Y, dPadRadius, 0, Math.PI * 2, false)
+	ctx.lineWidth = 1;
+	ctx.strokeStyle = miniMapColor;
+	ctx.stroke();
+	ctx.closePath();
+	ctx.beginPath();
+	ctx.arc(player.x - canvas.width / 2 + dPad2X, player.y - canvas.height / 2 + dPad2Y, dPadRadius / 2, 0, Math.PI * 2, false)
+	ctx.lineWidth = 1;
+	ctx.strokeStyle = miniMapColor;
+	ctx.stroke();
+	ctx.closePath();
+}
+
 function draw() {
 	clearCanvas();
 	if (!isPaused) {
-		makeCrosshair();
 		calcPlayerCoord();
 		acceleratePlayer();
 		doBoundary();
@@ -525,7 +627,6 @@ function draw() {
 		enemyKill();
 		drawBadGuy();
 		enemyKill();
-		drawLine();
 		drawBorder();
 		playerKill();
 		drawPlayer();
@@ -534,7 +635,6 @@ function draw() {
 		superTimer--;
 	}
 	else {
-		makeCursor();
 		drawBG();
 		drawBorder();
 		drawPlayer();
@@ -543,6 +643,8 @@ function draw() {
 		ctx.fillStyle = lineColor;
 		ctx.fillText("PAUSED", player.x - 150, player.y);
 	}
+	drawPause();
+	drawDPad();
 	ctx.font = "16px Arial";
 	ctx.fillStyle = lineColor;
 	ctx.fillText("Lives: " + playerLives, 20 + player.x - canvas.width / 2, 30 + player.y - canvas.height / 2);
@@ -550,4 +652,4 @@ function draw() {
 	ctx.fillText("Super: " + powerUpsLeft, 20 + player.x - canvas.width / 2, 78 + player.y - canvas.height / 2);
 }
 
-var interval = setInterval(draw, 1);
+var interval = setInterval(draw, 4);
