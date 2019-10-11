@@ -1,6 +1,8 @@
 var
 	canvas = document.getElementById("Pong")
 	dimension = [document.documentElement.clientWidth, document.documentElement.clientHeight];
+	canvas.width = dimension[0];
+	canvas.height = dimension[1];
 	ctx = canvas.getContext("2d")
 
 const
