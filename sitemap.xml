@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset	xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
-		<loc>http://savestate.org</loc>
+		<loc>https://pgattic.github.io</loc>
 		<lastmod>2019-09-24</lastmod>
 		<priority>1.00</priority>
 	</url>
 	<url>
-		<loc>http://savestate.org/snake</loc>
+		<loc>https://pgattic.github.io/snake</loc>
 		<lastmod>2019-09-24</lastmod>
 		<priority>0.80</priority>
 	</url>
 	<url>
-		<loc>http://savestate.org/multiplayer-snake</loc>
+		<loc>https://pgattic.github.io/multiplayer-snake</loc>
 		<lastmod>2019-09-24</lastmod>
 		<priority>0.80</priority>
 	</url>
 	<url>
-		<loc>http://savestate.org/yeet-ball</loc>
+		<loc>https://pgattic.github.io/yeet-ball</loc>
 		<lastmod>2019-09-24</lastmod>
 		<priority>0.80</priority>
 	</url>
 	<url>
-		<loc>http://savestate.org/yeet-ball-classic</loc>
+		<loc>https://pgattic.github.io/yeet-ball-classic</loc>
 		<lastmod>2019-09-24</lastmod>
 		<priority>0.80</priority>
 	</url>
 	<url>
-		<loc>http://savestate.org/pong</loc>
+		<loc>https://pgattic.github.io/pong</loc>
 		<lastmod>2019-10-01</lastmod>
 		<priority>0.80</priority>
 	</url>
 	<url>
-		<loc>http://savestate.org/about-me</loc>
+		<loc>https://pgattic.github.io/about-me</loc>
 		<lastmod>2019-09-24</lastmod>
 		<priority>0.80</priority>
 	</url>
