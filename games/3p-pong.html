@@ -16,32 +16,39 @@
 	<link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
 
 
-	<title>Multiplayer Snake - SaveState's Web Games</title>
+	<title>Pong - SaveState's Web Games</title>
 	<meta name="robots" content="noindex">
 	<meta charset="utf-8" />
 	<meta name="description" content="SaveState's Web Games">
 	<meta name="author" content="Preston Corless, SaveState">
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+		}
+
+		canvas {
+			background: #000;
+			display: block;
+			margin: 0 auto;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			-ms-transform: translate(-50%, -50%);
+			transform: translate(-50%, -50%);
+		}
+	</style>
 </head>
 
-<body>
+<body style="height: 100%; margin: 0;">
 	
+	<canvas id="Pong" width="100%" height="100%"></canvas>
 
-<div class="wrapper" style="margin: 0 auto; width: 1200px; position: relative;">
-	<canvas style="background-color:#eeeeee" id="Snake" width="1200" height="600" align="right"></canvas>
-</div>
 	<script>
-		const // user-friendly vars
-			gameSpeed = 75 // Milliseconds per frame. Therefore, a higher number is a slower game.
-			unit = 24 // The unit used for calculating the width of the player's body and the size of the food. It is recommended to be a factor of 600.
-			foodColor = "darkgreen"
-			growthRate = 5 // How much you grow from getting food.
-			scoreColor = "black"
-			initialPlayerLength = 5
-			goThroughBody = false
-			goThroughWall = false
+	const numOfPlayers = 3;
 	</script>
 
-	<script src="multiplayer-snake-engine.js"></script>
+	<script src="pong-engine.js"></script>
 
 </body>
 

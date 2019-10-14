@@ -7,9 +7,9 @@ const // internal constants
 var
 	canvas = document.getElementById("Snake")
 	ctx = canvas.getContext("2d")
-	
+
 	playerDirectionTemp = 5
-	
+
 	player1 = {
 		inGame : false,
 		startX : -unit,
@@ -23,6 +23,7 @@ var
 		bodyX : [NaN],
 		bodyY : [NaN],
 		color : "blue",
+		lineColor : "lightblue",
 		keyPressed : false,
 	}
 
@@ -39,6 +40,7 @@ var
 		bodyX : [NaN],
 		bodyY : [NaN],
 		color : "red",
+		lineColor : "tomato",
 		keyPressed : false,
 	}
 
@@ -55,6 +57,7 @@ var
 		bodyX : [NaN],
 		bodyY : [NaN],
 		color : "green",
+		lineColor : "lightgreen",
 		keyPressed : false,
 	}
 
@@ -71,6 +74,7 @@ var
 		bodyX : [NaN],
 		bodyY : [NaN],
 		color : "yellow",
+		lineColor : "lightyellow",
 		keyPressed : false,
 	}
 
@@ -415,6 +419,18 @@ function drawScore(playerN) {
 	ctx.fillText(playerN.length, playerN.x, playerN.y + (unit / 2) + (unit / 24));
 }
 
+function drawLine(playerN) {
+	ctx.beginPath();
+	ctx.moveTo(playerN.x + unit / 2, playerN.y + unit / 2);
+	for (let i = 1; i <= playerN.length; i++) {
+		ctx.lineTo(playerN.bodyX[i] + unit / 2, playerN.bodyY[i] + unit / 2);
+	}
+	ctx.lineWidth = unit / 3;
+	ctx.strokeStyle = playerN.lineColor;
+	ctx.stroke();
+	ctx.closePath();
+}
+
 function draw() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	if (!isPaused) {
@@ -444,21 +460,25 @@ function draw() {
 		if (player1.inGame) {
 			drawHead(player1);
 			drawBody(player1);
+			drawLine(player1);
 			drawScore(player1);
 		}
 		if (player2.inGame) {
 			drawHead(player2);
 			drawBody(player2);
+			drawLine(player2);
 			drawScore(player2);
 		}
 		if (player3.inGame) {
 			drawHead(player3);
 			drawBody(player3);
+			drawLine(player3);
 			drawScore(player3);
 		}
 		if (player4.inGame) {
 			drawHead(player4);
 			drawBody(player4);
+			drawLine(player4);
 			drawScore(player4);
 		}
 	}
@@ -466,18 +486,22 @@ function draw() {
 		if (player1.inGame) {
 			drawHead(player1);
 			drawBody(player1);
+			drawLine(player1);
 		}
 		if (player2.inGame) {
 			drawHead(player2);
 			drawBody(player2);
+			drawLine(player2);
 		}
 		if (player3.inGame) {
 			drawHead(player3);
 			drawBody(player3);
+			drawLine(player3);
 		}
 		if (player4.inGame) {
 			drawHead(player4);
 			drawBody(player4);
+			drawLine(player4);
 		}
 	}
 //	player1.keyPressed = false;
