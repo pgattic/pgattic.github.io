@@ -6,6 +6,8 @@ var
 	ctx = canvas.getContext("2d")
 
 const
+	developerMode = false
+
 	bgColor = "black"
 	p1PaddleColor = "red"
 	p2PaddleColor = "green"
@@ -160,40 +162,6 @@ function keyUpHandler(e) {
 	}
 }
 
-function draw() {
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	if (!isPaused) {
-		if (numOfPlayers == 1) {
-			aiCalc();
-		}
-		accelerate(player1);
-		accelerate(player2);
-		accelerate(player3);
-		accelerate(player4);
-		calcPlayerCoords(player1);
-		calcPlayerCoords(player2);
-		calcPlayerCoords(player3);
-		calcPlayerCoords(player4);
-		doBorder(player1);
-		doBorder(player2);
-		doBorder(player3);
-		doBorder(player4);
-		moveBall();
-	}
-	drawMidline();
-	drawBall();
-	drawPaddle(player1);
-	drawPaddle(player2);
-	if (numOfPlayers >= 3) {
-		drawPaddle(player3);
-	}
-	if (numOfPlayers >= 4) {
-	drawPaddle(player4);
-	}
-	drawScore();
-	calcWinner();
-}
-
 function aiCalc() {
 	if (ball.x > canvas.width * (2/5)) {
 		if (player2.y + (paddleWidth / 2) > ball.y) {
@@ -309,14 +277,26 @@ function moveBall() {
 	if (player1.x < player1StartX) {
 		player1.x += 0.1;
 	}
+	else if (player1.x > player1StartX) {
+		player1.x -= 0.1;
+	}
 	if (player2.x > player2StartX) {
 		player2.x -= 0.1;
+	}
+	else if (player2.x < player2StartX) {
+		player2.x += 0.1;
 	}
 	if (player3.x < player3StartX) {
 		player3.x += 0.1;
 	}
+	else if (player3.x > player3StartX) {
+		player3.x -= 0.1;
+	}
 	if (player4.x > player4StartX) {
 		player4.x -= 0.1;
+	}
+	else if (player4.x < player4StartX) {
+		player4.x += 0.1;
 	}
 }
 
@@ -386,9 +366,11 @@ function drawScore() {
 	ctx.font = "bolder 36px Courier New";
 	ctx.fillStyle = p2PaddleColor;
 	ctx.fillText(player2.points, canvas.width - (paddleThickness + 30), 50);
-	ctx.font = "12px Arial";
-	ctx.fillStyle = "white";
-	ctx.fillText(ball.dx, 10, 10);
+	if (developerMode) {
+		ctx.font = "12px Arial";
+		ctx.fillStyle = "white";
+		ctx.fillText(ball.dx, 10, 10);
+	}
 }
 
 function calcWinner() {
@@ -408,6 +390,46 @@ function calcWinner() {
 		isPaused = true;
 		resetGame();
 	}
+}
+
+function draw() {
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	if (!isPaused) {
+		if (numOfPlayers == 1) {
+			aiCalc();
+		}
+		accelerate(player1);
+		accelerate(player2);
+		accelerate(player3);
+		accelerate(player4);
+		calcPlayerCoords(player1);
+		calcPlayerCoords(player2);
+		calcPlayerCoords(player3);
+		calcPlayerCoords(player4);
+		doBorder(player1);
+		doBorder(player2);
+		doBorder(player3);
+		doBorder(player4);
+		moveBall();
+	}
+	drawMidline();
+	drawBall();
+	drawPaddle(player1);
+	drawPaddle(player2);
+	if (numOfPlayers >= 3) {
+		drawPaddle(player3);
+	}
+	if (numOfPlayers >= 4) {
+	drawPaddle(player4);
+	}
+	drawScore();
+	if (isPaused) {
+		ctx.font = "bold 72px Arial";
+		ctx.fillStyle = midlineColor;
+		ctx.textAlign = "center";
+		ctx.fillText("PAUSED", canvas.width / 2, canvas.height / 2);
+	}
+	calcWinner();
 }
 
 var
