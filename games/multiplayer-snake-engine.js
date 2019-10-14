@@ -22,8 +22,8 @@ var
 		score : 0,
 		bodyX : [NaN],
 		bodyY : [NaN],
-		color : "blue",
-		lineColor : "lightblue",
+		color : "#00c",
+		lineColor : "#22f",
 		keyPressed : false,
 	}
 
@@ -39,8 +39,8 @@ var
 		score : 0,
 		bodyX : [NaN],
 		bodyY : [NaN],
-		color : "red",
-		lineColor : "tomato",
+		color : "#c00",
+		lineColor : "#f22",
 		keyPressed : false,
 	}
 
@@ -56,8 +56,8 @@ var
 		score : 0,
 		bodyX : [NaN],
 		bodyY : [NaN],
-		color : "green",
-		lineColor : "lightgreen",
+		color : "#0c0",
+		lineColor : "#2f2",
 		keyPressed : false,
 	}
 
@@ -73,8 +73,8 @@ var
 		score : 0,
 		bodyX : [NaN],
 		bodyY : [NaN],
-		color : "yellow",
-		lineColor : "lightyellow",
+		color : "#dd0",
+		lineColor : "#ff2",
 		keyPressed : false,
 	}
 
@@ -189,6 +189,27 @@ function keyDownHandler(e) {
 
 
 //GAME ENGINE
+function drawGrid() {
+	for (let i = 0; i <= canvas.width / unit; i++) {
+		ctx.beginPath();
+		ctx.moveTo(i * unit, 0);
+		ctx.lineTo(i * unit, canvas.height);
+		ctx.lineWidth = 1;
+		ctx.strokeStyle = "lightgray";
+		ctx.stroke();
+		ctx.closePath();
+	}
+	for (let i = 0; i <= canvas.height / unit; i++) {
+		ctx.beginPath();
+		ctx.moveTo(0, i * unit);
+		ctx.lineTo(canvas.width, i * unit);
+		ctx.lineWidth = 1;
+		ctx.strokeStyle = "lightgray";
+		ctx.stroke();
+		ctx.closePath();
+	}
+}
+
 function playerLocation(playerN) {
 	playerN.bodyX[0] = playerN.x;
 	playerN.bodyY[0] = playerN.y;
@@ -204,25 +225,6 @@ function playerLocation(playerN) {
 		playerN.x -= unit;
 	} else {
 		playerN.x += unit;
-	}
-}
-
-function drawHead(playerN) {
-	ctx.beginPath();
-	ctx.rect(playerN.x, playerN.y, unit, unit);
-	ctx.fillStyle = playerN.color;
-	ctx.fill();
-	ctx.closePath();
-	
-}
-
-function drawBody(playerN) {
-	for (let i = 1; i < playerN.length; i++) {
-		ctx.beginPath();
-		ctx.rect(playerN.bodyX[i], playerN.bodyY[i], unit, unit);
-		ctx.fillStyle = playerN.color;
-		ctx.fill();
-		ctx.closePath();
 	}
 }
 
@@ -407,7 +409,7 @@ function foodCheck(playerN) {
 
 function drawFood() {
 	ctx.beginPath();
-	ctx.arc(foodX, foodY, (unit / 2), 0, Math.PI * 2, false);
+	ctx.arc(foodX, foodY, (unit / 2) - 1, 0, Math.PI * 2, false);
 	ctx.fillStyle = foodColor;
 	ctx.fill();
 	ctx.closePath();
@@ -416,25 +418,50 @@ function drawFood() {
 function drawScore(playerN) {
 	ctx.font = "bolder "+((unit / 2) + 4)+"px Arial";
 	ctx.fillStyle = scoreColor;
-	ctx.fillText(playerN.length, playerN.x, playerN.y + (unit / 2) + (unit / 24));
+	ctx.textAlign = "center";
+	ctx.fillText(playerN.length, playerN.x + unit / 2, playerN.y + (unit / 2) + (unit / 12));
 }
 
 function drawLine(playerN) {
 	ctx.beginPath();
+	ctx.lineCap = "round";
 	ctx.moveTo(playerN.x + unit / 2, playerN.y + unit / 2);
-	for (let i = 1; i <= playerN.length; i++) {
+	for (let i = 1; i < playerN.length; i++) {
 		ctx.lineTo(playerN.bodyX[i] + unit / 2, playerN.bodyY[i] + unit / 2);
+		ctx.lineWidth = unit - 2;
+		ctx.strokeStyle = playerN.color;
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.lineCap = "round";
+		ctx.moveTo(playerN.bodyX[i] + unit / 2, playerN.bodyY[i] + unit / 2);
+	}
+	ctx.lineWidth = unit - 1;
+	ctx.strokeStyle = playerN.color;
+	ctx.stroke();
+	ctx.closePath();
+
+	ctx.beginPath();
+	ctx.lineCap = "round";
+	ctx.moveTo(playerN.x + unit / 2, playerN.y + unit / 2);
+	for (let i = 1; i < playerN.length; i++) {
+		ctx.lineTo(playerN.bodyX[i] + unit / 2, playerN.bodyY[i] + unit / 2);
+		ctx.lineWidth = unit / 3;
+		ctx.strokeStyle = playerN.lineColor;
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.lineCap = "round";
+		ctx.moveTo(playerN.bodyX[i] + unit / 2, playerN.bodyY[i] + unit / 2);
 	}
 	ctx.lineWidth = unit / 3;
-	ctx.strokeStyle = playerN.lineColor;
+	ctx.strokeStyle = playerN.color;
 	ctx.stroke();
 	ctx.closePath();
 }
 
-function draw() {
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
+function calculate() {
 	if (!isPaused) {
-		drawFood();
 		if (player1.inGame) {
 			playerLocation(player1);
 			boundsCheck(player1);
@@ -455,52 +482,42 @@ function draw() {
 			boundsCheck(player4);
 			foodCheck(player4);
 		}
-
 		suicideCheck();
+	}
+}
+
+function draw() {
+	drawGrid();
+	drawFood();
+	if (!isPaused) {
 		if (player1.inGame) {
-			drawHead(player1);
-			drawBody(player1);
 			drawLine(player1);
 			drawScore(player1);
 		}
 		if (player2.inGame) {
-			drawHead(player2);
-			drawBody(player2);
 			drawLine(player2);
 			drawScore(player2);
 		}
 		if (player3.inGame) {
-			drawHead(player3);
-			drawBody(player3);
 			drawLine(player3);
 			drawScore(player3);
 		}
 		if (player4.inGame) {
-			drawHead(player4);
-			drawBody(player4);
 			drawLine(player4);
 			drawScore(player4);
 		}
 	}
 	else {
 		if (player1.inGame) {
-			drawHead(player1);
-			drawBody(player1);
 			drawLine(player1);
 		}
 		if (player2.inGame) {
-			drawHead(player2);
-			drawBody(player2);
 			drawLine(player2);
 		}
 		if (player3.inGame) {
-			drawHead(player3);
-			drawBody(player3);
 			drawLine(player3);
 		}
 		if (player4.inGame) {
-			drawHead(player4);
-			drawBody(player4);
 			drawLine(player4);
 		}
 	}
@@ -510,4 +527,10 @@ function draw() {
 //	player4.keyPressed = false;
 }
 
-var interval = setInterval(draw, gameSpeed);
+function doGame() {
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	calculate();
+	draw();
+}
+
+var interval = setInterval(doGame, gameSpeed);
