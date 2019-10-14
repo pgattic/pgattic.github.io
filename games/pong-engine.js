@@ -22,7 +22,7 @@ const
 	ballRadius = 10
 	ballStartX = canvas.width / 2
 	ballStartY = canvas.height / 2
-	ballDXCap = 8
+	ballDXCap = 10
 	ballAcceleration = 0.2
 
 	player1StartX = 4
