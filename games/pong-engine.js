@@ -31,13 +31,13 @@ const
 	paddleStartY = canvas.height / 2 - paddleWidth / 2
 
 	player1StartX = 4
-	player1StartY = paddleStartY + 3
+	player1StartY = paddleStartY + 1
 
 	player2StartX = canvas.width - paddleThickness - 4
 	player2StartY = paddleStartY
 
 	player3StartX = canvas.width / 4 + player1StartX
-	player3StartY = paddleStartY
+	player3StartY = paddleStartY + 1
 
 	player4StartX = canvas.width * (3/4) - paddleThickness
 	player4StartY = paddleStartY
