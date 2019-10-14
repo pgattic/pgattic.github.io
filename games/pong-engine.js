@@ -23,6 +23,7 @@ const
 	ballStartX = canvas.width / 2
 	ballStartY = canvas.height / 2
 	ballDXCap = 5
+	ballAcceleration = 0.2
 
 	player1StartX = 4
 	player1StartY = (canvas.height + paddleWidth) / 4 + 3
@@ -156,14 +157,14 @@ function calcPlayerCoords(playerN) {
 }
 
 function doBorder(playerN) {
-	if (playerN.y < 0) {
-		playerN.vel = 0;
-		playerN.y = 0;
-	}
-	if (playerN.y + paddleWidth > canvas.height) {
-		playerN.vel = 0;
-		playerN.y = canvas.height - paddleWidth;
-	}
+	playerN.y = (playerN.y < 0) ? (playerN.vel = -playerN.vel / 2, playerN.y = 0) : playerN.y = (playerN.y + paddleWidth > canvas.height) ? (playerN.vel = -playerN.vel / 2, playerN.y = canvas.height - paddleWidth) : playerN.y;
+//	if (playerN.y < 0) {
+//		playerN.vel = 0;
+//		playerN.y = 0;
+//	if (playerN.y + paddleWidth > canvas.height) {
+//		playerN.vel = 0;
+//		playerN.y = canvas.height - paddleWidth;
+//	}
 }
 
 function moveBall() {
@@ -183,18 +184,26 @@ function moveBall() {
 		resetGame();
 	}
 	if (ball.x - ballRadius < player1.x + paddleThickness && ball.y + ballRadius > player1.y && ball.y - ballRadius < player1.y + paddleWidth) {
-		ball.dx = -ball.dx + .1;
+		player1.x += ball.dx * 2;
+		ball.dx = -ball.dx + ballAcceleration;
 		if (ball.dx > ballDXCap) {
 			ball.dx = ballDXCap;
 		}
 		ball.dy = (player1.y - ball.y + paddleWidth / 2) / -30;
 	}
 	if (ball.x + ballRadius > player2.x && ball.y + ballRadius > player2.y && ball.y - ballRadius < player2.y + paddleWidth) {
-		ball.dx = -ball.dx - .1;
+		player2.x += ball.dx * 2;
+		ball.dx = -ball.dx - ballAcceleration;
 		if (ball.dx < -ballDXCap) {
 			ball.dx = -ballDXCap;
 		}
-		ball.dy = (player2.y - ball.y + paddleWidth / 2) / -30;
+		ball.dy = (ball.dy + ((player2.y - ball.y + paddleWidth / 2) / -(canvas.height / 40))) / 2;
+	}
+	if (player1.x < player1StartX) {
+		player1.x += 0.1;
+	}
+	if (player2.x > player2StartX) {
+		player2.x -= 0.1;
 	}
 }
 
