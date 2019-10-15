@@ -4,6 +4,17 @@ const // internal constants
 	left = 3
 	right = 4
 
+// user-friendly vars
+	gameSpeed = 75 // Milliseconds per frame. Therefore, a higher number is a slower game.
+	unit = 24 // The unit used for calculating the width of the player's body and the size of the food. It is recommended to be a factor of 600.
+	foodColor = "#c0c"
+	foodLineColor = "#f0f"
+	growthRate = 5 // How much you grow from getting food.
+	scoreColor = "black"
+	initialPlayerLength = 5
+	goThroughBody = false
+	goThroughWall = false
+
 var
 	canvas = document.getElementById("Snake")
 	ctx = canvas.getContext("2d")
@@ -14,14 +25,12 @@ var
 		inGame : false,
 		startX : -unit,
 		startY : 0,
-		x : -unit,
-		y : 0,
 		direction : right,
 		startDirection : right,
 		length : initialPlayerLength,
 		score : 0,
-		bodyX : [NaN],
-		bodyY : [NaN],
+		bodyX : [-unit],
+		bodyY : [0],
 		color : "#00c",
 		lineColor : "#22f",
 		keyPressed : false,
@@ -31,14 +40,12 @@ var
 		inGame : false,
 		startX : canvas.width,
 		startY : 0,
-		x : canvas.width,
-		y : 0,
 		direction : left,
 		startDirection : left,
 		length : initialPlayerLength,
 		score : 0,
-		bodyX : [NaN],
-		bodyY : [NaN],
+		bodyX : [canvas.width],
+		bodyY : [0],
 		color : "#c00",
 		lineColor : "#f22",
 		keyPressed : false,
@@ -48,14 +55,12 @@ var
 		inGame : false,
 		startX : -unit,
 		startY : canvas.height - unit,
-		x : -unit,
-		y : canvas.height - unit,
 		direction : right,
 		startDirection : right,
 		length : initialPlayerLength,
 		score : 0,
-		bodyX : [NaN],
-		bodyY : [NaN],
+		bodyX : [-unit],
+		bodyY : [canvas.height - unit],
 		color : "#0c0",
 		lineColor : "#2f2",
 		keyPressed : false,
@@ -65,15 +70,13 @@ var
 		inGame : false,
 		startX : canvas.width,
 		startY : canvas.height - unit,
-		x : canvas.width,
-		y : canvas.height - unit,
 		direction : left,
 		startDirection : left,
 		length : initialPlayerLength,
 		score : 0,
-		bodyX : [NaN],
-		bodyY : [NaN],
-		color : "#dd0",
+		bodyX : [canvas.width],
+		bodyY : [canvas.height - unit],
+		color : "#ee0",
 		lineColor : "#ff2",
 		keyPressed : false,
 	}
@@ -211,79 +214,81 @@ function drawGrid() {
 }
 
 function playerLocation(playerN) {
-	playerN.bodyX[0] = playerN.x;
-	playerN.bodyY[0] = playerN.y;
 	for (let i = playerN.length - 1; i > 0; i--) {
 		playerN.bodyX[i] = playerN.bodyX[i - 1];
 		playerN.bodyY[i] = playerN.bodyY[i - 1];
 	}
 	if (playerN.direction == up) {
-		playerN.y -=  unit;
+		playerN.bodyY[0] -=  unit;
 	} else if (playerN.direction == down) {
-		playerN.y += unit;
+		playerN.bodyY[0] += unit;
 	} else if (playerN.direction == left) {
-		playerN.x -= unit;
+		playerN.bodyX[0] -= unit;
 	} else {
-		playerN.x += unit;
+		playerN.bodyX[0] += unit;
 	}
 }
 
 function boundsCheck(playerN) {
-	if (playerN.x >= canvas.width || playerN.x < 0 || playerN.y >= canvas.height || playerN.y < 0) {
+	if (playerN.bodyX[0] >= canvas.width || playerN.bodyX[0] < 0 || playerN.bodyY[0] >= canvas.height || playerN.bodyY[0] < 0) {
 		if (!goThroughWall) {
 			gameOver(playerN);
 		}
 		else {
-			if (playerN.x >= canvas.width) {
-				playerN.x = 0;
+			if (playerN.bodyX[0] >= canvas.width) {
+				playerN.bodyX[0] = 0;
 			}
-			if (playerN.x < 0) {
-				playerN.x = canvas.width - unit;
+			if (playerN.bodyX[0] < 0) {
+				playerN.bodyX[0] = canvas.width - unit;
 			}
-			if (playerN.y >= canvas.height) {
-				playerN.y = 0;
+			if (playerN.bodyY[0] >= canvas.height) {
+				playerN.bodyY[0] = 0;
 			}
-			if (playerN.y < 0) {
-				playerN.y = canvas.height - unit;
+			if (playerN.bodyY[0] < 0) {
+				playerN.bodyY[0] = canvas.height - unit;
 			}
 		}
 	}
 }
 
 function gameOver(playerN) {
-	playerN.x = playerN.startX;
-	playerN.y = playerN.startY;
+	for (let i = 0; i < playerN.length; i++) {
+		playerN.bodyX[i] = NaN;
+		playerN.bodyY[i] = NaN;
+	}
+	for (let i = 0; i < initialPlayerLength; i++) {
+		playerN.bodyX[i] = playerN.startX;
+		playerN.bodyY[i] = playerN.startY;
+	}
 	playerN.direction = playerN.startDirection;
 	playerN.score = 0;
 	playerN.length = initialPlayerLength;
-	playerN.bodyX = [playerN.x];
-	playerN.bodyY = [playerN.y];
 	isPaused = false;
 }
 
 function suicideCheck() {
 //HEADS
-	if (player1.x == player2.x && player1.y == player2.y) {
+	if (player1.bodyX[0] == player2.bodyX[0] && player1.bodyY[0] == player2.bodyY[0]) {
 		gameOver(player1);
 		gameOver(player2);
 	}
-	if (player1.x == player3.x && player1.y == player3.y) {
+	if (player1.bodyX[0] == player3.bodyX[0] && player1.bodyY[0] == player3.bodyY[0]) {
 		gameOver(player1);
 		gameOver(player3);
 	}
-	if (player1.x == player4.x && player1.y == player4.y) {
+	if (player1.bodyX[0] == player4.bodyX[0] && player1.bodyY[0] == player4.bodyY[0]) {
 		gameOver(player1);
 		gameOver(player4);
 	}
-	if (player2.x == player3.x && player2.y == player3.y) {
+	if (player2.bodyX[0] == player3.bodyX[0] && player2.bodyY[0] == player3.bodyY[0]) {
 		gameOver(player2);
 		gameOver(player3);
 	}
-	if (player2.x == player4.x && player2.y == player4.y) {
+	if (player2.bodyX[0] == player4.bodyX[0] && player2.bodyY[0] == player4.bodyY[0]) {
 		gameOver(player2);
 		gameOver(player4);
 	}
-	if (player3.x == player4.x && player3.y == player4.y) {
+	if (player3.bodyX[0] == player4.bodyX[0] && player3.bodyY[0] == player4.bodyY[0]) {
 		gameOver(player3);
 		gameOver(player4);
 	}
@@ -291,24 +296,24 @@ function suicideCheck() {
 //PLAYER 1
 	if (player1.inGame) {
 		for (let i = 1; i < player1.length; i++) {
-			if (player1.bodyX[i] == player1.x && player1.bodyY[i] == player1.y) {
+			if (player1.bodyX[i] == player1.bodyX[0] && player1.bodyY[i] == player1.bodyY[0]) {
 				gameOver(player1);
 			}
 		}
 		for (let i = 1; i < player1.length; i++) {
-			if (player1.bodyX[i] == player2.x && player1.bodyY[i] == player2.y) {
+			if (player1.bodyX[i] == player2.bodyX[0] && player1.bodyY[i] == player2.bodyY[0]) {
 				player1.length += 5 * (Math.ceil(player2.length / 10));
 				gameOver(player2);
 			}
 		}
 		for (let i = 1; i < player1.length; i++) {
-			if (player1.bodyX[i] == player3.x && player1.bodyY[i] == player3.y) {
+			if (player1.bodyX[i] == player3.bodyX[0] && player1.bodyY[i] == player3.bodyY[0]) {
 				player1.length += 5 * (Math.ceil(player3.length / 10));
 				gameOver(player3);
 			}
 		}
 		for (let i = 1; i < player1.length; i++) {
-			if (player1.bodyX[i] == player4.x && player1.bodyY[i] == player4.y) {
+			if (player1.bodyX[i] == player4.bodyX[0] && player1.bodyY[i] == player4.bodyY[0]) {
 				player1.length += 5 * (Math.ceil(player4.length / 10));
 				gameOver(player4);
 			}
@@ -318,24 +323,24 @@ function suicideCheck() {
 //PLAYER 2
 	if (player2.inGame) {
 		for (let i = 1; i < player2.length; i++) {
-			if (player2.bodyX[i] == player2.x && player2.bodyY[i] == player2.y) {
+			if (player2.bodyX[i] == player2.bodyX[0] && player2.bodyY[i] == player2.bodyY[0]) {
 				gameOver(player2);
 			}
 		}
 		for (let i = 1; i < player2.length; i++) {
-			if (player2.bodyX[i] == player1.x && player2.bodyY[i] == player1.y) {
+			if (player2.bodyX[i] == player1.bodyX[0] && player2.bodyY[i] == player1.bodyY[0]) {
 				player2.length += 5 * (Math.ceil(player1.length / 10));
 				gameOver(player1);
 			}
 		}
 		for (let i = 1; i < player2.length; i++) {
-			if (player2.bodyX[i] == player3.x && player2.bodyY[i] == player3.y) {
+			if (player2.bodyX[i] == player3.bodyX[0] && player2.bodyY[i] == player3.bodyY[0]) {
 				player2.length += 5 * (Math.ceil(player3.length / 10));
 				gameOver(player3);
 			}
 		}
 		for (let i = 1; i < player2.length; i++) {
-			if (player2.bodyX[i] == player4.x && player2.bodyY[i] == player4.y) {
+			if (player2.bodyX[i] == player4.bodyX[0] && player2.bodyY[i] == player4.bodyY[0]) {
 				player2.length += 5 * (Math.ceil(player4.length / 10));
 				gameOver(player4);
 			}
@@ -345,24 +350,24 @@ function suicideCheck() {
 //PLAYER 3
 	if (player3.inGame) {
 		for (let i = 1; i < player3.length; i++) {
-			if (player3.bodyX[i] == player3.x && player3.bodyY[i] == player3.y) {
+			if (player3.bodyX[i] == player3.bodyX[0] && player3.bodyY[i] == player3.bodyY[0]) {
 				gameOver(player3);
 			}
 		}
 		for (let i = 1; i < player3.length; i++) {
-			if (player3.bodyX[i] == player1.x && player3.bodyY[i] == player1.y) {
+			if (player3.bodyX[i] == player1.bodyX[0] && player3.bodyY[i] == player1.bodyY[0]) {
 				player3.length += 5 * (Math.ceil(player1.length / 10));
 				gameOver(player1);
 			}
 		}
 		for (let i = 1; i < player3.length; i++) {
-			if (player3.bodyX[i] == player2.x && player3.bodyY[i] == player2.y) {
+			if (player3.bodyX[i] == player2.bodyX[0] && player3.bodyY[i] == player2.bodyY[0]) {
 				player3.length += 5 * (Math.ceil(player2.length / 10));
 				gameOver(player2);
 			}
 		}
 		for (let i = 1; i < player3.length; i++) {
-			if (player3.bodyX[i] == player4.x && player3.bodyY[i] == player4.y) {
+			if (player3.bodyX[i] == player4.bodyX[0] && player3.bodyY[i] == player4.bodyY[0]) {
 				player3.length += 5 * (Math.ceil(player4.length / 10));
 				gameOver(player4);
 			}
@@ -372,24 +377,24 @@ function suicideCheck() {
 //PLAYER 4
 	if (player4.inGame) {
 		for (let i = 1; i < player4.length; i++) {
-			if (player4.bodyX[i] == player4.x && player4.bodyY[i] == player4.y) {
+			if (player4.bodyX[i] == player4.bodyX[0] && player4.bodyY[i] == player4.bodyY[0]) {
 				gameOver(player4);
 			}
 		}
 		for (let i = 1; i < player4.length; i++) {
-			if (player4.bodyX[i] == player1.x && player4.bodyY[i] == player1.y) {
+			if (player4.bodyX[i] == player1.bodyX[0] && player4.bodyY[i] == player1.bodyY[0]) {
 				gameOver(player1);
 				player4.length += 5;
 			}
 		}
 		for (let i = 1; i < player4.length; i++) {
-			if (player4.bodyX[i] == player2.x && player4.bodyY[i] == player2.y) {
+			if (player4.bodyX[i] == player2.bodyX[0] && player4.bodyY[i] == player2.bodyY[0]) {
 				gameOver(player2);
 				player4.length += 5;
 			}
 		}
 		for (let i = 1; i < player4.length; i++) {
-			if (player4.bodyX[i] == player3.x && player4.bodyY[i] == player3.y) {
+			if (player4.bodyX[i] == player3.bodyX[0] && player4.bodyY[i] == player3.bodyY[0]) {
 				gameOver(player3);
 				player4.length += 5;
 			}
@@ -398,7 +403,7 @@ function suicideCheck() {
 }
 
 function foodCheck(playerN) {
-	if (playerN.x + unit / 2 == foodX && playerN.y + unit / 2 == foodY) {
+	if (playerN.bodyX[0] + unit / 2 == foodX && playerN.bodyY[0] + unit / 2 == foodY) {
 		playerN.score++;
 		playerN.length += growthRate;
 		foodX = ((Math.floor(Math.random() * (canvas.width/unit))) * unit) + unit / 2
@@ -413,19 +418,24 @@ function drawFood() {
 	ctx.fillStyle = foodColor;
 	ctx.fill();
 	ctx.closePath();
+	ctx.beginPath();
+	ctx.arc(foodX, foodY, unit / 6, 0, Math.PI * 2, false);
+	ctx.fillStyle = foodLineColor;
+	ctx.fill();
+	ctx.closePath();
 }
 
 function drawScore(playerN) {
 	ctx.font = "bolder "+((unit / 2) + 4)+"px Arial";
 	ctx.fillStyle = scoreColor;
 	ctx.textAlign = "center";
-	ctx.fillText(playerN.length, playerN.x + unit / 2, playerN.y + (unit / 2) + (unit / 12));
+	ctx.fillText(playerN.length, playerN.bodyX[0] + unit / 2, playerN.bodyY[0] + (unit / 2) + (unit / 12));
 }
 
 function drawLine(playerN) {
 	ctx.beginPath();
 	ctx.lineCap = "round";
-	ctx.moveTo(playerN.x + unit / 2, playerN.y + unit / 2);
+	ctx.moveTo(playerN.bodyX[0] + unit / 2, playerN.bodyY[0] + unit / 2);
 	for (let i = 1; i < playerN.length; i++) {
 		ctx.lineTo(playerN.bodyX[i] + unit / 2, playerN.bodyY[i] + unit / 2);
 		ctx.lineWidth = unit - 2;
@@ -443,7 +453,7 @@ function drawLine(playerN) {
 
 	ctx.beginPath();
 	ctx.lineCap = "round";
-	ctx.moveTo(playerN.x + unit / 2, playerN.y + unit / 2);
+	ctx.moveTo(playerN.bodyX[0] + unit / 2, playerN.bodyY[0] + unit / 2);
 	for (let i = 1; i < playerN.length; i++) {
 		ctx.lineTo(playerN.bodyX[i] + unit / 2, playerN.bodyY[i] + unit / 2);
 		ctx.lineWidth = unit / 3;
