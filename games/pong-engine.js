@@ -51,6 +51,7 @@ var
 	player1 = {
 		x : player1StartX,
 		y : player1StartY,
+		bottomX : player1StartX,
 		vel : 0,
 		points : 0,
 	}
@@ -58,6 +59,7 @@ var
 	player2 = {
 		x : player2StartX,
 		y : player2StartY,
+		bottomX : player2StartX,
 		vel : 0,
 		points : 0,
 	}
@@ -65,6 +67,7 @@ var
 	player3 = {
 		x : player3StartX,
 		y : player3StartY,
+		bottomX : player3StartX,
 		vel : 0,
 		points : 0,
 	}
@@ -72,6 +75,7 @@ var
 	player4 = {
 		x : player4StartX,
 		y : player4StartY,
+		bottomX : player4StartX,
 		vel : 0,
 		points : 0,
 	}
@@ -225,16 +229,18 @@ function moveBall() {
 		resetGame();
 	}
 	if (ball.x - ballRadius < player1.x + paddleThickness && ball.y + ballRadius > player1.y && ball.y - ballRadius < player1.y + paddleWidth) {
-		player1.x += ball.dx * 2;
+		player1.x -= ball.dx * (ball.y - (player1.y + paddleWidth)) / (paddleWidth / 2);
+		player1.bottomX += ball.dx * (ball.y - (player1.y)) / (paddleWidth / 2);
 		ball.dx = -ball.dx + ballAcceleration;
 		if (ball.dx > ballDXCap) {
 			ball.dx = ballDXCap;
 		}
-		player1.dy += ball.dy / 4;
+		player1.dy += ball.dy / 2;
 		ball.dy = (player1.y - ball.y + paddleWidth / 2) / -30;
 	}
 	if (ball.x + ballRadius > player2.x && ball.y + ballRadius > player2.y && ball.y - ballRadius < player2.y + paddleWidth) {
-		player2.x += ball.dx * 2;
+		player2.x -= ball.dx * (ball.y - (player2.y + paddleWidth)) / (paddleWidth / 2);
+		player2.bottomX += ball.dx * (ball.y - (player2.y)) / (paddleWidth / 2);
 		ball.dx = -ball.dx - ballAcceleration;
 		if (ball.dx < -ballDXCap) {
 			ball.dx = -ballDXCap;
@@ -245,7 +251,8 @@ function moveBall() {
 
 	if (numOfPlayers >= 3) {
 		if (ball.x - ballRadius < player3.x + paddleThickness && ball.y + ballRadius > player3.y && ball.y - ballRadius < player3.y + paddleWidth && ball.x + ballRadius > player3.x) {
-			player3.x += ball.dx * 2;
+			player3.x -= ball.dx * (ball.y - (player3.y + paddleWidth)) / (paddleWidth / 2);
+			player3.bottomX += ball.dx * (ball.y - (player3.y)) / (paddleWidth / 2);
 			if (ball.dx < 0) {
 				ball.dx = -ball.dx + ballAcceleration;
 			}
@@ -260,7 +267,8 @@ function moveBall() {
 	}
 	if (numOfPlayers >= 4) {
 		if (ball.x + ballRadius > player4.x && ball.y + ballRadius > player4.y && ball.y - ballRadius < player4.y + paddleWidth && ball.x - ballRadius < player4.x + paddleThickness) {
-			player4.x += ball.dx * 2;
+			player4.x -= ball.dx * (ball.y - (player4.y + paddleWidth)) / (paddleWidth / 2);
+			player4.bottomX += ball.dx * (ball.y - (player4.y)) / (paddleWidth / 2);
 			if (ball.dx < 0) {
 				ball.dx = -ball.dx + ballAcceleration;
 			}
@@ -280,23 +288,50 @@ function moveBall() {
 	else if (player1.x > player1StartX) {
 		player1.x -= 0.1;
 	}
+	if (player1.bottomX < player1StartX) {
+		player1.bottomX += 0.1;
+	}
+	else if (player1.bottomX > player1StartX) {
+		player1.bottomX -= 0.1;
+	}
+	
 	if (player2.x > player2StartX) {
 		player2.x -= 0.1;
 	}
 	else if (player2.x < player2StartX) {
 		player2.x += 0.1;
 	}
+	if (player2.bottomX > player2StartX) {
+		player2.bottomX -= 0.1;
+	}
+	else if (player2.bottomX < player2StartX) {
+		player2.bottomX += 0.1;
+	}
+
 	if (player3.x < player3StartX) {
 		player3.x += 0.1;
 	}
 	else if (player3.x > player3StartX) {
 		player3.x -= 0.1;
 	}
+	if (player3.bottomX < player3StartX) {
+		player3.bottomX += 0.1;
+	}
+	else if (player3.bottomX > player3StartX) {
+		player3.bottomX -= 0.1;
+	}
+
 	if (player4.x > player4StartX) {
 		player4.x -= 0.1;
 	}
 	else if (player4.x < player4StartX) {
 		player4.x += 0.1;
+	}
+	if (player4.bottomX > player4StartX) {
+		player4.bottomX -= 0.1;
+	}
+	else if (player4.bottomX < player4StartX) {
+		player4.bottomX += 0.1;
 	}
 }
 
@@ -330,24 +365,32 @@ function resetGame() {
 
 function drawMidline() {
 	ctx.beginPath();
+	ctx.save();
 	ctx.setLineDash([10, 10]);
 	ctx.moveTo(canvas.width / 2, 4);
 	ctx.lineTo(canvas.width / 2, canvas.height + 4);
 	ctx.lineWidth = 3.5;
 	ctx.strokeStyle = midlineColor;
 	ctx.stroke();
+	ctx.closePath();
 }
 
 function drawPaddle(playerN) {
 	ctx.beginPath();
-	ctx.rect(playerN.x, playerN.y, paddleThickness, paddleWidth);
+	ctx.restore();
+	ctx.lineCap = "round";
+	ctx.moveTo(playerN.x + paddleThickness / 2, playerN.y + paddleThickness / 2);
+	ctx.lineTo(playerN.bottomX + paddleThickness / 2, playerN.y + paddleWidth - paddleThickness / 2);
+	ctx.lineWidth = paddleThickness;
+	
+//	ctx.rect(playerN.x, playerN.y, paddleThickness, paddleWidth);
 	if (playerN == player1 || playerN == player3) {
-		ctx.fillStyle = p1PaddleColor;
+		ctx.strokeStyle = p1PaddleColor;
 	}
 	else if (playerN == player2 || playerN == player4){
-		ctx.fillStyle = p2PaddleColor;
+		ctx.strokeStyle = p2PaddleColor;
 	}
-	ctx.fill();
+	ctx.stroke();
 	ctx.closePath();
 }
 
