@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+	<title>Typewriter Clicker</title>
+
+</head>
+
+<body>
+	<audio id="click-effect" src="key.ogg" preload="auto"></audio>
+	<audio id="enter-effect" src="ding.ogg" preload="auto"></audio>
+
+<script>
+	const origClickAudio = document.getElementById("click-effect");
+	var clickAudio = origClickAudio.cloneNode();
+	const origEnterAudio = document.getElementById("enter-effect");
+	var enterAudio = origEnterAudio.cloneNode();
+
+	document.addEventListener("keydown", keyDownHandler, false);
+	
+	function keyDownHandler (e) {
+		if (e.key == "Enter") {
+			enterAudio = origEnterAudio.cloneNode()
+			enterAudio.play()
+		} else {
+			clickAudio.play()
+			clickAudio = origClickAudio.cloneNode()
+		}
+	}
+</script>
+
+</body>
+
+</html>
