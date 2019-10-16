@@ -1,0 +1,1 @@
+<canvas id="k"><script>var x=document.getElementById("k").getContext("2d");t=50;c=0;addEventListener('click',o);function o(){if (c < 1){setInterval(a,100)}c++}function a(){t--;x.font="36px a";x.clearRect(0,0,400,400);x.fillText("Time: "+t+" Clicks: "+c,9,39);if(t<1){removeEventListener("click",o);t=1;x.fillText("CPS: "+c/5,9,89)}}</script>
