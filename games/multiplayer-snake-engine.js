@@ -1,10 +1,9 @@
-const // internal constants
+const
 	up = 1
 	down = 2
 	left = 3
 	right = 4
 
-// user-friendly vars
 	gameSpeed = 75 // Milliseconds per frame. Therefore, a higher number is a slower game.
 	unit = 24 // The unit used for calculating the width of the player's body and the size of the food. It is recommended to be a factor of 600.
 	foodColor = "#c0c"
@@ -12,8 +11,6 @@ const // internal constants
 	growthRate = 5 // How much you grow from getting food.
 	scoreColor = "black"
 	initialPlayerLength = 5
-	goThroughBody = false
-	goThroughWall = false
 
 var
 	canvas = document.getElementById("Snake")
@@ -231,23 +228,7 @@ function playerLocation(playerN) {
 
 function boundsCheck(playerN) {
 	if (playerN.bodyX[0] >= canvas.width || playerN.bodyX[0] < 0 || playerN.bodyY[0] >= canvas.height || playerN.bodyY[0] < 0) {
-		if (!goThroughWall) {
-			gameOver(playerN);
-		}
-		else {
-			if (playerN.bodyX[0] >= canvas.width) {
-				playerN.bodyX[0] = 0;
-			}
-			if (playerN.bodyX[0] < 0) {
-				playerN.bodyX[0] = canvas.width - unit;
-			}
-			if (playerN.bodyY[0] >= canvas.height) {
-				playerN.bodyY[0] = 0;
-			}
-			if (playerN.bodyY[0] < 0) {
-				playerN.bodyY[0] = canvas.height - unit;
-			}
-		}
+		gameOver(playerN);
 	}
 }
 
@@ -383,20 +364,20 @@ function suicideCheck() {
 		}
 		for (let i = 1; i < player4.length; i++) {
 			if (player4.bodyX[i] == player1.bodyX[0] && player4.bodyY[i] == player1.bodyY[0]) {
+				player4.length += 5 * (Math.ceil(player1.length / 10));
 				gameOver(player1);
-				player4.length += 5;
 			}
 		}
 		for (let i = 1; i < player4.length; i++) {
 			if (player4.bodyX[i] == player2.bodyX[0] && player4.bodyY[i] == player2.bodyY[0]) {
+				player4.length += 5 * (Math.ceil(player2.length / 10));
 				gameOver(player2);
-				player4.length += 5;
 			}
 		}
 		for (let i = 1; i < player4.length; i++) {
 			if (player4.bodyX[i] == player3.bodyX[0] && player4.bodyY[i] == player3.bodyY[0]) {
+				player4.length += 5 * (Math.ceil(player3.length / 10));
 				gameOver(player3);
-				player4.length += 5;
 			}
 		}
 	}
