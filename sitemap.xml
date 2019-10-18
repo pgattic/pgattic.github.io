@@ -36,6 +36,11 @@
 		<priority>0.80</priority>
 	</url>
 	<url>
+		<loc>https://pgattic.github.io/challenges</loc>
+		<lastmod>2019-10-17</lastmod>
+		<priority>0.80</priority>
+	</url>
+	<url>
 		<loc>https://pgattic.github.io/about-me</loc>
 		<lastmod>2019-09-24</lastmod>
 		<priority>0.80</priority>
