@@ -1,1 +1,1 @@
-<canvas id=4><script>x=document.getElementById(4).getContext("2d");t=501;c=0;addEventListener('click',o);x.font="30px a";a();function o(){if(c<1){setInterval(a,10)}c++}function a(){t--;x.clearRect(0,0,300,99);q("Time: "+t/100,3);q("Clicks: "+c,6);if(t<1){removeEventListener("click",o);t=1;q(c/5+" cps",9)}}function q(w,y){x.fillText(w,9,9*y)}</script>
+<html onclick="if(c<1)setInterval(a,10);if(t>0)c++"><p id=1><script>t=501;c=0;function a(){t-=t>0?1:0;document.getElementById(1).innerHTML=c/(5-t/100)+" cps<br>Time: "+t/100+"<br>Clicks: "+c}a()</script>
