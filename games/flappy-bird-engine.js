@@ -8,16 +8,17 @@ var
 const
 	startX = canvas.width / 5
 	startY = 100
-	jumpVelocity = -2
-	floorHeight = canvas.height / 4
+	jumpVelocity = -1.9
+	floorHeight = canvas.height / 6
 	floorColor = "#8B4513"
 	pipeColor = "green"
 	fallAcceleration = 0.025
-	playerRadius = 10
-	gameVelocity = 0.5
-	pipeRate = 175
-	pipeWidth = 50
-	pipeGap = 125
+	playerRadius = 20
+	playerInnerScale = 0.75
+	gameVelocity = 0.75
+	pipeRate = 320
+	pipeWidth = 80
+	pipeGap = 150
 	pipeYMin = canvas.height / 8
 	pipeYMax = canvas.height * (7/8) - floorHeight - pipeGap
 	numOfPlayers = 8
@@ -28,7 +29,7 @@ var
 		color : "blue",
 		x : startX,
 		y : startY,
-		dx : gameVelocity,
+		dx : 0,
 		dy : 0,
 		jumping : false,
 		alive : true,
@@ -39,7 +40,7 @@ var
 		color : "red",
 		x : startX,
 		y : startY,
-		dx : gameVelocity,
+		dx : 0,
 		dy : 0,
 		jumping : false,
 		alive : true,
@@ -50,7 +51,7 @@ var
 		color : "green",
 		x : startX,
 		y : startY,
-		dx : gameVelocity,
+		dx : 0,
 		dy : 0,
 		jumping : false,
 		alive : true,
@@ -61,7 +62,7 @@ var
 		color : "yellow",
 		x : startX,
 		y : startY,
-		dx : gameVelocity,
+		dx : 0,
 		dy : 0,
 		jumping : false,
 		alive : true,
@@ -72,7 +73,7 @@ var
 		color : "purple",
 		x : startX,
 		y : startY,
-		dx : gameVelocity,
+		dx : 0,
 		dy : 0,
 		jumping : false,
 		alive : true,
@@ -80,10 +81,10 @@ var
 		score : 0,
 		jumpButton : "5",
 	}, {
-		color : "pink",
+		color : "cyan",
 		x : startX,
 		y : startY,
-		dx : gameVelocity,
+		dx : 0,
 		dy : 0,
 		jumping : false,
 		alive : true,
@@ -91,10 +92,10 @@ var
 		score : 0,
 		jumpButton : "6",
 	}, {
-		color : "cyan",
+		color : "orange",
 		x : startX,
 		y : startY,
-		dx : gameVelocity,
+		dx : 0,
 		dy : 0,
 		jumping : false,
 		alive : true,
@@ -102,10 +103,10 @@ var
 		score : 0,
 		jumpButton : "7",
 	}, {
-		color : "orange",
+		color : "pink",
 		x : startX,
 		y : startY,
-		dx : gameVelocity,
+		dx : 0,
 		dy : 0,
 		jumping : false,
 		alive : true,
@@ -119,9 +120,9 @@ var
 	pipePassed = [NaN]
 	numOfPipes = 0
 	gameScore = 0
-	
 	isPaused = false
 	gameX = 0
+	pipeWait = 0
 
 
 document.addEventListener("keydown", getKeys, false);
@@ -157,25 +158,24 @@ function drawBG() {
 	ctx.fillStyle = floorColor;
 	ctx.fill();
 	ctx.closePath();
-	gameX += gameVelocity;
 }
 
 function movePlayer(n) {
 	player[n].x += player[n].dx;
 	player[n].y += player[n].dy;
-	if (player[n].y < playerRadius) {
-		player[n].y = playerRadius;
+	if (player[n].y < playerRadius * playerInnerScale) {
+		player[n].y = playerRadius * playerInnerScale;
 		player[n].dy = 0;
 	}
-	if (player[n].y + playerRadius >= canvas.height - floorHeight) {
+	if (player[n].y + playerRadius * playerInnerScale >= canvas.height - floorHeight) {
 		if (!player[n].hitFloor) {
 			playersAlive--;
 			player[n].alive = false;
 			player[n].hitFloor = true;
 		}
 		player[n].dy = 0;
-		player[n].dx = 0;
-		player[n].y = canvas.height - floorHeight - playerRadius;
+		player[n].dx = -gameVelocity;
+		player[n].y = canvas.height - floorHeight - playerRadius * playerInnerScale;
 	}
 	else {
 		player[n].dy += fallAcceleration;
@@ -191,8 +191,8 @@ function createPipe() {
 
 function kill(n) {
 	for (var i = 0; i <= numOfPipes; i++) {
-		if (player[n].x + playerRadius > pipeX[i] && player[n].x - playerRadius < pipeX[i] + pipeWidth && (player[n].y - playerRadius < pipeY[i] || player[n].y + playerRadius > pipeY[i] + pipeGap)) {
-			player[n].dx = 0;
+		if (player[n].x + playerRadius * playerInnerScale > pipeX[i] && player[n].x - playerRadius * playerInnerScale < pipeX[i] + pipeWidth && (player[n].y - playerRadius * playerInnerScale < pipeY[i] || player[n].y + playerRadius * playerInnerScale > pipeY[i] + pipeGap)) {
+			player[n].dx = -gameVelocity;
 			player[n].alive = false;
 		}
 	}
@@ -216,7 +216,10 @@ function drawPlayer(n) {
 }
 
 function despawnPipes() {
-	if (pipeX[0] + pipeWidth - gameX < 0) {
+	for (var i = 0; i <= numOfPipes; i++) {
+		pipeX[i] -= gameVelocity;
+	}
+	if (pipeX[0] + pipeWidth < 0) {
 		for (var i = 0; i <= numOfPipes; i++) {
 			pipeX[i] = pipeX[i + 1];
 			pipeY[i] = pipeY[i + 1];
@@ -230,7 +233,7 @@ function drawPipes() {
 	for (var i = 0; i <= numOfPipes; i++) {
 		ctx.beginPath();
 		ctx.rect(pipeX[i] - gameX, 0, pipeWidth, pipeY[i]);
-		ctx.rect(pipeX[i] - gameX, pipeY[i] + pipeGap, pipeWidth, canvas.height - floorHeight - pipeY[i] - pipeGap);
+		ctx.rect(pipeX[i] - gameX, pipeY[i] + pipeGap, pipeWidth, canvas.height - floorHeight - pipeY[i] - pipeGap + 1);
 		ctx.fillStyle = pipeColor;
 		ctx.fill();
 		ctx.closePath();
@@ -240,16 +243,15 @@ function drawPipes() {
 function drawScore() {
 	ctx.font = "36px Arial";
 	ctx.fillStyle = "white";
-	ctx.fillText("Score: " + gameScore, 50, canvas.height - floorHeight + 70);
-	ctx.fillText("Players Alive: " + playersAlive, 50, canvas.height - floorHeight + 120);
+	ctx.fillText("Score: " + gameScore, 20, canvas.height - floorHeight + 50);
+	ctx.fillText("Players Alive: " + playersAlive, 20, canvas.height - floorHeight + 90);
 }
 
 function draw() {
 	if (!isPaused) {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		drawBG();
 		despawnPipes();
-		if (gameX % pipeRate == 0) {
+		if (pipeWait % pipeRate == 0) {
 			createPipe();
 		}
 		drawPipes();
@@ -259,7 +261,9 @@ function draw() {
 			givePoints(i);
 			drawPlayer(i);
 		}
+		drawBG();
 		drawScore();
+		pipeWait++;
 	}
 }
 
