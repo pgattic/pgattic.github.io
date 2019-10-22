@@ -12,6 +12,9 @@ const // internal constants
 	growthRate = 5 // How much you grow from getting food.
 	scoreColor = "black"
 	initialPlayerLength = 5
+	
+	pauseKey1 = " "
+	pauseKey2 = "Enter"
 
 var
 	canvas = document.getElementById("Snake")
@@ -21,56 +24,92 @@ var
 		inGame : false,
 		startX : -unit / 2,
 		startY : unit / 2,
-		direction : right,
+		direction : [right],
 		dirTemp : right,
 		startDirection : right,
-		length : initialPlayerLength,
+		size : initialPlayerLength,
 		bodyX : [-unit],
 		bodyY : [0],
 		color : "#00c",
 		lineColor : "#22f",
+		upKey1 : "w",
+		upKey2 : "W",
+		downKey1 : "s",
+		downKey2 : "S",
+		leftKey1 : "a",
+		leftKey2 : "A",
+		rightKey1 : "d",
+		rightKey2 : "D",
+		spawnKey : "1",
 	}
 
 	player2 = {
 		inGame : false,
 		startX : canvas.width + unit / 2,
 		startY : unit / 2,
-		direction : left,
+		direction : [left],
 		dirTemp : left,
 		startDirection : left,
-		length : initialPlayerLength,
+		size : initialPlayerLength,
 		bodyX : [canvas.width],
 		bodyY : [0],
 		color : "#c00",
 		lineColor : "#f22",
+		upKey1 : "t",
+		upKey2 : "T",
+		downKey1 : "g",
+		downKey2 : "G",
+		leftKey1 : "f",
+		leftKey2 : "F",
+		rightKey1 : "h",
+		rightKey2 : "H",
+		spawnKey : "2",
 	}
 
 	player3 = {
 		inGame : false,
 		startX : -unit / 2,
 		startY : canvas.height - unit / 2,
-		direction : right,
+		direction : [right],
 		dirTemp : left,
 		startDirection : right,
-		length : initialPlayerLength,
+		size : initialPlayerLength,
 		bodyX : [-unit],
 		bodyY : [canvas.height - unit],
 		color : "#0c0",
 		lineColor : "#2f2",
+		upKey1 : "i",
+		upKey2 : "I",
+		downKey1 : "j",
+		downKey2 : "J",
+		leftKey1 : "k",
+		leftKey2 : "K",
+		rightKey1 : "l",
+		rightKey2 : "L",
+		spawnKey : "3",
 	}
 
 	player4 = {
 		inGame : false,
 		startX : canvas.width + unit / 2,
 		startY : canvas.height - unit / 2,
-		direction : left,
+		direction : [left],
 		dirTemp : left,
 		startDirection : left,
-		length : initialPlayerLength,
+		size : initialPlayerLength,
 		bodyX : [canvas.width],
 		bodyY : [canvas.height - unit],
 		color : "#ee0",
 		lineColor : "#ff2",
+		upKey1 : "Up",
+		upKey2 : "ArrowUp",
+		downKey1 : "Down",
+		downKey2 : "ArrowDown",
+		leftKey1 : "Left",
+		leftKey2 : "ArrowLeft",
+		rightKey1 : "Right",
+		rightKey2 : "ArrowRight",
+		spawnKey : "4",
 	}
 
 	foodX = ((Math.floor(Math.random() * (canvas.width/unit))) * unit) + unit / 2
@@ -85,123 +124,71 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phon
 document.addEventListener("keydown", keyDownHandler, false);
 
 function keyDownHandler(e) {
-	if (player1.inGame) {
-		if (e.key == "w" || e.key == "W") {
-			player1.dirTemp = up;
-		}
-		if (e.key == "s" || e.key == "S") {
-			player1.dirTemp = down;
-		}
-		if (e.key == "a" || e.key == "A") {
-			player1.dirTemp = left;
-		}
-		if (e.key == "d" || e.key == "D") {
-			player1.dirTemp = right;
-		}
-		if (Math.abs(player1.direction - player1.dirTemp) !== 2) {
-			player1.direction = player1.dirTemp;
-		}
-	}
-	if (player2.inGame) {
-		if (e.key == "t" || e.key == "T") {
-			player2.dirTemp = up;
-		}
-		if (e.key == "g" || e.key == "G") {
-			player2.dirTemp = down;
-		}
-		if (e.key == "f" || e.key == "F") {
-			player2.dirTemp = left;
-		}
-		if (e.key == "h" || e.key == "H") {
-			player2.dirTemp = right;
-		}
-		if (Math.abs(player2.direction - player2.dirTemp) !== 2) {
-			player2.direction = player2.dirTemp;
-		}
-	}
-	if (player3.inGame) {
-		if (e.key == "i" || e.key == "I") {
-			player3.dirTemp = up;
-		}
-		if (e.key == "k" || e.key == "K") {
-			player3.dirTemp = down;
-		}
-		if (e.key == "j" || e.key == "J") {
-			player3.dirTemp = left;
-		}
-		if (e.key == "l" || e.key == "L") {
-			player3.dirTemp = right;
-		}
-		if (Math.abs(player3.direction - player3.dirTemp) !== 2) {
-			player3.direction = player3.dirTemp;
-		}
-	}
-	if (player4.inGame) {
-		if (e.key == "Up" || e.key == "ArrowUp") {
-			player4.dirTemp = up;
-		}
-		if (e.key == "Down" || e.key == "ArrowDown") {
-			player4.dirTemp = down;
-		}
-		if (e.key == "Left" || e.key == "ArrowLeft") {
-			player4.dirTemp = left;
-		}
-		if (e.key == "Right" || e.key == "ArrowRight") {
-			player4.dirTemp = right;
-		}
-		if (Math.abs(player4.direction - player4.dirTemp) !== 2) {
-			player4.direction = player4.dirTemp;
-		}
-	}
-	if (e.key == "1") {
-		player1.inGame = !player1.inGame;
-		gameOver(player1);
-	}
-	if (e.key == "2") {
-		player2.inGame = !player2.inGame;
-		gameOver(player2);
-	}
-	if (e.key == "3") {
-		player3.inGame = !player3.inGame;
-		gameOver(player3);
-	}
-	if (e.key == "4") {
-		player4.inGame = !player4.inGame;
-		gameOver(player4);
-	}
-	if (e.key == " " || e.key == "Enter") {
+	doKeys(player1, e);
+	doKeys(player2, e);
+	doKeys(player3, e);
+	doKeys(player4, e);
+	if (e.key == pauseKey1 || e.key == pauseKey2) {
 		isPaused = !isPaused;
+	}
+}
+
+function doKeys(playerN, e) {
+	if (playerN.inGame || !isPaused) {
+		if (e.key == playerN.upKey1 || e.key == playerN.upKey2) {
+			playerN.dirTemp = up;
+		}
+		if (e.key == playerN.downKey1 || e.key == playerN.downKey2) {
+			playerN.dirTemp = down;
+		}
+		if (e.key == playerN.leftKey1 || e.key == playerN.leftKey2) {
+			playerN.dirTemp = left;
+		}
+		if (e.key == playerN.rightKey1 || e.key == playerN.rightKey2) {
+			playerN.dirTemp = right;
+		}
+		if (Math.abs(playerN.direction[playerN.direction.length - 1] - playerN.dirTemp) !== 2 && playerN.direction[playerN.direction.length - 1] !== playerN.dirTemp) {
+			playerN.direction.push(playerN.dirTemp);
+		}
+	}
+	if (e.key == playerN.spawnKey) {
+		playerN.inGame = !playerN.inGame;
+		gameOver(playerN);
 	}
 }
 
 
 //GAME ENGINE
-function calculate(playerN) {
+function calculate1(playerN) {
 	if (playerN.inGame) {
 		playerLocation(playerN);
 		boundsCheck(playerN);
 		foodCheck(playerN);
 	}
-	suicideCheck(playerN, player1);
-	suicideCheck(playerN, player2);
-	suicideCheck(playerN, player3);
-	suicideCheck(playerN, player4);
 }
 
 function playerLocation(playerN) {
-	var i = playerN.length;
-	for (i; i > 0; i--) {
-		playerN.bodyX[i] = playerN.bodyX[i - 1];
-		playerN.bodyY[i] = playerN.bodyY[i - 1];
+	if (playerN.direction.length > 1) {
+		playerN.direction.shift();
 	}
-	if (playerN.direction == up) {
-		playerN.bodyY[0] -=  unit;
-	} else if (playerN.direction == down) {
-		playerN.bodyY[0] += unit;
-	} else if (playerN.direction == left) {
-		playerN.bodyX[0] -= unit;
+	if (playerN.direction[0] == up) {
+		playerN.bodyX.unshift(playerN.bodyX[0]);
+		playerN.bodyY.unshift(playerN.bodyY[0] - unit);
+	} else if (playerN.direction[0] == down) {
+		playerN.bodyX.unshift(playerN.bodyX[0]);
+		playerN.bodyY.unshift(playerN.bodyY[0] + unit);
+	} else if (playerN.direction[0] == left) {
+		playerN.bodyX.unshift(playerN.bodyX[0] - unit);
+		playerN.bodyY.unshift(playerN.bodyY[0]);
 	} else {
-		playerN.bodyX[0] += unit;
+		playerN.bodyX.unshift(playerN.bodyX[0] + unit);
+		playerN.bodyY.unshift(playerN.bodyY[0]);
+	}
+	while (playerN.bodyX.length > playerN.size) {
+		playerN.bodyX.pop();
+	}
+	while (playerN.bodyY.length > playerN.size) {
+		playerN.bodyY.pop();
 	}
 }
 
@@ -213,7 +200,7 @@ function boundsCheck(playerN) {
 
 function gameOver(playerN) {
 	var i;
-	var n = playerN.length;
+	var n = playerN.size;
 	for (i = 0; i < n; i++) {
 		playerN.bodyX[i] = NaN;
 		playerN.bodyY[i] = NaN;
@@ -222,18 +209,25 @@ function gameOver(playerN) {
 		playerN.bodyX[i] = playerN.startX;
 		playerN.bodyY[i] = playerN.startY;
 	}
-	playerN.direction = playerN.startDirection;
+	playerN.direction = [playerN.startDirection];
 	playerN.dirTemp = playerN.startDirection;
-	playerN.length = initialPlayerLength;
+	playerN.size = initialPlayerLength;
 }
 
 function foodCheck(playerN) {
 	if (playerN.bodyX[0] == foodX && playerN.bodyY[0] == foodY) {
-		playerN.length += growthRate;
+		playerN.size += growthRate;
 		foodX = ((Math.floor(Math.random() * (canvas.width/unit))) * unit) + unit / 2
 		foodY = ((Math.floor(Math.random() * (canvas.height/unit))) * unit) + unit / 2
 	}
 	drawFood();
+}
+
+function calculate2(playerN) {
+	suicideCheck(playerN, player1);
+	suicideCheck(playerN, player2);
+	suicideCheck(playerN, player3);
+	suicideCheck(playerN, player4);
 }
 
 function suicideCheck(playerN, playerQ) {
@@ -242,10 +236,10 @@ function suicideCheck(playerN, playerQ) {
 		gameOver(playerQ);
 	}
 	var i;
-	var n = playerN.length;
+	var n = playerN.size;
 	for (i = 1; i < n; i++) {
 		if (playerN.bodyX[i] == playerQ.bodyX[0] && playerN.bodyY[i] == playerQ.bodyY[0]) {
-			playerN.length += 5 * (Math.ceil(playerQ.length / 10));
+			playerN.size += 5 * (Math.ceil(playerQ.size / 10));
 			gameOver(playerQ);
 		}
 	}
@@ -295,7 +289,7 @@ function display(playerN) {
 
 function drawLine(playerN) {
 	var i;
-	var n = playerN.length;
+	var n = playerN.size;
 
 	ctx.beginPath();
 	ctx.lineCap = "round";
@@ -335,16 +329,19 @@ function drawScore(playerN) {
 	ctx.font = "bolder "+((unit / 2) + 4)+"px Arial";
 	ctx.fillStyle = scoreColor;
 	ctx.textAlign = "center";
-	ctx.fillText(playerN.length, playerN.bodyX[0], playerN.bodyY[0] + (unit / 12));
+	ctx.fillText(playerN.size, playerN.bodyX[0], playerN.bodyY[0] + (unit / 12));
 }
 
 function draw() {
 	if (!isPaused) {
-		calculate(player1);
-		calculate(player2);
-		calculate(player3);
-		calculate(player4);
-
+		calculate1(player1);
+		calculate1(player2);
+		calculate1(player3);
+		calculate1(player4);
+		calculate2(player1);
+		calculate2(player2);
+		calculate2(player3);
+		calculate2(player4);
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 		drawGrid();
 		drawFood();
