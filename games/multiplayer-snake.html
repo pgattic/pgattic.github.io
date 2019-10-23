@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-us">
 
 <head>
 	<!-- Global site tag (gtag.js) - Google Analytics -->
@@ -21,14 +21,21 @@
 	<meta charset="utf-8" />
 	<meta name="description" content="SaveState's Web Games">
 	<meta name="author" content="Preston Corless, SaveState">
+	<style>
+		canvas {
+			margin: 0;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			-ms-transform: translate(-50%, -50%);
+			transform: translate(-50%, -50%);
+		}
+	</style>
 </head>
 
 <body>
-	
 
-<div class="wrapper" style="margin: 0 auto; width: 1200px; position: relative;">
-	<canvas style="background-color:#fefefe; border:1px solid #101010" id="Snake" width="1200" height="600" align="right"></canvas>
-</div>
+	<canvas style="background-color:#fefefe; border:1px solid #101010" id="Snake" width="1200" height="600">Sorry, your browser doesn't support HTML5 Canvas! Choose a different browser please!</canvas>
 
 	<script src="multiplayer-snake-engine-optimized.js"></script>
 
