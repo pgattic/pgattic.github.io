@@ -80,10 +80,10 @@ var
 		lineColor : "#2f2",
 		upKey1 : "i",
 		upKey2 : "I",
-		downKey1 : "j",
-		downKey2 : "J",
-		leftKey1 : "k",
-		leftKey2 : "K",
+		downKey1 : "k",
+		downKey2 : "K",
+		leftKey1 : "j",
+		leftKey2 : "J",
 		rightKey1 : "l",
 		rightKey2 : "L",
 		spawnKey : "3",
@@ -114,6 +114,7 @@ var
 
 	foodX = ((Math.floor(Math.random() * (canvas.width/unit))) * unit) + unit / 2
 	foodY = ((Math.floor(Math.random() * (canvas.height/unit))) * unit) + unit / 2
+	foodFailure = false
 	isPaused = false
 
 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
@@ -217,10 +218,30 @@ function gameOver(playerN) {
 function foodCheck(playerN) {
 	if (playerN.bodyX[0] == foodX && playerN.bodyY[0] == foodY) {
 		playerN.size += growthRate;
-		foodX = ((Math.floor(Math.random() * (canvas.width/unit))) * unit) + unit / 2
-		foodY = ((Math.floor(Math.random() * (canvas.height/unit))) * unit) + unit / 2
+		foodFailure = true;
+		while (foodFailure) {
+			foodFailure = false;
+			foodX = ((Math.floor(Math.random() * (canvas.width/unit))) * unit) + unit / 2;
+			foodY = ((Math.floor(Math.random() * (canvas.height/unit))) * unit) + unit / 2;
+			foodCheck2(player1);
+			foodCheck2(player2);
+			foodCheck2(player3);
+			foodCheck2(player4);
+		}
 	}
 	drawFood();
+}
+
+function foodCheck2(playerN) {
+	if (playerN.inGame) {
+		var i;
+		var s = playerN.size;
+		for (i = 0; i < s; i++) {
+			if (playerN.bodyX[i] == foodX && playerN.bodyY[i] == foodY) {
+				foodFailure = true;
+			}
+		}
+	}
 }
 
 function calculate2(playerN) {
@@ -231,7 +252,7 @@ function calculate2(playerN) {
 }
 
 function suicideCheck(playerN, playerQ) {
-	if (playerN !== playerQ && playerN.bodyX[0] == playerQ.bodyX[0] && playerN.bodyY[0] == playerQ.bodyY[0]) {
+	if (playerN !== playerQ && ((playerN.bodyX[0] == playerQ.bodyX[0] && playerN.bodyY[0] == playerQ.bodyY[0]) || (playerN.bodyX[0] == playerQ.bodyX[1] && playerN.bodyY[0] == playerQ.bodyY[1]))) {
 		gameOver(playerN);
 		gameOver(playerQ);
 	}
