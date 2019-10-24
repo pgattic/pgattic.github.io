@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-114106362-3"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-114106362-3');
+	</script>
+<!--	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<script>
+		 (adsbygoogle = window.adsbygoogle || []).push({
+			  google_ad_client: "ca-pub-7332676129708879",
+			  enable_page_level_ads: true
+		 });
+	</script>
+-->
+	<link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
+	<link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<SCRIPT LANGUAGE="JavaScript" SRC="script.js"></SCRIPT>
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<title>Home - SaveState's Web Games</title>
+	<meta charset="UTF-8">
+	<meta name="description" content="SaveState's Web Games">
+	<meta name="keywords" content="HTML, CSS, XML, JavaScript, HTML5, Coding, ROM, Hack, SaveState, Web, Games, YeetBall, ShootEm, yeet, ball, shoot, em, OpenSnake, open, snake, multiplayer snake, typewriter, pong, cps, preston, corless, pgattic">
+	<meta name="author" content="Preston Corless, SaveState">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<style>
+		.w3-sidebar a {font-family: "Roboto", sans-serif}
+		body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
+		.clearfix {
+			overflow: auto;
+		}
+
+		.thumb {
+			float: left;
+		}
+		a {
+			color: #1f9e45;
+			font-weight: bold;
+		}
+	</style>
+</head>
+<body class="w3-content" style="max-width:1200px">
+	<!-- adBlock detector -->
+	<div id="wrapfabtest">
+		<div class="adBanner">
+		</div>
+	</div>
+	<!-- Sidebar/menu -->
+	<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
+		<div class="w3-container w3-display-container w3-padding-16">
+			<i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
+			<h3 class="w3-wide"><img src="favicon-32x32.png"><b> SaveState</b></h3>
+		</div>
+		<div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
+			<a id="home" onclick="refresh(0, 'Home', 'home1', 'home')" class="w3-bar-item w3-button w3-light-grey">Home</a>
+			<a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-left-align" id="myBtn">
+				Games <i class="fa fa-caret-down"></i>
+			</a>
+			<div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium">
+				<a id="snake" onclick="refresh(1, 'Snake', 'snake1', 'snake')" class="w3-bar-item w3-button">Snake</a>
+				<a id="msnake" onclick="refresh(2, 'Multiplayer Snake', 'multiplayer-snake1', 'msnake')" class="w3-bar-item w3-button">Multiplayer Snake</a>
+				<a id="yball" onclick="refresh(3, 'Yeet Ball', 'yeet-ball1', 'yball')" class="w3-bar-item w3-button">Yeet Ball</a>
+				<a id="yballc" onclick="refresh(4, 'Yeet Ball Classic', 'yeet-ball-classic1', 'yballc')" class="w3-bar-item w3-button">Yeet Ball Classic</a>
+				<a id="pong" onclick="refresh(5, 'Pong', 'pong1', 'pong')" class="w3-bar-item w3-button">Pong</a>
+				<a id="mpong" onclick="refresh(6, '4-Player Pong', '4p-pong1', 'mpong')" class="w3-bar-item w3-button">4-Player Pong</a>
+			</div>
+			<a id="chal" onclick="refresh(7, 'Coding Challenges', 'challenges1', 'chal')" class="w3-bar-item w3-button">Coding Challenges</a>
+			<a id="abt" onclick="refresh(8, 'About Me', 'about-me1', 'abt')" class="w3-bar-item w3-button">About Me</a>
+		</div>
+	</nav>
+
+	<!-- Top menu on small screens -->
+	<header class="w3-bar w3-top w3-hide-large w3-black w3-xlarge">
+		<div class="w3-bar-item w3-padding-24 w3-wide"><img src="favicon-32x32.png"> SaveState</div>
+		<a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding-24 w3-right" onclick="w3_open()"><i class="fa fa-bars"></i></a>
+	</header>
+
+	<!-- Overlay effect when opening sidebar on small screens -->
+	<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+	<!-- !PAGE CONTENT! -->
+	<div class="w3-main" style="margin-left:250px">
+
+		<!-- Push down content on small screens -->
+		<div class="w3-hide-large" style="margin-top:83px"></div>
+		
+		<!-- Top header -->
+		<header class="w3-container w3-xlarge">
+			<p id="title1" class="w3-left">Home</p>
+			<p class="w3-right">
+			</p>
+		</header>
+
+		<!-- Image header -->
+		<div class="w3-display-container w3-container">
+			<img src="code3.png" alt="Code" style="width:100%">
+			<div class="w3-display-topleft w3-text-white" style="padding:24px 48px">
+				<h1 id="title2" class="w3-jumbo w3-hide-small">Home</h1>
+				<h2 id="title3" class="w3-hide-large w3-hide-medium">Home</h2>
+			</div>
+		</div>
+
+		<div id="information" class="w3-container w3-text-grey" style="padding:24px 48px">
+			<h2>Welcome to my coding site!</h2>
+			<p>Here is where I will put all of the coding projects that I make. As of now, I am coding all of my games in JavaScript. If you have any suggestions on what I should do next, you can <a href="mailto:pgattic@gmail.com" target="_blank" style="color:green;">email me</a>, or if you know me personally, just talk to me in person, that would make things easier.</p>
+			<p>Please check out my games, I've worked really hard on them and I think you will appreciate playing them.</p>
+			<p>Lastly, thank you so much for visiting! I hope you'll enjoy it here and maybe come back later, too!</p>
+			<h2>My games:</h2>
+			<div class="clearfix">
+				<p><img class="thumb" src="snake-thumb.png" alt="snake"><a href="snake">Snake</a></p>
+				<p>This is a classic snake game. If you've played snake before, you know what this is. The main objective is to eat the food that spawns in play, which makes you grow longer. How long can your snake grow?<br>Players: <img src="player.png" alt="1"></p>
+			</div>
+			<div class="clearfix">
+				<p><img class="thumb" src="multiplayer-snake-thumb.png" alt="multisnake"><a href="multiplayer-snake" style="color:green;">Multiplayer Snake</a></p>
+				<p>So, you've mastered the game of snake? Let's see how you do against your friends! Yep, that's right! This snake game allows up to 4 people to play at the same time, using one keyboard!<br>Players: <img src="player.png" alt="1"> - <img src="player.png" alt="4"><img src="player.png"><img src="player.png"><img src="player.png"></p>
+			</div>
+			<div class="clearfix">
+				<p><img class="thumb" src="yeet-ball-thumb.png" alt="yeetball"><a href="yeet-ball" style="color:green;">Yeet Ball</a></p>
+				<p>The idea for this game was one of my own creation. In it, you play as the red ball, and you try to survive as long as you can by shooting those green balls. How long can you last?<br>Players: <img src="player.png" alt="1"></p>
+			</div>
+			<div class="clearfix">
+				<p><img class="thumb" src="yeet-ball-classic-thumb.png" alt="yeetballclassic"><a href="yeet-ball-classic" style="color:green;">Yeet Ball Classic</a></p>
+				<p>This is what Yeet Ball was like before it got that major screen-scrolling update. For those of you enjoyed that version more than the new one, I've decided to leave that old version up for you to play!<br>Players: <img src="player.png" alt="1"></p>
+			</div>
+			<div class="clearfix">
+				<p><img class="thumb" src="2p-pong-thumb.png" alt="pong"><a href="pong" style="color:green;">Pong</a></p>
+				<p>The original Pong game, brought back to life! This game now supports up to two players! All you have to do is hit the ball to the enemy's side! Careful, don't miss!<br>Players: <img src="player.png" alt="1"> - <img src="player.png" alt="2"><img src="player.png"></p>
+			</div>
+			<div class="clearfix">
+				<p><img class="thumb" src="2p-pong-thumb.png" alt="pong"><a href="4p-pong" style="color:green;">4-Player Pong</a></p>
+				<p>A beautiful new update to the original Pong game that brings two more players into the action! Two people play on each team!<br>Players: <img src="player.png" alt="4"><img src="player.png"><img src="player.png"><img src="player.png"></p>
+			</div>
+		</div>
+		
+<!--		<div align="center">
+			<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+			<!-- WebSiteAds -->
+<!--			<ins class="adsbygoogle"
+				 style="display:block"
+				 data-ad-client="ca-pub-7332676129708879"
+				 data-ad-slot="6957629164"
+				 data-ad-format="auto"
+				 data-full-width-responsive="true"></ins>
+			<script>
+				 (adsbygoogle = window.adsbygoogle || []).push({});
+			</script>
+		</div> -->
+
+		<!-- Footer -->
+
+		<div class="w3-black w3-center w3-padding-24">2019 SaveState</div>
+
+	</div>
+
+	<script src="site-script.js"></script>
+
+	<script>
+	const
+		synop = [
+			["<h2>Welcome to my coding site!</h2>" +
+			"<p>Here is where I will put all of the coding projects that I make. As of now, I am coding all of my games in JavaScript. If you have any suggestions on what I should do next, you can <a href='mailto:pgattic@gmail.com' target='_blank'>email me</a>, or if you know me personally, just talk to me in person, that would make things easier.</p>" +
+			"<p>Please check out my games, I've worked really hard on them and I think you will appreciate playing them.</p>" +
+			"<p>Lastly, thank you so much for visiting! I hope you'll enjoy it here and maybe come back later, too!</p>" +
+			"<h2>My games:</h2>" +
+			"<div class='clearfix'>" +
+				"<p><img class='thumb' src='snake-thumb.png' alt='snake'><a href='snake'>Snake</a></p>" +
+				"<p>This is a classic snake game. If you've played snake before, you know what this is. The main objective is to eat the food that spawns in play, which makes you grow longer. How long can your snake grow?<br>Players: <img src='player.png' alt='1'></p>" +
+			"</div>" +
+			"<div class='clearfix'>" +
+				"<p><img class='thumb' src='multiplayer-snake-thumb.png' alt='multisnake'><a href='multiplayer-snake'>Multiplayer Snake</a></p>" +
+				"<p>So, you've mastered the game of snake? Let's see how you do against your friends! Yep, that's right! This snake game allows up to 4 people to play at the same time, using one keyboard!<br>Players: <img src='player.png' alt='1'> - <img src='player.png' alt='4'><img src='player.png'><img src='player.png'><img src='player.png'></p>" +
+			"</div>" +
+			"<div class='clearfix'><p><img class='thumb' src='yeet-ball-thumb.png' alt='yeetball'><a href='yeet-ball'>Yeet Ball</a></p>" +
+				"<p>The idea for this game was one of my own creation. In it, you play as the red ball, and you try to survive as long as you can by shooting those green balls. How long can you last?<br>Players: <img src='player.png' alt='1'></p>" +
+			"</div>" +
+			"<div class='clearfix'><p><img class='thumb' src='yeet-ball-classic-thumb.png' alt='yeetballclassic'><a href='yeet-ball-classic'>Yeet Ball Classic</a></p>" +
+				"<p>This is what Yeet Ball was like before it got that major screen-scrolling update. For those of you enjoyed that version more than the new one, I've decided to leave that old version up for you to play!<br>Players: <img src='player.png' alt='1'></p>" +
+			"</div>" +
+			"<div class='clearfix'><p><img class='thumb' src='2p-pong-thumb.png' alt='pong'><a href='pong'>Pong</a></p>" +
+				"<p>The original Pong game, brought back to life! This game now supports up to two players! All you have to do is hit the ball to the enemy's side! Careful, don't miss!<br>Players: <img src='player.png' alt='1'> - <img src='player.png' alt='2'><img src='player.png'></p>" +
+			"</div>" +
+			"<div class='clearfix'><p><img class='thumb' src='2p-pong-thumb.png' alt='pong'><a href='4p-pong'>4-Player Pong</a></p>" +
+				"<p>A beautiful new update to the original Pong game that brings two more players into the action! Two people play on each team!<br>Players: <img src='player.png' alt='4'><img src='player.png'><img src='player.png'><img src='player.png'></p>" +
+			"</div>"],
+			["<p>This is a simple snake game that is planned to be highly customizable. I plan on implementing some sandbox features.</p><p>The main objective is to eat the randomly-spawning food pellets, which grows your snake. Try not to run into yourself or the walls!</p><img src='snake-thumb.png' alt='thumbnail' align='right'><h2>How to play:</h2><p>Controls:</p><ul><li>Move: Arrow keys or WASD</li><li>Pause/Resume: E</li></ul><p>Note: The game starts off paused so that you can configure the settings until you're ready.</p><p><a href='/games/snake' class='w3-button w3-black w3-padding-large w3-large'>Play Snake</a><br/>Players: <img src='player.png' alt='1'></p>"],
+			["<p>Update from Snake that features playing with up to 4 players sharing one keyboard!</p><h2>How to play:</h2><p>The game starts off with no players in game. Add (or drop) a player by pressing the number key that corresponds to that player number. For example, you can add or remove player 1 in the game by pressing '1' on the keyboard.</p><img src='multiplayer-snake-thumb.png' alt='thumbnail' align='right'><p>Controls:</p><ul><li>Player 1 move: WASD</li><li>Player 2 move: TFGH</li><li>Player 3 move: IJKL</li><li>Player 4 move: Arrow keys</li><li>Pause game: Space bar or Enter</li></ul><p>Keep in mind that this game does not support mobile devices. If you are on a mobile device right now, please switch to a computer to play this.</p><p><a href='/games/multiplayer-snake' class='w3-button w3-black w3-padding-large w3-large'>Play Multiplayer Snake</a><br/>Players: <img src='player.png' alt='1'> - <img src='player.png' alt='4'><img src='player.png'><img src='player.png'><img src='player.png'></p>"],
+			["<p>A newer version of Yeet Ball but with a scrolling background. A recent update introduces the power-up! Collect these rare blue squares to give you either one more life or one more Super Ability!</p><p>The Super Ability is a power that instantly kills any enemy on the screen. You start off with only three Super Ability uses, so use them wisely!</p><img src='yeet-ball-thumb.png' alt='thumbnail' align='right'><h2>How to play:</h2><p>Controls:</p><ul><li>Move: Arrow Keys or WASD</li><li>Pause: Q</li><li>Use Super Ability: E</li><li>Shoot: Mouse</li></ul><p>Keep in mind that this game does not (yet) support mobile devices. If you are on a mobile device right now, please switch to a computer to play this.</p><p><a href='/games/yeet-ball' class='w3-button w3-black w3-padding-large w3-large'>Play Yeet Ball</a><br/>Players: <img src='player.png' alt='1'></p><p><a href='/games/yeet-ball-dark' class='w3-button w3-black w3-padding-large w3-large'>Play Yeet Ball Dark</a><br/>Players: <img src='player.png' alt='1'></p>"],
+			["<p>This is the old version of Yeet Ball, kept alive for those who enjoyed it better than the new one.</p><p>A recent update introduces the power-up! Collect these rare blue squares to give you either one more life or one more Super Ability!</p><p>The Super Ability is a power that instantly kills any enemy on the screen. You start off with only three Super Ability uses, so use them wisely!</p><img src='yeet-ball-classic-thumb.png' alt='thumbnail' align='right'><h2>How to play:</h2><p>Controls:</p><ul><li>Move: Arrow Keys or WASD</li><li>Pause: Q</li><li>Use Super Ability: E</li><li>Shoot: Mouse</li></ul><p>Keep in mind that this game does not (yet) support mobile devices. If you are on a mobile device right now, please switch to a computer to play this.</p><p><a href='/games/yeet-ball-classic' class='w3-button w3-black w3-padding-large w3-large'>Play Yeet Ball Classic</a><br/>Players: <img src='player.png' alt='1'></p><p><a href='/games/yeet-ball-classic-dark' class='w3-button w3-black w3-padding-large w3-large'>Play Yeet Ball Classic + Dark</a><br/>Players: <img src='player.png' alt='1'></p>"],
+			["<p>This is an ideration of the classic pong game that we all know and love! It supports one or two payers.</p><img src='2p-pong-thumb.png' alt='thumbnail' align='right'><h2>How to play:</h2><p>Controls:</p><ul><li>Player 1 Move: Q = up, A = down</li><li>Player 2 Move: P = up, ; = down (only if you're playing the two-player version!)</li><li>Pause: Space</li></ul><p>Keep in mind that this game does not support mobile devices. If you are on a mobile device right now, please switch to a computer to play this.</p><p><a href='/games/pong' class='w3-button w3-black w3-padding-large w3-large'>Play Pong</a><br/>Players: <img src='player.png' alt='1'></p><p><a href='/games/2p-pong' class='w3-button w3-black w3-padding-large w3-large'>Play 2-Player Pong</a><br/>Players: <img src='player.png' alt='2'><img src='player.png'></p>"],
+			["<p>A new spin on the classic Pong game! it now features the compatability for 4 people to play at the same time!</p><img src='2p-pong-thumb.png' alt='thumbnail' align='right'><h2>How to play:</h2><p>The Red Team (Players 1 and 2) duels against the Green Team (players 3 and 4)!</p><p>Controls:</p><ul><li>Player 1 Move: Q = up, A = down</li><li>Player 2 Move: R = up, F = down</li><li>Player 3 Move: U = up, J = down</li><li>Player 4 Move: P = up, semicolon (;) = down</li><li>Pause: Space</li></ul><p>Keep in mind that this game does not support mobile devices. If you are on a mobile device right now, please switch to a computer to play this.</p><p><a href='/games/4p-pong' class='w3-button w3-black w3-padding-large w3-large'>Play 4-Player Pong</a><br/>Players: <img src='player.png' alt='4'><img src='player.png'><img src='player.png'><img src='player.png'></p>"],
+			["<p>Hello, and welcome to my Coding Challenges page! This is where I put all of my Coding Challenges that I do.</p><p>The rules of my Challenges are:</p><ul><li>The resulting code must be less than or equal to 1 Kilobyte of space (that's 1024 characters).</li><li>It may not reference other pieces of code. This includes external js files, frameworks, or binaries for the purpose of executing tasks. Media files such as images, audio files, and video files are allowed.</li><li>If the file generates an error while running but still runs, it isn't allowed. The code is tested on Google Chrome, and some coding shortcuts taken in these may not work in other browsers.</li></ul><p>And here are my Challenge projects so far:</p><ul><li><a href='challenges/typewriter' target='_blank'>Typewriter</a> (72 bytes): Type anything in the box, and you will hear the sound of a typewriter clicking.</li><li><a href='challenges/cps' target='_blank'>CPS counter</a> (203 bytes): Click anywhere in the page as many times as you can for 5 seconds, and your clicks per second will be shown.</li><li><a href='challenges/paint' target='_blank'>Paint</a> (510 bytes): Use your mouse to draw stuff on the screen! Press the F5 key to reload the page (as with any web page).</li></ul><p>I will continue to shrink the code for these whenever I see a possibility to do so.</p>"],
+			["<p>Hello people! I am SaveState, but my real name is Preston. I am an Eagle Scout, and a former competitive gymnast. I also am a member of the <a href='https://www.churchofjesuschrist.org' target='_blank'>Church of Jesus Christ of Latter-Day Saints</a>. I am currently a senior in high school, and I've been interested in coding for a really long time. I aspire to study computer science in college, and make a job out of it. Thank you for visiting my site!</p><p>You can find me on:</p><ul><li><a href='https://discord.gg/bym96ZG' target='_blank'>Discord</a></li><li><a href='https://savestateroms.weebly.com/' target='_blank'>My Rom Hacking website</a></li><li><a href='https://www.romhacking.net/community/5210/' target='_blank'>RomHacking.net</a></li><li><a href='https://www.youtube.com/channel/UCfcUAR7o362pS5Yy_82G1rw?view_as=subscriber' target='_blank'>YouTube</a></li></ul>"]
+		];
+		title1 = [
+			["Home"],
+			["Games / Snake"],
+			["Games / Multiplayer Snake"],
+			["Games / Yeet Ball"],
+			["Games / Yeet Ball Classic"],
+			["Games / Pong"],
+			["Games / 4-Player Pong"],
+			["Coding Challenges"],
+			["About Me"],
+		];
+		title2 = [
+			["Home"],
+			["Snake"],
+			["Multiplayer Snake"],
+			["Yeet Ball"],
+			["Yeet Ball Classic"],
+			["Pong"],
+			["4-Player Pong"],
+			["Coding Challenges"],
+			["About Me"],
+		];
+	
+	var
+		source = "home";
+		dest = "home";
+	
+	function refresh(state, title, url, page) {
+		dest = page;
+		if (dest !== source) {
+			document.getElementById(page).classList.add("w3-light-grey");
+			document.getElementById(source).classList.remove("w3-light-grey");
+			document.getElementById("information").innerHTML = synop[state];
+			document.getElementById("title1").innerHTML = title1[state];
+			document.getElementById("title2").innerHTML = title2[state];
+			document.getElementById("title3").innerHTML = title2[state];
+//			window.scrollTo(0, 0);
+			history.pushState(state, title, url);
+		}
+		source = page;
+	}
+
+	</script>
+</body>
+</html>
