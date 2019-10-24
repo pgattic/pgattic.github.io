@@ -2,15 +2,7 @@
 <html lang="en-us">
 
 <head>
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-114106362-3"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-
-		gtag('config', 'UA-114106362-3');
-	</script>
+	<?php include_once("analytics.php") ?>
 <!--	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 	<script>
 		 (adsbygoogle = window.adsbygoogle || []).push({
@@ -240,7 +232,7 @@
 			document.getElementById("title1").innerHTML = title1[state];
 			document.getElementById("title2").innerHTML = title2[state];
 			document.getElementById("title3").innerHTML = title2[state];
-//			window.scrollTo(0, 0);
+			window.scrollTo(0, 0);
 			history.pushState(state, title, url);
 		}
 		source = page;
