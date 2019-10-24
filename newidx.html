@@ -57,20 +57,20 @@
 			<h3 class="w3-wide"><img src="favicon-32x32.png"><b> SaveState</b></h3>
 		</div>
 		<div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
-			<a id="home" onclick="refresh(0, 'Home', 'home1', 'home')" class="w3-bar-item w3-button w3-light-grey">Home</a>
+			<a id="home" onclick="refresh(0, 'Home', 'home')" class="w3-bar-item w3-button w3-light-grey">Home</a>
 			<a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-left-align" id="myBtn">
 				Games <i class="fa fa-caret-down"></i>
 			</a>
 			<div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium">
-				<a id="snake" onclick="refresh(1, 'Snake', 'snake1', 'snake')" class="w3-bar-item w3-button">Snake</a>
-				<a id="msnake" onclick="refresh(2, 'Multiplayer Snake', 'multiplayer-snake1', 'msnake')" class="w3-bar-item w3-button">Multiplayer Snake</a>
-				<a id="yball" onclick="refresh(3, 'Yeet Ball', 'yeet-ball1', 'yball')" class="w3-bar-item w3-button">Yeet Ball</a>
-				<a id="yballc" onclick="refresh(4, 'Yeet Ball Classic', 'yeet-ball-classic1', 'yballc')" class="w3-bar-item w3-button">Yeet Ball Classic</a>
-				<a id="pong" onclick="refresh(5, 'Pong', 'pong1', 'pong')" class="w3-bar-item w3-button">Pong</a>
-				<a id="mpong" onclick="refresh(6, '4-Player Pong', '4p-pong1', 'mpong')" class="w3-bar-item w3-button">4-Player Pong</a>
+				<a id="snake" onclick="refresh(1, 'Snake', 'snake')" class="w3-bar-item w3-button">Snake</a>
+				<a id="multiplayer-snake" onclick="refresh(2, 'Multiplayer Snake', 'multiplayer-snake')" class="w3-bar-item w3-button">Multiplayer Snake</a>
+				<a id="yeet-ball" onclick="refresh(3, 'Yeet Ball', 'yeet-ball')" class="w3-bar-item w3-button">Yeet Ball</a>
+				<a id="yeet-ball-classic" onclick="refresh(4, 'Yeet Ball Classic', 'yeet-ball-classic')" class="w3-bar-item w3-button">Yeet Ball Classic</a>
+				<a id="pong" onclick="refresh(5, 'Pong', 'pong')" class="w3-bar-item w3-button">Pong</a>
+				<a id="4p-pong" onclick="refresh(6, '4-Player Pong', '4p-pong')" class="w3-bar-item w3-button">4-Player Pong</a>
 			</div>
-			<a id="chal" onclick="refresh(7, 'Coding Challenges', 'challenges1', 'chal')" class="w3-bar-item w3-button">Coding Challenges</a>
-			<a id="abt" onclick="refresh(8, 'About Me', 'about-me1', 'abt')" class="w3-bar-item w3-button">About Me</a>
+			<a id="challenges" onclick="refresh(7, 'Coding Challenges', 'challenges')" class="w3-bar-item w3-button">Coding Challenges</a>
+			<a id="about-me" onclick="refresh(8, 'About Me', 'about-me')" class="w3-bar-item w3-button">About Me</a>
 		</div>
 	</nav>
 
@@ -222,18 +222,18 @@
 	var
 		source = "home";
 		dest = "home";
-	
-	function refresh(state, title, url, page) {
+
+	function refresh(state, title, page) {
 		dest = page;
 		if (dest !== source) {
-			document.getElementById(page).classList.add("w3-light-grey");
+			document.getElementById(dest).classList.add("w3-light-grey");
 			document.getElementById(source).classList.remove("w3-light-grey");
 			document.getElementById("information").innerHTML = synop[state];
 			document.getElementById("title1").innerHTML = title1[state];
 			document.getElementById("title2").innerHTML = title2[state];
 			document.getElementById("title3").innerHTML = title2[state];
 			window.scrollTo(0, 0);
-			history.pushState(state, title, url);
+			history.pushState(page, title, "#" + page);
 		}
 		source = page;
 	}
