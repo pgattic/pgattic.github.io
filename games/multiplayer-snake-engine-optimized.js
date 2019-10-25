@@ -22,7 +22,7 @@ var
 
 	player1 = {
 		inGame : false,
-		startX : -unit / 2,
+		startX : unit / 2,
 		startY : unit / 2,
 		direction : [right],
 		dirTemp : right,
@@ -41,11 +41,15 @@ var
 		rightKey1 : "d",
 		rightKey2 : "D",
 		spawnKey : "1",
+		foodX : [NaN],
+		foodY : [NaN],
+		foodSize : [0],
+		amtOfFood : 0,
 	}
 
 	player2 = {
 		inGame : false,
-		startX : canvas.width + unit / 2,
+		startX : canvas.width - unit / 2,
 		startY : unit / 2,
 		direction : [left],
 		dirTemp : left,
@@ -64,11 +68,15 @@ var
 		rightKey1 : "h",
 		rightKey2 : "H",
 		spawnKey : "2",
+		foodX : [NaN],
+		foodY : [NaN],
+		foodSize : [0],
+		amtOfFood : 0,
 	}
 
 	player3 = {
 		inGame : false,
-		startX : -unit / 2,
+		startX : unit / 2,
 		startY : canvas.height - unit / 2,
 		direction : [right],
 		dirTemp : left,
@@ -87,11 +95,15 @@ var
 		rightKey1 : "l",
 		rightKey2 : "L",
 		spawnKey : "3",
+		foodX : [NaN],
+		foodY : [NaN],
+		foodSize : [0],
+		amtOfFood : 0,
 	}
 
 	player4 = {
 		inGame : false,
-		startX : canvas.width + unit / 2,
+		startX : canvas.width - unit / 2,
 		startY : canvas.height - unit / 2,
 		direction : [left],
 		dirTemp : left,
@@ -110,6 +122,10 @@ var
 		rightKey1 : "Right",
 		rightKey2 : "ArrowRight",
 		spawnKey : "4",
+		foodX : [NaN],
+		foodY : [NaN],
+		foodSize : [0],
+		amtOfFood : 0,
 	}
 
 	foodX = ((Math.floor(Math.random() * (canvas.width/unit))) * unit) + unit / 2
@@ -153,6 +169,9 @@ function doKeys(playerN, e) {
 		}
 	}
 	if (e.key == playerN.spawnKey) {
+		if (playerN.inGame) {
+			generateFood(playerN);
+		}
 		playerN.inGame = !playerN.inGame;
 		gameOver(playerN);
 	}
@@ -195,6 +214,7 @@ function playerLocation(playerN) {
 
 function boundsCheck(playerN) {
 	if (playerN.bodyX[0] >= canvas.width || playerN.bodyX[0] < 0 || playerN.bodyY[0] >= canvas.height || playerN.bodyY[0] < 0) {
+		generateFood(playerN);
 		gameOver(playerN);
 	}
 }
@@ -253,16 +273,37 @@ function calculate2(playerN) {
 
 function suicideCheck(playerN, playerQ) {
 	if (playerN !== playerQ && ((playerN.bodyX[0] == playerQ.bodyX[0] && playerN.bodyY[0] == playerQ.bodyY[0]) || (playerN.bodyX[0] == playerQ.bodyX[1] && playerN.bodyY[0] == playerQ.bodyY[1]))) {
+		generateFood(playerN);
 		gameOver(playerN);
+		generateFood(playerQ);
 		gameOver(playerQ);
 	}
 	var i;
 	var n = playerN.size;
 	for (i = 1; i < n; i++) {
 		if (playerN.bodyX[i] == playerQ.bodyX[0] && playerN.bodyY[i] == playerQ.bodyY[0]) {
-			playerN.size += 5 * (Math.ceil(playerQ.size / 10));
+			generateFood(playerQ);
 			gameOver(playerQ);
 		}
+	}
+	n = playerQ.amtOfFood;
+	for (i = 1; i <= n; i++) {
+		if (playerN.bodyX[0] == playerQ.foodX[i] && playerN.bodyY[0] == playerQ.foodY[i]) {
+			playerN.size += playerQ.foodSize[i];
+			playerQ.foodSize.splice(i, 1);
+			playerQ.foodX.splice(i, 1);
+			playerQ.foodY.splice(i, 1);
+		}
+	}
+}
+
+function generateFood(playerN) {
+	if (playerN.size > initialPlayerLength) { var i = 1// if singularity food
+//	for (i = 1; i < playerN.size - initialPlayerLength + 1; i++) {
+		playerN.foodX.push(playerN.bodyX[i]);
+		playerN.foodY.push(playerN.bodyY[i]);
+		playerN.foodSize.push(5 * (Math.ceil(playerN.size / 10))); // 5 * (Math.ceil(playerN.size / 10)) if singularity food
+		playerN.amtOfFood++;
 	}
 }
 
@@ -306,12 +347,16 @@ function display(playerN) {
 		drawLine(playerN);
 		drawScore(playerN);
 	}
+	drawPlayerFood(playerN);
 }
 
 function drawLine(playerN) {
 	var i;
 	var n = playerN.size;
 
+	if (playerN.size > (canvas.width / unit) * (canvas.height / unit)) {
+		playerN.size = (canvas.width / unit) * (canvas.height / unit);
+	}
 	ctx.beginPath();
 	ctx.lineCap = "round";
 	ctx.lineWidth = unit - 2;
@@ -351,6 +396,22 @@ function drawScore(playerN) {
 	ctx.fillStyle = scoreColor;
 	ctx.textAlign = "center";
 	ctx.fillText(playerN.size, playerN.bodyX[0], playerN.bodyY[0] + (unit / 12));
+}
+
+function drawPlayerFood(playerN) {
+	var n = playerN.amtOfFood;
+	for (var i = 1; i <= n; i++) {
+		ctx.beginPath();
+		ctx.arc(playerN.foodX[i], playerN.foodY[i], (unit / 2) - 1, 0, Math.PI * 2, false);
+		ctx.fillStyle = playerN.color;
+		ctx.fill();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.arc(playerN.foodX[i], playerN.foodY[i], unit / 6, 0, Math.PI * 2, false);
+		ctx.fillStyle = playerN.lineColor;
+		ctx.fill();
+		ctx.closePath();
+	}
 }
 
 function draw() {
