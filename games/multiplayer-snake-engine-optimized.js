@@ -7,7 +7,7 @@ const // internal constants
 // user-friendly vars
 	gameSpeed = 75 // Milliseconds per frame. Therefore, a higher number is a slower game.
 	unit = 24 // The unit used for calculating the width of the player's body and the size of the food. It is recommended to be a factor of 600.
-	foodColor = "#c0c"
+	foodColor = "#b0b"
 	foodLineColor = "#f0f"
 	growthRate = 5 // How much you grow from getting food.
 	scoreColor = "black"
@@ -30,8 +30,8 @@ var
 		size : initialPlayerLength,
 		bodyX : [-unit],
 		bodyY : [0],
-		color : "#00c",
-		lineColor : "#22f",
+		color : "#00b",
+		lineColor : "#33f",
 		upKey1 : "w",
 		upKey2 : "W",
 		downKey1 : "s",
@@ -111,8 +111,8 @@ var
 		size : initialPlayerLength,
 		bodyX : [canvas.width],
 		bodyY : [canvas.height - unit],
-		color : "#ee0",
-		lineColor : "#ff2",
+		color : "#dd0",
+		lineColor : "#ff3",
 		upKey1 : "Up",
 		upKey2 : "ArrowUp",
 		downKey1 : "Down",
@@ -128,6 +128,9 @@ var
 		amtOfFood : 0,
 	}
 
+	dimension = [Math.floor(document.documentElement.clientWidth / unit) * unit, Math.floor(document.documentElement.clientHeight / unit) * unit];
+	canvas.width = dimension[0];
+	canvas.height = dimension[1];
 	foodX = ((Math.floor(Math.random() * (canvas.width/unit))) * unit) + unit / 2
 	foodY = ((Math.floor(Math.random() * (canvas.height/unit))) * unit) + unit / 2
 	foodFailure = false
@@ -239,17 +242,21 @@ function foodCheck(playerN) {
 	if (playerN.bodyX[0] == foodX && playerN.bodyY[0] == foodY) {
 		playerN.size += growthRate;
 		foodFailure = true;
-		while (foodFailure) {
-			foodFailure = false;
-			foodX = ((Math.floor(Math.random() * (canvas.width/unit))) * unit) + unit / 2;
-			foodY = ((Math.floor(Math.random() * (canvas.height/unit))) * unit) + unit / 2;
-			foodCheck2(player1);
-			foodCheck2(player2);
-			foodCheck2(player3);
-			foodCheck2(player4);
-		}
+		redoFood();
 	}
 	drawFood();
+}
+
+function redoFood() {
+	while (foodFailure) {
+		foodFailure = false;
+		foodX = ((Math.floor(Math.random() * (canvas.width/unit))) * unit) + unit / 2;
+		foodY = ((Math.floor(Math.random() * (canvas.height/unit))) * unit) + unit / 2;
+		foodCheck2(player1);
+		foodCheck2(player2);
+		foodCheck2(player3);
+		foodCheck2(player4);
+	}
 }
 
 function foodCheck2(playerN) {
@@ -327,6 +334,11 @@ function drawGrid() {
 		ctx.stroke();
 		ctx.closePath();
 	}
+	ctx.beginPath();
+	ctx.rect(0, 0, canvas.width, canvas.height);
+	ctx.strokeStyle = "black";
+	ctx.stroke();
+	ctx.closePath();
 }
 
 function drawFood() {
@@ -336,7 +348,7 @@ function drawFood() {
 	ctx.fill();
 	ctx.closePath();
 	ctx.beginPath();
-	ctx.arc(foodX, foodY, unit / 6, 0, Math.PI * 2, false);
+	ctx.arc(foodX, foodY, unit / 4, 0, Math.PI * 2, false);
 	ctx.fillStyle = foodLineColor;
 	ctx.fill();
 	ctx.closePath();
@@ -375,7 +387,7 @@ function drawLine(playerN) {
 	ctx.closePath();
 
 	ctx.beginPath();
-	ctx.lineWidth = unit / 3;
+	ctx.lineWidth = unit / 2;
 	ctx.strokeStyle = playerN.lineColor;
 	ctx.moveTo(playerN.bodyX[0], playerN.bodyY[0]);
 	for (i = 1; i < n; i++) {
@@ -407,7 +419,7 @@ function drawPlayerFood(playerN) {
 		ctx.fill();
 		ctx.closePath();
 		ctx.beginPath();
-		ctx.arc(playerN.foodX[i], playerN.foodY[i], unit / 6, 0, Math.PI * 2, false);
+		ctx.arc(playerN.foodX[i], playerN.foodY[i], unit / 4, 0, Math.PI * 2, false);
 		ctx.fillStyle = playerN.lineColor;
 		ctx.fill();
 		ctx.closePath();
@@ -415,6 +427,19 @@ function drawPlayerFood(playerN) {
 }
 
 function draw() {
+	if (canvas.width != Math.floor(document.documentElement.clientWidth / unit) * unit || canvas.height != Math.floor(document.documentElement.clientHeight / unit) * unit) {
+		dimension = [Math.floor(document.documentElement.clientWidth / unit) * unit, Math.floor(document.documentElement.clientHeight / unit) * unit];
+		canvas.width = dimension[0];
+		canvas.height = dimension[1];
+		player2.startX = canvas.width - unit / 2;
+		player3.startY = canvas.height - unit / 2;
+		player4.startX = canvas.width - unit / 2;
+		player4.startY = canvas.height - unit / 2;
+		if (foodX > canvas.width || foodY > canvas.height) {
+			foodFailure = true;
+			redoFood();
+		}
+	}
 	if (!isPaused) {
 		calculate1(player1);
 		calculate1(player2);
@@ -424,14 +449,14 @@ function draw() {
 		calculate2(player2);
 		calculate2(player3);
 		calculate2(player4);
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		drawGrid();
-		drawFood();
-		display(player1);
-		display(player2);
-		display(player3);
-		display(player4);
 	}
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	drawGrid();
+	drawFood();
+	display(player1);
+	display(player2);
+	display(player3);
+	display(player4);
 }
 
 var interval = setInterval(draw, gameSpeed);
