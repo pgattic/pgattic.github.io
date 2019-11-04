@@ -18,6 +18,9 @@ const // internal constants
 
 var
 	canvas = document.getElementById("Snake")
+	dimension = [Math.floor(document.documentElement.clientWidth / unit) * unit, Math.floor(document.documentElement.clientHeight / unit) * unit];
+	canvas.width = dimension[0];
+	canvas.height = dimension[1];
 	ctx = canvas.getContext("2d")
 
 	player1 = {
