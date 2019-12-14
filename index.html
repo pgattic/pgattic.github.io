@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-us">
-
+<html lang="en-US">
 <head>
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-114106362-3"></script>
@@ -13,155 +12,66 @@
 	</script>
 	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 	<script>
-		 (adsbygoogle = window.adsbygoogle || []).push({
-			  google_ad_client: "ca-pub-7332676129708879",
-			  enable_page_level_ads: true
-		 });
+		(adsbygoogle = window.adsbygoogle || []).push({
+			google_ad_client: "ca-pub-7332676129708879",
+			enable_page_level_ads: true
+		});
 	</script>
 
-	<link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
-	<link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
+	<link rel="icon" type="image/png" href="img/favicon-32x32.png" sizes="32x32" />
+	<link rel="icon" type="image/png" href="img/favicon-16x16.png" sizes="16x16" />
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-	<SCRIPT LANGUAGE="JavaScript" SRC="script.js"></SCRIPT>
-	<link rel="stylesheet" type="text/css" href="style.css" />
 	<title>Home - SaveState's Web Games</title>
 	<meta charset="UTF-8">
 	<meta name="description" content="SaveState's Web Games">
-	<meta name="keywords" content="HTML, CSS, XML, JavaScript, HTML5, Coding, ROM, Hack, SaveState, Web, Games, YeetBall, ShootEm, yeet, ball, shoot, em, OpenSnake, open, snake, multiplayer snake, typewriter, pong, cps, preston, corless, pgattic">
+	<meta name="keywords" content="JavaScript,HTML5,Coding,SaveState,Web,Games,yeet ball,multiplayer,4 player,snake,typewriter,pong,cps,preston corless,pgattic">
 	<meta name="author" content="Preston Corless, SaveState">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<style>
-		.w3-sidebar a {font-family: "Roboto", sans-serif}
-		body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
-		.clearfix {
-			overflow: auto;
-		}
-
-		.thumb {
-			float: left;
-		}
-	</style>
+	<style>:root{--main-bg-color:#eee}</style>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
-<body class="w3-content" style="max-width:1200px">
-	<!-- adBlock detector -->
-	<div id="wrapfabtest">
-		<div class="adBanner">
+<body>
+	<div class="sidebar"></div>
+
+	<div class="content">
+		<header>Home</header>
+		<div class="title">
+			<img src="img/code3.png" class="title-img">
+			<div>Home</div>
 		</div>
-	</div>
-	<!-- Sidebar/menu -->
-	<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
-		<div class="w3-container w3-display-container w3-padding-16">
-			<i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
-			<h3 class="w3-wide"><img src="favicon-32x32.png"><b> SaveState</b></h3>
-		</div>
-		<div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
-			<a class="w3-bar-item w3-button w3-light-grey"><i class="fa fa-caret-right w3-margin-right"></i>Home</a>
-			<a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-left-align" id="myBtn">
-				Games <i class="fa fa-caret-down"></i>
-			</a>
-			<div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium">
-				<a href="snake" class="w3-bar-item w3-button">Snake</a>
-				<a href="multiplayer-snake" class="w3-bar-item w3-button">Multiplayer Snake</a>
-				<a href="yeet-ball" class="w3-bar-item w3-button">Yeet Ball</a>
-				<a href="yeet-ball-classic" class="w3-bar-item w3-button">Yeet Ball Classic</a>
-				<a href="pong" class="w3-bar-item w3-button">Pong</a>
-				<a href="4p-pong" class="w3-bar-item w3-button">4-Player Pong</a>
-			</div>
-			<a href="challenges" class="w3-bar-item w3-button">Coding Challenges</a>
-			<a href="about-me" class="w3-bar-item w3-button">About Me</a>
-		</div>
-	</nav>
-
-	<!-- Top menu on small screens -->
-	<header class="w3-bar w3-top w3-hide-large w3-black w3-xlarge">
-		<div class="w3-bar-item w3-padding-24 w3-wide"><img src="favicon-32x32.png"> SaveState</div>
-		<a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding-24 w3-right" onclick="w3_open()"><i class="fa fa-bars"></i></a>
-	</header>
-
-	<!-- Overlay effect when opening sidebar on small screens -->
-	<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
-
-	<!-- !PAGE CONTENT! -->
-	<div class="w3-main" style="margin-left:250px">
-
-		<!-- Push down content on small screens -->
-		<div class="w3-hide-large" style="margin-top:83px"></div>
-		
-		<!-- Top header -->
-		<header class="w3-container w3-xlarge">
-			<p class="w3-left">Home</p>
-			<p class="w3-right">
-			</p>
-		</header>
-
-		<!-- Image header -->
-		<div class="w3-display-container w3-container">
-			<img src="code3.png" alt="Code" style="width:100%">
-			<div class="w3-display-topleft w3-text-white" style="padding:24px 48px">
-				<h1 class="w3-jumbo w3-hide-small">Home</h1>
-				<h2 class="w3-hide-large w3-hide-medium">Home</h2>
-			</div>
-		</div>
-
-		<div class="w3-container w3-text-grey" id="About Me" style="padding:24px 48px">
+		<div class="page">
 			<h2>Welcome to my coding site!</h2>
-			<p>Here is where I will put all of the coding projects that I make. As of now, I am coding all of my games in JavaScript. If you have any suggestions on what I should do next, you can <a href="mailto:pgattic@gmail.com" target="_blank" style="color:green;">email me</a>, or if you know me personally, just talk to me in person, that would make things easier.</p>
+			<p>Here is where I will put all of the coding projects that I make. As of now, I am coding all of my games in JavaScript, sometimes also referred to as HTML5. If you have any suggestions on what I should do next, you can <a href="mailto:pgattic@gmail.com" target="_blank" style="color:green">email me</a>.</p>
 			<p>Please check out my games, I've worked really hard on them and I think you will appreciate playing them.</p>
-			<p>Lastly, thank you so much for visiting! I hope you'll enjoy it here and maybe come back later, too!</p>
+			<p>Lastly, thank you so much for visiting! I hope you'll enjoy it here and maybe come back later, too! I've been cranking games out really fast, and I don't plan on stopping anytime soon, so there may even be more games here by the next time you get here!</p>
 			<h2>My games:</h2>
 			<div class="clearfix">
-				<p><img class="thumb" src="snake-thumb.png" alt="snake"><strong><a href="snake" style="color:green;">Snake</a></strong></p>
-				<p>This is a classic snake game. If you've played snake before, you know what this is. The main objective is to eat the food that spawns in play, which makes you grow longer. How long can your snake grow?<br>Players: <img src="player.png" alt="1"></p>
-			</div>
-			<div class="clearfix">
-				<p><img class="thumb" src="multiplayer-snake-thumb.png" alt="multisnake"><strong><a href="multiplayer-snake" style="color:green;">Multiplayer Snake</a></strong></p>
-				<p>So, you've mastered the game of snake? Let's see how you do against your friends! Yep, that's right! This snake game allows up to 4 people to play at the same time, using one keyboard!<br>Players: <img src="player.png" alt="1"> - <img src="player.png" alt="4"><img src="player.png"><img src="player.png"><img src="player.png"></p>
-			</div>
-			<div class="clearfix">
-				<p><img class="thumb" src="yeet-ball-thumb.png" alt="yeetball"><strong><a href="yeet-ball" style="color:green;">Yeet Ball</a></strong></p>
-				<p>The idea for this game was one of my own creation. In it, you play as the red ball, and you try to survive as long as you can by shooting those green balls. How long can you last?<br>Players: <img src="player.png" alt="1"></p>
-			</div>
-			<div class="clearfix">
-				<p><img class="thumb" src="yeet-ball-classic-thumb.png" alt="yeetballclassic"><strong><a href="yeet-ball-classic" style="color:green;">Yeet Ball Classic</a></strong></p>
-				<p>This is what Yeet Ball was like before it got that major screen-scrolling update. For those of you enjoyed that version more than the new one, I've decided to leave that old version up for you to play!<br>Players: <img src="player.png" alt="1"></p>
-			</div>
-			<div class="clearfix">
-				<p><img class="thumb" src="2p-pong-thumb.png" alt="pong"><strong><a href="pong" style="color:green;">Pong</a></strong></p>
-				<p>The original Pong game, brought back to life! This game now supports up to two players! All you have to do is hit the ball to the enemy's side! Careful, don't miss!<br>Players: <img src="player.png" alt="1"> - <img src="player.png" alt="2"><img src="player.png"></p>
-			</div>
-			<div class="clearfix">
-				<p><img class="thumb" src="2p-pong-thumb.png" alt="pong"><strong><a href="4p-pong" style="color:green;">4-Player Pong</a></strong></p>
-				<p>A beautiful new update to the original Pong game that brings two more players into the action! Two people play on each team!<br>Players: <img src="player.png" alt="4"><img src="player.png"><img src="player.png"><img src="player.png"></p>
+				<p><img class="thumb" src="img/snake-thumb.png"><strong><a href="games/snake" style="color:green">Snake</a></strong></p>
+				<p>This is a classic snake game. If you've played snake before, you know what this is. The main objective is to eat the food that spawns in play, which makes you grow longer. How long can your snake grow?<br>Players: <svg class="player" alt="1"/></p>
+
+				<p><img class="thumb" src="img/multiplayer-snake-thumb.png"><strong><a href="games/multiplayer-snake" style="color:green">Multiplayer Snake</a></strong></p>
+				<p>So, you've mastered the game of snake? Let's see how you do against your friends! Yep, that's right! This snake game allows up to 4 people to play at the same time, using one keyboard!<br>Players: <svg class="player" alt="1"/> - <svg class="player"/><svg class="player"/><svg class="player"/><svg class="player" alt="4"/></p>
+
+				<p><img class="thumb" src="img/yeet-ball-thumb.png"><strong><a href="games/yeet-ball" style="color:green">Yeet Ball</a></strong></p>
+				<p>The idea for this game was one of my own creation. In it, you play as the red ball, and you try to survive as long as you can by shooting those green balls. How long can you last?<br>Players: <svg class="player" alt="1"/></p>
+
+				<p><img class="thumb" src="img/yeet-ball-classic-thumb.png"><strong><a href="games/yeet-ball-classic" style="color:green">Yeet Ball Classic</a></strong></p>
+				<p>This is what Yeet Ball was like before it got that major screen-scrolling update. For those of you enjoyed that version more than the new one, I've decided to leave that old version up for you to play!<br>Players: <svg class="player" alt="1"/></p>
+
+				<p><img class="thumb" src="img/2p-pong-thumb.png"><strong><a href="games/pong" style="color:green">Pong</a></strong></p>
+				<p>The original Pong game, brought back to life! This game now supports one or two players! All you have to do is hit the ball to the enemy's side! Careful, don't miss!<br>Players: <svg class="player" alt="1"/> - <svg class="player"/><svg class="player" alt="2"/></p>
+
+				<p><img class="thumb" src="img/2p-pong-thumb.png"><strong><a href="games/4p-pong" style="color:green">4-Player Pong</a></strong></p>
+				<p>A beautiful new update to the original Pong game that brings two more players into the action! Two people play on each team! Caution: The players on the front can accodentally hit the ball backwards!<br>Players: <svg class="player"/><svg class="player"/><svg class="player"/><svg class="player" alt="4"/></p>
+
+				<p><img class="thumb" src="img/flappy-bird-thumb.png"><strong><a href="games/flappy-bird" style="color:green">8-Player Flappy Bird</a></strong></p>
+				<p>"What the frick? 8 players?!" Yes. 8 players at a time. The funny thing about this is that I can still add many, many more, but there's really no point. This is still undergoing improvements, but still works fine now.<br>Players: <svg class="player"/><svg class="player"/><svg class="player"/><svg class="player"/><svg class="player"/><svg class="player"/><svg class="player"/><svg class="player" alt="8"/></p>
 			</div>
 		</div>
-		
-		<div align="center">
-			<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-			<!-- WebSiteAds -->
-			<ins class="adsbygoogle"
-				 style="display:block"
-				 data-ad-client="ca-pub-7332676129708879"
-				 data-ad-slot="6957629164"
-				 data-ad-format="auto"
-				 data-full-width-responsive="true"></ins>
-			<script>
-				 (adsbygoogle = window.adsbygoogle || []).push({});
-			</script>
-		</div>
-
-		<!-- Footer -->
-
-		<div class="w3-black w3-center w3-padding-24">2019 SaveState</div>
-
 	</div>
-
-	<script src="site-script.js"></script>
-
+	<script type="text/javascript" src="js/script-min.js"></script>
 </body>
 </html>

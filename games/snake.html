@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-us">
-
+<html lang="en-US">
 <head>
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-114106362-3"></script>
@@ -11,47 +10,52 @@
 
 		gtag('config', 'UA-114106362-3');
 	</script>
-
-	<link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
-	<link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
-
-
-	<title>Snake - SaveState's Web Games</title>
-	<meta name="robots" content="noindex">
-	<meta charset="utf-8" />
-	<meta name="description" content="SaveState's Web Games">
-	<meta name="author" content="Preston Corless, SaveState">
-</head>
-
-<body>
-	
-
-<div class="wrapper" style="margin: 0 auto; width: 1200px; position: relative;">
-	<canvas style="background-color:#eeeeee" id="Snake" width="1200" height="600" align="right"></canvas>
-	<div class="controls" style="position: absolute; top:0; left:0;">
-
-		<p>Go through wall: <input type="checkbox" id="gTWall"  onclick="goThroughWallToggle()"></p>
-		<p>Go through body: <input type="checkbox" id="gTBody"  onclick="goThroughBodyToggle()"></p>
-
-   </div>
-</div>
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 	<script>
-
-		var // user-friendly vars
-			gameSpeed = 75 // Milliseconds per frame. Therefore, a higher number is a slower game.
-			unit = 24 // The unit used for calculating the width of the player's body and the size of the food. It is recommended to be a factor of 600.
-			playerColor = "#00c"
-			playerLineColor = "#22f"
-			foodColor = "green"
-			growthRate = 5 // How much you grow from getting food.
-			scoreColor = "black"
-			initialPlayerLength = 5
-			goThroughBody = false
-			goThroughWall = false
+		(adsbygoogle = window.adsbygoogle || []).push({
+			google_ad_client: "ca-pub-7332676129708879",
+			enable_page_level_ads: true
+		});
 	</script>
 
-	<script src="snake-engine.js"></script>
+	<link rel="icon" type="image/png" href="../img/favicon-32x32.png" sizes="32x32" />
+	<link rel="icon" type="image/png" href="../img/favicon-16x16.png" sizes="16x16" />
 
+	<title>Snake - SaveState's Web Games</title>
+	<meta charset="UTF-8">
+	<meta name="description" content="SaveState's Web Games">
+	<meta name="keywords" content="JavaScript,HTML5,Coding,SaveState,Web,Games,yeet ball,multiplayer,4 player,snake,typewriter,pong,cps,preston corless,pgattic">
+	<meta name="author" content="Preston Corless, SaveState">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+
+	<style>:root{--main-bg-color:#eef}</style>
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<body>
+	<div class="sidebar"></div>
+
+	<div class="content">
+		<header>Games / Snake</header>
+		<div class="title">
+			<img src="../img/code3.png" class="title-img">
+			<div>Snake</div>
+		</div>
+		<div class="page">
+			<p>This is a simple snake game that is planned to be highly customizable. I plan on implementing some sandbox features.</p>
+			<p>The main objective is to eat the randomly-spawning food pellets, which grows your snake. Try not to run into yourself or the walls!</p>
+			<img class="thumb" src="../img/snake-thumb.png" style="float:right">
+			<h2>How to play:</h2>
+			<p>Controls:</p>
+			<ul>
+				<li>Move: Arrow keys or WASD</li>
+				<li>Pause/Resume: E</li>
+			</ul>
+			<p>Note: The game starts off paused so that you can configure the settings until you're ready.</p>
+			<p><a href="doc/snake" class="play-button">Play Snake</a><br/>&nbsp;&nbsp;&nbsp;<svg class="player"/></p>
+		</div>
+	</div>
+	<script type="text/javascript" src="../js/script-min.js"></script>
 </body>
-
 </html>

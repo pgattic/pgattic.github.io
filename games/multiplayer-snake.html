@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-us">
-
+<html lang="en-US">
 <head>
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-114106362-3"></script>
@@ -11,37 +10,56 @@
 
 		gtag('config', 'UA-114106362-3');
 	</script>
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<script>
+		(adsbygoogle = window.adsbygoogle || []).push({
+			google_ad_client: "ca-pub-7332676129708879",
+			enable_page_level_ads: true
+		});
+	</script>
 
-	<link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
-	<link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
-
+	<link rel="icon" type="image/png" href="../img/favicon-32x32.png" sizes="32x32" />
+	<link rel="icon" type="image/png" href="../img/favicon-16x16.png" sizes="16x16" />
 
 	<title>Multiplayer Snake - SaveState's Web Games</title>
-	<meta name="robots" content="noindex">
-	<meta charset="utf-8" />
+	<meta charset="UTF-8">
 	<meta name="description" content="SaveState's Web Games">
+	<meta name="keywords" content="JavaScript,HTML5,Coding,SaveState,Web,Games,yeet ball,multiplayer,4 player,snake,typewriter,pong,cps,preston corless,pgattic">
 	<meta name="author" content="Preston Corless, SaveState">
-	<style>
-		canvas {
-			padding: 0;
-			background: #fefefe;
-			display: block;
-			margin: 0 auto;
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			-ms-transform: translate(-50%, -50%);
-			transform: translate(-50%, -50%);
-		}
-	</style>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+
+	<style>:root{--main-bg-color:#fef}</style>
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
 </head>
-
 <body>
+	<div class="sidebar"></div>
 
-	<canvas id="Snake" width="100%" height="100%">Sorry, your browser doesn't support HTML5 Canvas! Choose a different browser please!</canvas>
-
-	<script src="multiplayer-snake-engine-optimized.js"></script>
-
+	<div class="content">
+		<header>Games / Multiplayer Snake</header>
+		<div class="title">
+			<img src="../img/code3.png" class="title-img">
+			<div>Multiplayer Snake</div>
+		</div>
+		<div class="page">
+			<p>Update from Snake that features playing with up to 4 players sharing one keyboard!</p>
+			<h2>How to play:</h2>
+			<p>The game starts off with no players in game. Add (or drop) a player by pressing the number key that corresponds to that player number. For example, you can add or remove player 1 in the game by pressing "1" on the keyboard.</p>
+			<p></p>
+			<img class="thumb" src="../img/multiplayer-snake-thumb.png" style="float:right">
+			<p>Controls:</p>
+			<ul>
+				<li>Player 1 move: WASD</li>
+				<li>Player 2 move: TFGH</li>
+				<li>Player 3 move: IJKL</li>
+				<li>Player 4 move: Arrow keys</li>
+				<li>Pause game: Space bar or Enter</li>
+			</ul>
+			<p>Keep in mind that this game does not support mobile devices. If you are on a mobile device right now, please switch to a computer to play this.</p>
+			<p><a href="doc/multiplayer-snake" class="play-button">Play Multiplayer Snake</a><br/>&nbsp;&nbsp;&nbsp;<svg class="player"/><svg class="player"/><svg class="player"/><svg class="player"/></p>
+		</div>
+	</div>
+	<script type="text/javascript" src="../js/script-min.js"></script>
 </body>
-
 </html>
