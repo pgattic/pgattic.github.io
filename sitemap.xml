@@ -6,37 +6,42 @@
 		<priority>1.00</priority>
 	</url>
 	<url>
-		<loc>https://pgattic.github.io/snake</loc>
+		<loc>https://pgattic.github.io/games/snake</loc>
 		<lastmod>2019-09-24</lastmod>
 		<priority>0.80</priority>
 	</url>
 	<url>
-		<loc>https://pgattic.github.io/multiplayer-snake</loc>
+		<loc>https://pgattic.github.io/games/multiplayer-snake</loc>
 		<lastmod>2019-09-24</lastmod>
 		<priority>0.80</priority>
 	</url>
 	<url>
-		<loc>https://pgattic.github.io/yeet-ball</loc>
+		<loc>https://pgattic.github.io/games/yeet-ball</loc>
 		<lastmod>2019-09-24</lastmod>
 		<priority>0.80</priority>
 	</url>
 	<url>
-		<loc>https://pgattic.github.io/yeet-ball-classic</loc>
+		<loc>https://pgattic.github.io/games/yeet-ball-classic</loc>
 		<lastmod>2019-09-24</lastmod>
 		<priority>0.80</priority>
 	</url>
 	<url>
-		<loc>https://pgattic.github.io/pong</loc>
+		<loc>https://pgattic.github.io/games/pong</loc>
 		<lastmod>2019-10-01</lastmod>
 		<priority>0.80</priority>
 	</url>
 	<url>
-		<loc>https://pgattic.github.io/4p-pong</loc>
+		<loc>https://pgattic.github.io/games/4p-pong</loc>
 		<lastmod>2019-10-14</lastmod>
 		<priority>0.80</priority>
 	</url>
 	<url>
-		<loc>https://pgattic.github.io/challenges</loc>
+		<loc>https://pgattic.github.io/games/8p-flappy-bird</loc>
+		<lastmod>2019-10-14</lastmod>
+		<priority>0.80</priority>
+	</url>
+	<url>
+		<loc>https://pgattic.github.io/challenges/about</loc>
 		<lastmod>2019-10-17</lastmod>
 		<priority>0.80</priority>
 	</url>
