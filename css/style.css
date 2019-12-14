@@ -68,7 +68,7 @@ a.active {
 
 .content {
 	margin: 10px 10px 10px 250px;
-	padding: 0px 16px;
+	padding: 16px;
 	font-family: "Montserrat", sans-serif;
 	border-radius: 16px;
 	transition: 0.5s;
@@ -76,11 +76,6 @@ a.active {
 
 .content:hover {
 	background-color: var(--main-bg-color);
-}
-
-.content header {
-	font-size:1.75em;
-	padding:16px;
 }
 
 .content .title {
