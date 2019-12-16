@@ -1,22 +1,12 @@
-Redirect 301 /yeet-ball.html /games/yeet-ball.html
-Redirect 301 /yeet-ball-classic.html /games/yeet-ball-classic.html
-Redirect 301 /snake.html /games/snake.html
-Redirect 301 /multiplayer-snake.html /games/multiplayer-snake.html
-Redirect 301 /pong.html /games/pong.html
-Redirect 301 /4p-pong.html /games/4p-pong.html
+Redirect 301 https://pgattic.github.io/yeet-ball.html https://pgattic.github.io/games/yeet-ball.html
+Redirect 301 https://pgattic.github.io/yeet-ball-classic.html https://pgattic.github.io/games/yeet-ball-classic.html
+Redirect 301 https://pgattic.github.io/snake.html https://pgattic.github.io/games/snake.html
+Redirect 301 https://pgattic.github.io/multiplayer-snake.html https://pgattic.github.io/games/multiplayer-snake.html
+Redirect 301 https://pgattic.github.io/pong.html https://pgattic.github.io/games/pong.html
+Redirect 301 https://pgattic.github.io/4p-pong.html https://pgattic.github.io/games/4p-pong.html
 
-ErrorDocument 401 /401.html
+ErrorDocument 401 /notfound.html
 
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^([^\.]+)$ $1.html [NC,L]
-<<<<<<< HEAD
-=======
-
-Redirect 301 /yeet-ball.html /games/yeet-ball.html
-Redirect 301 /yeet-ball-classic.html /games/yeet-ball-classic.html
-Redirect 301 /snake.html /games/snake.html
-Redirect 301 /multiplayer-snake.html /games/multiplayer-snake.html
-Redirect 301 /pong.html /games/pong.html
-Redirect 301 /4p-pong.html /games/4p-pong.html
->>>>>>> 13b068790b6f941b23f51ca036694347a95592cc
