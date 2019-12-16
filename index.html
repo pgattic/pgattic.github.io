@@ -34,9 +34,9 @@
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-	<div class="sidebar">
+	<aside>
 		<h2><img src="/img/favicon-32x32.png" style="vertical-align:text-bottom"> SaveState</h2>
-		<a class="active">► Home</a>
+		<a class="active">Home</a>
 		<a class="dropdown-btn">Games<span>▼</span></a>
 		<div class="dropdown-container">
 			<a style="color:#00b" href="/games/snake">Snake</a>
@@ -55,43 +55,44 @@
 			<a href="/challenges/paint">Paint</a>
 		</div>
 		<a href="/about-me">About Me</a>
-	</div>
+	</aside>
 
-	<div class="content">
-		<div class="title">
-			<img src="img/code3.png" class="title-img">
-			<div>Home</div>
-		</div>
-		<div class="page">
-			<h2>Welcome to my coding site!</h2>
-			<p>Here is where I will put all of the coding projects that I make. As of now, I am coding all of my games in JavaScript, sometimes also referred to as HTML5. If you have any suggestions on what I should do next, you can <a href="mailto:pgattic@gmail.com" target="_blank" style="color:green">email me</a>.</p>
+	<main>
+		<header>
+			<img src="img/code3.png">
+			<h1>Home</h1>
+		</header>
+		<article>
+			<h3>Welcome to my coding site!</h3>
+			<p>Here is where I will put all of the coding projects that I make. As of now, I am coding all of my games in JavaScript, sometimes also referred to as HTML5. If you have any suggestions on what I should do next, you can <a href="mailto:pgattic@gmail.com" target="_blank">email me</a>.</p>
 			<p>Please check out my games, I've worked really hard on them and I think you will appreciate playing them.</p>
 			<p>Lastly, thank you so much for visiting! I hope you'll enjoy it here and maybe come back later, too! I've been cranking games out really fast, and I don't plan on stopping anytime soon, so there may even be more games here by the next time you get here!</p>
-			<h2>My games:</h2>
+			<h3>My games:</h3>
 			<div class="clearfix">
-				<p><img class="thumb" src="img/snake-thumb.png"><strong><a href="games/snake" style="color:green">Snake</a></strong></p>
+				<p><img class="thumb" src="img/snake-thumb.png"><strong><a href="games/snake">Snake</a></strong></p>
 				<p>This is a classic snake game. If you've played snake before, you know what this is. The main objective is to eat the food that spawns in play, which makes you grow longer. How long can your snake grow?<br>Players: <svg class="player" alt="1"/></p>
 
-				<p><img class="thumb" src="img/multiplayer-snake-thumb.png"><strong><a href="games/multiplayer-snake" style="color:green">Multiplayer Snake</a></strong></p>
+				<p><img class="thumb" src="img/multiplayer-snake-thumb.png"><strong><a href="games/multiplayer-snake">Multiplayer Snake</a></strong></p>
 				<p>So, you've mastered the game of snake? Let's see how you do against your friends! Yep, that's right! This snake game allows up to 4 people to play at the same time, using one keyboard!<br>Players: <svg class="player" alt="1"/> - <svg class="player"/><svg class="player"/><svg class="player"/><svg class="player" alt="4"/></p>
 
-				<p><img class="thumb" src="img/yeet-ball-thumb.png"><strong><a href="games/yeet-ball" style="color:green">Yeet Ball</a></strong></p>
+				<p><img class="thumb" src="img/yeet-ball-thumb.png"><strong><a href="games/yeet-ball">Yeet Ball</a></strong></p>
 				<p>The idea for this game was one of my own creation. In it, you play as the red ball, and you try to survive as long as you can by shooting those green balls. How long can you last?<br>Players: <svg class="player" alt="1"/></p>
 
-				<p><img class="thumb" src="img/yeet-ball-classic-thumb.png"><strong><a href="games/yeet-ball-classic" style="color:green">Yeet Ball Classic</a></strong></p>
+				<p><img class="thumb" src="img/yeet-ball-classic-thumb.png"><strong><a href="games/yeet-ball-classic">Yeet Ball Classic</a></strong></p>
 				<p>This is what Yeet Ball was like before it got that major screen-scrolling update. For those of you enjoyed that version more than the new one, I've decided to leave that old version up for you to play!<br>Players: <svg class="player" alt="1"/></p>
 
-				<p><img class="thumb" src="img/2p-pong-thumb.png"><strong><a href="games/pong" style="color:green">Pong</a></strong></p>
+				<p><img class="thumb" src="img/2p-pong-thumb.png"><strong><a href="games/pong">Pong</a></strong></p>
 				<p>The original Pong game, brought back to life! This game now supports one or two players! All you have to do is hit the ball to the enemy's side! Careful, don't miss!<br>Players: <svg class="player" alt="1"/> - <svg class="player"/><svg class="player" alt="2"/></p>
 
-				<p><img class="thumb" src="img/2p-pong-thumb.png"><strong><a href="games/4p-pong" style="color:green">4-Player Pong</a></strong></p>
+				<p><img class="thumb" src="img/2p-pong-thumb.png"><strong><a href="games/4p-pong">4-Player Pong</a></strong></p>
 				<p>A beautiful new update to the original Pong game that brings two more players into the action! Two people play on each team! Caution: The players on the front can accodentally hit the ball backwards!<br>Players: <svg class="player"/><svg class="player"/><svg class="player"/><svg class="player" alt="4"/></p>
 
-				<p><img class="thumb" src="img/flappy-bird-thumb.png"><strong><a href="games/flappy-bird" style="color:green">8-Player Flappy Bird</a></strong></p>
+				<p><img class="thumb" src="img/flappy-bird-thumb.png"><strong><a href="games/flappy-bird">8-Player Flappy Bird</a></strong></p>
 				<p>"What the frick? 8 players?!" Yes. 8 players at a time. The funny thing about this is that I can still add many, many more, but there's really no point. This is still undergoing improvements, but still works fine now.<br>Players: <svg class="player"/><svg class="player"/><svg class="player"/><svg class="player"/><svg class="player"/><svg class="player"/><svg class="player"/><svg class="player" alt="8"/></p>
 			</div>
-		</div>
-	</div>
+		<article>
+		<footer>2016 - 2020 SaveState</footer>
+	<main>
 	<script type="text/javascript" src="js/script-min.js"></script>
 </body>
 </html>

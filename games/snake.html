@@ -34,12 +34,12 @@
 	<link rel="stylesheet" type="text/css" href="../css/style.css">
 </head>
 <body>
-	<div class="sidebar">
+	<aside>
 		<h2><img src="/img/favicon-32x32.png" style="vertical-align:text-bottom"> SaveState</h2>
 		<a href="/">Home</a>
 		<a class="dropdown-btn">Games<span>▼</span></a>
 		<div class="dropdown-container">
-			<a style="color:#00b" class="active">► Snake</a>
+			<a style="color:#00b" class="active">Snake</a>
 			<a style="color:#b0b" href="/games/multiplayer-snake">Multiplayer Snake</a>
 			<a style="color:#c00" href="/games/yeet-ball">Yeet Ball</a>
 			<a style="color:#f00" href="/games/yeet-ball-classic">Yeet Ball Classic</a>
@@ -55,18 +55,18 @@
 			<a href="/challenges/paint">Paint</a>
 		</div>
 		<a href="/about-me">About Me</a>
-	</div>
+	</aside>
 
-	<div class="content">
-		<div class="title">
+	<main>
+		<header>
 			<img src="../img/code3.png" class="title-img">
-			<div>Snake</div>
-		</div>
-		<div class="page">
+			<h1>Snake</h1>
+		</header>
+		<article>
 			<p>This is a simple snake game that is planned to be highly customizable. I plan on implementing some sandbox features.</p>
 			<p>The main objective is to eat the randomly-spawning food pellets, which grows your snake. Try not to run into yourself or the walls!</p>
 			<img class="thumb" src="../img/snake-thumb.png" style="float:right">
-			<h2>How to play:</h2>
+			<h3>How to play:</h3>
 			<p>Controls:</p>
 			<ul>
 				<li>Move: Arrow keys or WASD</li>
@@ -74,8 +74,9 @@
 			</ul>
 			<p>Note: The game starts off paused so that you can configure the settings until you're ready.</p>
 			<p><a href="doc/snake" class="play-button">Play Snake</a><br/>&nbsp;&nbsp;&nbsp;<svg class="player"/></p>
-		</div>
-	</div>
+		</article>
+		<footer>2016 - 2020 SaveState</footer>
+	</main>
 	<script type="text/javascript" src="../js/script-min.js"></script>
 </body>
 </html>

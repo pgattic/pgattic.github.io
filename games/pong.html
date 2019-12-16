@@ -34,7 +34,7 @@
 	<link rel="stylesheet" type="text/css" href="../css/style.css">
 </head>
 <body>
-	<div class="sidebar">
+	<aside>
 		<h2><img src="/img/favicon-32x32.png" style="vertical-align:text-bottom"> SaveState</h2>
 		<a href="/">Home</a>
 		<a class="dropdown-btn">Games<span>▼</span></a>
@@ -43,7 +43,7 @@
 			<a style="color:#b0b" href="/games/multiplayer-snake">Multiplayer Snake</a>
 			<a style="color:#c00" href="/games/yeet-ball">Yeet Ball</a>
 			<a style="color:#f00" href="/games/yeet-ball-classic">Yeet Ball Classic</a>
-			<a style="color:#222" class="active">► Pong</a>
+			<a style="color:#222" class="active">Pong</a>
 			<a style="color:#222" href="/games/4p-pong">4-Player Pong</a>
 			<a style="color:#080" href="/games/8p-flappy-bird">8-Player Flappy Bird</a>
 		</div>
@@ -55,17 +55,17 @@
 			<a href="/challenges/paint">Paint</a>
 		</div>
 		<a href="/about-me">About Me</a>
-	</div>
+	</aside>
 
-	<div class="content">
-		<div class="title">
+	<main>
+		<header>
 			<img src="../img/code3.png" class="title-img">
-			<div>Pong</div>
-		</div>
-		<div class="page">
+			<h1>Pong</h1>
+		</header>
+		<article>
 			<p>This is an ideration of the classic pong game that we all know and love! It supports one or two payers.</p>
 			<img class="thumb" src="../img/2p-pong-thumb.png" style="float:right">
-			<h2>How to play:</h2>
+			<h3>How to play:</h3>
 			<p>Controls:</p>
 			<ul>
 				<li>Player 1 Move: Q = up, A = down</li>
@@ -75,8 +75,9 @@
 			<p>Keep in mind that this game does not (yet) support mobile devices. If you are on a mobile device right now, please switch to a computer to play this.</p>
 			<p><a href="doc/pong" class="play-button">Play Pong</a><br/>&nbsp;&nbsp;&nbsp;<svg class="player"/></p>
 			<p><a href="doc/2p-pong" class="play-button">Play 2-Player Pong</a><br/>&nbsp;&nbsp;&nbsp;<svg class="player"/><svg class="player"/></p>
-		</div>
-	</div>
+		</article>
+		<footer>2016 - 2020 SaveState</footer>
+	</main>
 	<script type="text/javascript" src="../js/script-min.js"></script>
 </body>
 </html>
