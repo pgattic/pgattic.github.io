@@ -5,7 +5,7 @@ Redirect 301 /multiplayer-snake https://pgattic.github.io/games/multiplayer-snak
 Redirect 301 /pong https://pgattic.github.io/games/pong.html
 Redirect 301 /4p-pong https://pgattic.github.io/games/4p-pong.html
 
-ErrorDocument 401 /notfound.html
+ErrorDocument 404 /notfound.html
 
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
