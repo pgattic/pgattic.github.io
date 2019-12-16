@@ -5,7 +5,7 @@ const // internal constants
 	right = 4
 
 // user-friendly vars
-	gameSpeed = 125 // Milliseconds per frame. Therefore, a higher number is a slower game.
+	gameSpeed = 75 // Milliseconds per frame. Therefore, a higher number is a slower game.
 	unit = 24 // The unit used for calculating the width of the player's body and the size of the food. It is recommended to be a factor of 600.
 	foodColor = "#b0b"
 	foodLineColor = "#f0f"
