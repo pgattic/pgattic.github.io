@@ -46,6 +46,11 @@
 		<priority>0.80</priority>
 	</url>
 	<url>
+		<loc>https://pgattic.github.io/blog</loc>
+		<lastmod>2019-12-17</lastmod>
+		<priority>0.80</priority>
+	</url>
+	<url>
 		<loc>https://pgattic.github.io/about-me</loc>
 		<lastmod>2019-09-24</lastmod>
 		<priority>0.80</priority>
