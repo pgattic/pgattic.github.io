@@ -199,7 +199,7 @@ function doGame() {
 		doBoundary();
 		ctx.shadowBlur = 0;
 		drawBG();
-		ctx.shadowBlur = 4;
+		ctx.shadowBlur = lowEnd?0:4;
 		animateBullet();
 		enemyKill();
 		drawBadGuy();
@@ -208,7 +208,7 @@ function doGame() {
 		drawPowerUp();
 		ctx.shadowBlur = 0;
 		drawMapBorder();
-		ctx.shadowBlur = 4;
+		ctx.shadowBlur = lowEnd?0:4;
 		drawLine();
 		drawPlayer();
 		drawMiniMap();
@@ -229,11 +229,11 @@ function doGame() {
 		makeCursor();
 		ctx.shadowBlur = 0;
 		drawBG();
-		ctx.shadowBlur = 4;
+		ctx.shadowBlur = lowEnd?0:4;
 		drawBorder();
 		ctx.shadowBlur = 0;
 		drawMapBorder();
-		ctx.shadowBlur = 4;
+		ctx.shadowBlur = lowEnd?0:4;
 		drawPlayer();
 		drawMiniMap();
 		ctx.font = "bolder 72px Arial";
