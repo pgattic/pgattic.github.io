@@ -5,7 +5,7 @@ var
 	ctx = canvas.getContext("2d"),
 	dimension = [document.clientWidth, document.clientHeight];
 	canvas.width = dimension[0],
-	canvas.height = dimension[1] - 90;
+	canvas.height = dimension[1] - 94;
 
 const
 	inMenu = 0,
@@ -566,7 +566,7 @@ function drawMiniMap() {
 function main() {
 	dimension = [document.documentElement.clientWidth, document.documentElement.clientHeight];
 	canvas.width = dimension[0];
-	canvas.height = dimension[1] - 90;
+	canvas.height = dimension[1] - 94;
 	clearCanvas();
 	switch (gameState) {
 		case inMenu:
