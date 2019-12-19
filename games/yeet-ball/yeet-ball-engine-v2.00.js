@@ -5,7 +5,7 @@ var
 	ctx = canvas.getContext("2d"),
 	dimension = [document.clientWidth, document.clientHeight];
 	canvas.width = dimension[0],
-	canvas.height = dimension[1];
+	canvas.height = dimension[1] - 90;
 
 const
 	inMenu = 0,
@@ -108,8 +108,8 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phon
 }
 
 document.onmousemove = function() {
-	mouseX = event.clientX - canvas.offsetLeft + player.x;
-	mouseY = event.clientY - canvas.offsetTop + player.y;
+	mouseX = event.clientX - canvas.offsetLeft + player.x - canvas.width / 2;
+	mouseY = event.clientY - canvas.offsetTop + player.y - canvas.height / 2;
 }
 document.onmousedown = function() {clicking = true}
 document.onmouseup = function() {clicking = false}
@@ -566,7 +566,7 @@ function drawMiniMap() {
 function main() {
 	dimension = [document.documentElement.clientWidth, document.documentElement.clientHeight];
 	canvas.width = dimension[0];
-	canvas.height = dimension[1];
+	canvas.height = dimension[1] - 90;
 	clearCanvas();
 	switch (gameState) {
 		case inMenu:
