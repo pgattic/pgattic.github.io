@@ -565,7 +565,7 @@ function drawMiniMap() {
 
 function main() {
 	dimension = [document.documentElement.clientWidth, document.documentElement.clientHeight];
-	canvas.width = dimension[0];
+	canvas.width = dimension[0] - 300;
 	canvas.height = dimension[1] - 94;
 	clearCanvas();
 	switch (gameState) {
