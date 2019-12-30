@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-114106362-3"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-114106362-3');
+	</script>
+
+
+	<title>YeetNoor - SaveState's Web Games</title>
+	<meta name="robots" content="noindex">
+	<meta charset="utf-8" />
+	<meta name="description" content="SaveState's Web Games">
+	<meta name="author" content="Preston Corless, SaveState">
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+		}
+
+		canvas {
+			background: #eeeeee;
+			display: block;
+			margin: 0 auto;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			-ms-transform: translate(-50%, -50%);
+			transform: translate(-50%, -50%);
+		}
+	</style>
+</head>
+
+<body style="height: 100%; margin: 0;">
+	<audio id="noor-effect" src="noor.ogg" preload="auto"></audio>
+	<audio id="noor-boost-effect" src="noor-super.ogg" preload="auto"></audio>
+	<audio id="noor-enemy-effect" src="noor-enemy.ogg" preload="auto"></audio>
+	<canvas id="GWar" width="100%" height="100%"></canvas>
+
+<script>
+		const
+			playerColor = "tomato"
+			playerOutlineColor = "red"
+			enemyColor = "lightgreen"
+			enemyOutlineColor = "green"
+			bulletColor = "blue"
+			lineColor = "black"
+			powerUpColor = "lightblue"
+			powerUpOutlineColor = "blue"
+			bgColor = "white"
+			miniMapColor = "blue"
+			gridColor = "lightgray"
+	</script>
+
+	<script>
+var
+	canvas = document.getElementById("GWar")
+	dimension = [document.documentElement.clientWidth, document.documentElement.clientHeight];
+	canvas.width = dimension[0];
+	canvas.height = dimension[1];
+	ctx = canvas.getContext("2d")
+
+const origNoorAudio = document.getElementById("noor-effect");
+var noorAudio = origNoorAudio.cloneNode();
+const origNoorBoostAudio = document.getElementById("noor-boost-effect");
+var noorBoostAudio = origNoorBoostAudio.cloneNode();
+const origNoorKillAudio = document.getElementById("noor-enemy-effect");
+var noorKillAudio = origNoorKillAudio.cloneNode();
+	
+const
+	
+	screenWidth = 1200
+	screenHeight = 1200
+
+	playerRadius = 10
+	playerStartX = screenWidth / 2
+	playerStartY = screenHeight / 2
+	playerAccel = 0.1
+	playerSlowRate = 1.04
+	playerHitBoxRadius = playerRadius
+
+	bulletRadius = 10
+	bulletSpeed = 5
+	gapBetweenSuperBullets = 30
+
+	enemyRadius = 10
+	enemySpeed = 0.5
+	enemyHitBoxRadius = enemyRadius * 1.5
+	enemySpawnConstant = 300
+	enemyPtValue = 100
+	enemyWaitLimit = 80
+
+	kToPowerUp = 40
+	powerUpSize = 20
+	
+var
+	mouseX = canvas.width / 2
+	mouseY = canvas.height / 2
+	upPressed = false
+	downPressed = false
+	leftPressed = false
+	rightPressed = false
+
+ctx.translate((canvas.width - screenWidth) / 2, (canvas.height - screenHeight) / 2);
+
+	player = {
+		x : playerStartX,
+		y : playerStartY,
+		xVel : 0,
+		yVel : 0,
+	}
+	powerUp = {
+		x : [0],
+		y : [0],
+		alive : [false],
+		numSpawned : 0,
+		wait : 0,
+	}
+
+	superBulletSpeed = 20
+	
+	bulletX = [0]
+	bulletY = [0]
+	bulletDX = [0]
+	bulletDY = [0]
+	bulletTimer = [0]
+	bulletsLoaded = 0
+	bulletAlive = [false]
+	bulletSuper = [false]
+	superTimer = -1
+	
+	enemyX = [5]
+	enemyY = [5]
+	enemysLoaded = 1
+	enemysKilled = 1
+	enemyAlive = [false]
+	enemySpawnRate = 0
+	enemyWait = 500
+	
+	isPaused = false
+	playerLives = 3
+	powerUpsLeft = 3
+	playerPoints = 0		
+
+let img = new Image();
+img.src = 'Noor.png';
+
+let img2 = new Image();
+img2.src = 'Untitled.png';
+
+if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
+	alert('Are you on mobile? This game was created for PC users only, sorry!')
+}
+
+document.addEventListener("mousemove", getMouse, false);
+document.addEventListener("click", getClick, false);
+document.addEventListener("keydown", getKeys, false);
+document.addEventListener("keyup", unGetKeys, false);
+
+function getMouse(e) {
+   mouseX = e.clientX - canvas.offsetLeft + player.x;
+   mouseY = e.clientY - canvas.offsetTop + player.y;
+}
+
+function getClick() {
+	if (!isPaused) {
+		if (superTimer < 0) {
+			noorAudio = origNoorAudio.cloneNode()
+			noorAudio.play()
+			bulletsLoaded++;
+			for (let i = bulletsLoaded; i > 0; i--) {
+				bulletX[i] = bulletX[i - 1];
+				bulletY[i] = bulletY[i - 1];
+				bulletDX[i] = bulletDX[i - 1];
+				bulletDY[i] = bulletDY[i - 1];
+				bulletTimer[i] = bulletTimer[i - 1];
+				bulletAlive[i] = bulletAlive[i - 1];
+				bulletSuper[i] = bulletSuper[i - 1];
+			}
+			bulletAlive[0] = true;
+			bulletSuper[0] = false;
+			let bulletRise = mouseY - player.y;
+			let bulletRun = mouseX - player.x;
+			let bulletDZ = Math.sqrt(Math.pow(bulletRun, 2) + Math.pow(bulletRise, 2));
+			bulletTimer[0] = ((screenWidth + screenHeight) / 2) * Math.sqrt(2);
+			bulletDY[0] = (bulletRise / bulletDZ) * bulletSpeed;
+			bulletDX[0] = (bulletRun / bulletDZ) * bulletSpeed;
+			bulletX[0] = player.x;
+			bulletY[0] = player.y;
+		}
+	}
+}
+
+function getKeys(e) {
+	if (e.key == "Up" || e.key == "ArrowUp" || e.key == "w") {
+		upPressed = true;
+	}
+	if (e.key == "Down" || e.key == "ArrowDown" || e.key == "s") {
+		downPressed = true;
+	}
+	if (e.key == "Left" || e.key == "ArrowLeft" || e.key == "a") {
+		leftPressed = true;
+	}
+	if (e.key == "Right" || e.key == "ArrowRight" || e.key == "d") {
+		rightPressed = true;
+	}
+	if (e.key == "q") {
+		isPaused = !isPaused;
+	}
+}
+
+function unGetKeys(e) {
+	if (e.key == "Up" || e.key == "ArrowUp" || e.key == "w") {
+		upPressed = false;
+	}
+	else if (e.key == "Down" || e.key == "ArrowDown" || e.key == "s") {
+		downPressed = false;
+	}
+	
+	if (e.key == "Left" || e.key == "ArrowLeft" || e.key == "a") {
+		leftPressed = false;
+	}
+	else if (e.key == "Right" || e.key == "ArrowRight" || e.key == "d") {
+		rightPressed = false;
+	}
+	if (e.key == "e") {
+		if (!isPaused) {
+			if (powerUpsLeft > 0) {
+				noorBoostAudio = origNoorBoostAudio.cloneNode()
+				noorBoostAudio.play()
+				superTimer = 250;
+				powerUpsLeft--;
+				for (let i = 1; i < Math.floor(screenWidth / gapBetweenSuperBullets); i++) {
+					for (let i = bulletsLoaded + 1; i > 0; i--) {
+						bulletX[i] = bulletX[i - 1];
+						bulletY[i] = bulletY[i - 1];
+						bulletDX[i] = bulletDX[i - 1];
+						bulletDY[i] = bulletDY[i - 1];
+						bulletTimer[i] = bulletTimer[i - 1];
+						bulletAlive[i] = bulletAlive[i - 1];
+						bulletSuper[i] = bulletSuper[i - 1];
+					}
+					bulletX[0] = 10;
+					bulletY[0] = (gapBetweenSuperBullets * i) - 10;
+					bulletDX[0] = superBulletSpeed;
+					bulletDY[0] = 0;
+					bulletTimer[0] = 1200;
+					bulletAlive[0] = true;
+					bulletSuper[0] = true;
+					bulletsLoaded++;
+				}
+			}
+		}
+	}
+	if (e.key == " ") {
+		getClick();
+	}
+}
+
+function clearCanvas() {
+	ctx.clearRect(-screenWidth / 2, -screenHeight / 2, screenWidth * 2.5, screenHeight * 2.5);
+}
+
+function makeCrosshair() {
+	document.getElementById("GWar").style.cursor = "crosshair";
+}
+
+function makeCursor() {
+	document.getElementById("GWar").style.cursor = "default";
+}
+
+function acceleratePlayer() {
+	if (upPressed) {
+		player.yVel = player.yVel - playerAccel;
+	}
+	if (downPressed) {
+		player.yVel = player.yVel + playerAccel;
+	}
+	if (leftPressed) {
+		player.xVel = player.xVel - playerAccel;
+	}
+	if (rightPressed) {
+		player.xVel = player.xVel + playerAccel;
+	}
+	player.yVel = player.yVel / playerSlowRate;
+	player.xVel = player.xVel / playerSlowRate;
+}
+
+function calcPlayerCoord() {
+	ctx.translate(-player.xVel, -player.yVel)
+	player.x = player.x + player.xVel;
+	player.y = player.y + player.yVel;
+	mouseX = mouseX + player.xVel;
+	mouseY = mouseY + player.yVel;
+}
+
+function doBoundary() {
+	if (player.x + playerRadius > screenWidth) { 
+		player.xVel = 0;
+		player.x--;
+		ctx.translate(1, 0)
+	}
+	if (player.x - playerRadius < 0) { 
+		player.xVel = 0;
+		player.x++;
+		ctx.translate(-1, 0)
+	}
+	if (player.y + playerRadius > screenHeight) { 
+		player.yVel = 0;
+		player.y--;
+		ctx.translate(0, 1)
+	}
+	if (player.y - playerRadius < 0) { 
+		player.yVel = 0;
+		player.y++;
+		ctx.translate(0, -1)
+	}
+}
+
+function drawBG() {
+	ctx.beginPath();
+	ctx.rect(0, 0, screenWidth, screenHeight);
+	ctx.fillStyle = bgColor;
+	ctx.fill();
+	ctx.closePath();
+	for (let i = 1; i < 8; i++) {
+		ctx.beginPath();
+		ctx.moveTo((screenWidth / 8) * i, 0);
+		ctx.lineTo((screenWidth / 8) * i, screenHeight);
+		ctx.lineWidth = 3;
+		ctx.strokeStyle = gridColor;
+		ctx.stroke();
+		ctx.beginPath();
+		ctx.moveTo(0, (screenHeight / 8) * i);
+		ctx.lineTo(screenHeight, (screenHeight / 8) * i);
+		ctx.lineWidth = 3;
+		ctx.strokeStyle = gridColor;
+		ctx.stroke();
+	}
+}
+
+function animateBullet() {
+	for (let i = 0; i < bulletsLoaded; i++) {
+		if (bulletX[i] < 0 || bulletX[i] > screenWidth || bulletY[i] < 0 || bulletY[i] > screenHeight) {
+			bulletAlive[i] = false;
+		}
+		if (bulletAlive[i]) {
+			ctx.beginPath();
+			ctx.moveTo(bulletX[i], bulletY[i]);
+			ctx.lineTo(bulletX[i] + bulletDX[i] * (30 / bulletSpeed), bulletY[i] + bulletDY[i] * (30 / bulletSpeed));
+			ctx.lineWidth = 8;
+			ctx.strokeStyle = bulletColor;
+			ctx.stroke();
+			bulletX[i] = bulletX[i] + bulletDX[i];
+			bulletY[i] = bulletY[i] + bulletDY[i];
+		}
+		else {
+			bulletX[i] = 4000;
+		}
+		bulletTimer[i]--;
+		if (bulletTimer[i] <= 0) {
+			bulletsLoaded--;
+		}
+	}
+}
+
+function drawBadGuy() {
+	enemyWait--;
+	if (enemyWait == 0) {
+		enemysLoaded++;
+		for (let i = enemysLoaded; i > 0; i--) {
+			enemyX[i] = enemyX[i - 1];
+			enemyY[i] = enemyY[i - 1];
+			enemyAlive[i] = enemyAlive[i - 1];
+		}
+		let onTop = Math.floor(Math.random() * 4);
+		if (onTop == 0) {
+			enemyX[1] = enemyRadius;
+			enemyY[1] = screenHeight * Math.random();
+		}
+		else if (onTop == 1) {
+			enemyX[1] = screenWidth - enemyRadius;
+			enemyY[1] = screenHeight * Math.random();
+		}
+		else if (onTop == 2) {
+			enemyX[1] = screenWidth * Math.random();
+			enemyY[1] = enemyRadius;
+		}
+		else if (onTop == 3) {
+			enemyX[1] = screenWidth * Math.random();
+			enemyY[1] = screenHeight - enemyRadius;
+		}
+		enemyAlive[1] = true;
+		enemyWait = enemySpawnConstant - (enemySpawnRate * 5);
+		if (enemyWait < enemyWaitLimit) {
+			enemyWait = enemyWaitLimit;
+		}
+	}
+	for (let i = 1; i < enemysLoaded + 1; i++) {
+		if (enemyAlive[i]) {
+			let enemyRise = player.y - enemyY[i];
+			let enemyRun = player.x - enemyX[i];
+			let enemyDZ = Math.sqrt(Math.pow(enemyRun, 2) + Math.pow(enemyRise, 2));
+			let enemyDY = (enemyRise / enemyDZ) * enemySpeed;
+			let enemyDX = (enemyRun / enemyDZ) * enemySpeed;
+			enemyX[i] = enemyX[i] + enemyDX;
+			enemyY[i] = enemyY[i] + enemyDY;
+			ctx.beginPath();
+			ctx.arc(enemyX[i], enemyY[i], enemyRadius + 3, 0, Math.PI * 2, false);
+			ctx.fillStyle = enemyOutlineColor;
+			ctx.fill();
+			ctx.closePath();
+			ctx.beginPath();
+			ctx.arc(enemyX[i], enemyY[i], enemyRadius, 0, Math.PI * 2, false);
+			ctx.fillStyle = enemyColor;
+			ctx.fill();
+			ctx.closePath();
+			ctx.drawImage(img2, 0, 0, 249, 358, enemyX[i] - enemyRadius - 6, enemyY[i] - enemyRadius - 8, enemyRadius * 2 + 9, enemyRadius * 2 + 16);
+
+
+			ctx.beginPath();
+			ctx.arc((((canvas.width / 2) - screenWidth / 8) + player.x + enemyX[i] / 10), (((canvas.height / 2) - screenHeight / 8) + player.y + enemyY[i] / 10), enemyRadius / 5, 0, Math.PI * 2, false);
+			ctx.fillStyle = enemyOutlineColor;
+			ctx.fill();
+			ctx.closePath();
+		}
+		else {
+			enemyX[i] = 5000;
+		}
+	}
+}
+
+function enemyKill() {
+	for (let i = 1; i < enemysLoaded; i++) {
+		for (let e = 0; e < bulletsLoaded; e++) {
+			if ((Math.abs(bulletX[e] - enemyX[i]) < enemyHitBoxRadius && Math.abs(bulletY[e] - enemyY[i]) < enemyHitBoxRadius) && enemyAlive[i] && bulletAlive[e]) {
+				enemyAlive[i] = false;
+				if (!bulletSuper[e]) {
+					bulletAlive[e] = false;
+				}
+				noorKillAudio = origNoorKillAudio.cloneNode()
+				noorKillAudio.play()
+				enemysKilled++;
+				enemySpawnRate++;
+				powerUp.wait++;
+				playerPoints = playerPoints + enemyPtValue;
+				if (powerUp.wait >= kToPowerUp) {
+					powerUp.wait = 0;
+					powerUp.alive[powerUp.numSpawned] = true;
+					powerUp.x[powerUp.numSpawned] = enemyX[i] - powerUpSize / 2;
+					powerUp.y[powerUp.numSpawned] = enemyY[i] - powerUpSize / 2;
+					powerUp.numSpawned++;
+				}
+			}
+		}
+	}
+}
+
+function drawLine() {
+	ctx.beginPath();
+	ctx.moveTo(player.x, player.y);
+	ctx.lineTo(mouseX, mouseY);
+	ctx.lineWidth = 1;
+	ctx.strokeStyle = lineColor;
+	ctx.stroke();
+}
+
+function drawBorder() {
+	ctx.beginPath();
+	ctx.moveTo(0, 0);
+	ctx.lineTo(0, screenHeight);
+	ctx.lineTo(screenWidth, screenHeight);
+	ctx.lineTo(screenWidth, 0);
+	ctx.lineTo(0, 0);
+	ctx.lineWidth = 1;
+	ctx.strokeStyle = lineColor;
+	ctx.stroke();
+}
+
+function playerKill() {
+	for (let i = 1; i < enemysLoaded + 1; i++) {
+		if (Math.abs(enemyX[i] - player.x) < playerHitBoxRadius && Math.abs(enemyY[i] - player.y) < playerHitBoxRadius) {
+			ctx.translate(player.x - screenWidth / 2, player.y - screenHeight / 2);
+			mouseX = mouseX - (player.x - screenWidth / 2)
+			mouseY = mouseY - (player.y - screenHeight / 2)
+			playerLives--;
+			player.x = playerStartX;
+			player.y = playerStartY;
+			player.xVel = 0;
+			player.yVel = 0;
+			enemyWait = 500;
+			for (i = 0; i <= bulletsLoaded; i++) {
+				bulletTimer[i] = 0;
+			}
+			enemySpawnRate = Math.round(enemySpawnRate / 2);
+			for (let i = 1; i < enemysLoaded + 1; i++) {
+				enemyAlive[i] = false;
+			}
+			if (playerLives == 0) {
+				alert("Game Over!\nYou killed " + (enemysKilled - 1) + " enemies.");
+				document.location.reload();
+				clearInterval(interval);
+			}
+		}
+	}
+}
+
+function drawPlayer() {
+	ctx.beginPath();
+	ctx.arc(player.x, player.y, playerRadius + 3, 0, Math.PI * 2, false);
+	ctx.fillStyle = playerOutlineColor;
+	ctx.fill();
+	ctx.closePath();
+	ctx.beginPath();
+	ctx.arc(player.x, player.y, playerRadius, 0, Math.PI * 2, false);
+	ctx.fillStyle = playerColor;
+	ctx.fill();
+	ctx.closePath();
+	ctx.drawImage(img, 0, 0, 133, 178, player.x - playerRadius - 6, player.y - playerRadius - 8, playerRadius * 2 + 9, playerRadius * 2 + 16);
+	}
+
+function drawPowerUp() {
+	for (let i = 0; i < powerUp.numSpawned; i++) {
+		if (powerUp.alive[i]) {
+			ctx.beginPath();
+			ctx.fillStyle = powerUpOutlineColor;
+			ctx.fillRect(powerUp.x[i] - 3, powerUp.y[i] - 3, powerUpSize + 6, powerUpSize + 6);
+			ctx.closePath();
+			ctx.beginPath();
+			ctx.fillStyle = powerUpColor;
+			ctx.fillRect(powerUp.x[i], powerUp.y[i], powerUpSize, powerUpSize);
+			ctx.closePath();
+		}
+		if (Math.abs((powerUp.x[i] + (powerUpSize / 2)) - player.x) < powerUpSize && Math.abs((powerUp.y[i] + (powerUpSize / 2)) - player.y) < powerUpSize && powerUp.alive[i]) {
+			if (Math.random() >= 0.5) {
+				playerLives++;
+			}
+			else {
+				powerUpsLeft++;
+			}
+			powerUp.alive[i] = false;
+		}
+	}
+}
+
+function drawMiniMap() {
+	ctx.beginPath();
+	ctx.rect(((canvas.width / 2) - screenWidth / 8) + player.x, ((canvas.height / 2) - screenHeight / 8) + player.y, screenWidth / 10, screenHeight / 10);
+	ctx.fillStyle = bgColor;
+	ctx.fill();
+	ctx.lineWidth = 1;
+	ctx.strokeStyle = lineColor;
+	ctx.stroke();
+	ctx.closePath();
+	for (let i = 1; i < 8; i++) {
+		ctx.beginPath();
+		ctx.moveTo(((canvas.width / 2) - screenWidth / 8) + player.x + (screenWidth / 80) * i, ((canvas.height / 2) - screenHeight / 8) + player.y);
+		ctx.lineTo(((canvas.width / 2) - screenWidth / 8) + player.x + (screenWidth / 80) * i, ((canvas.height / 2) - screenHeight / 8) + player.y + (screenWidth / 10));
+		ctx.lineWidth = 1;
+		ctx.strokeStyle = gridColor;
+		ctx.stroke();
+
+		ctx.beginPath();
+		ctx.moveTo(((canvas.width / 2) - screenWidth / 8) + player.x, ((canvas.height / 2) - screenHeight / 8) + player.y + (screenHeight / 80) * i);
+		ctx.lineTo(((canvas.width / 2) - screenWidth / 8) + player.x + (screenWidth / 10), ((canvas.height / 2) - screenHeight / 8) + player.y + (screenHeight / 80) * i);
+		ctx.lineWidth = 1;
+		ctx.strokeStyle = gridColor;
+		ctx.stroke();
+	}
+	ctx.beginPath()
+	ctx.rect(((((canvas.width / 2) - screenWidth / 8) + player.x * 1.1) - canvas.width / 20), ((((canvas.height / 2) - screenHeight / 8) + player.y * 1.1) - canvas.height / 20), canvas.width / 10, canvas.height / 10);
+	ctx.lineWidth = 1;
+	ctx.strokeStyle = miniMapColor;
+	ctx.stroke();
+	ctx.closePath();
+	ctx.beginPath();
+	ctx.arc((((canvas.width / 2) - screenWidth / 8) + player.x * 1.1), (((canvas.height / 2) - screenHeight / 8) + player.y * 1.1), playerRadius / 5, 0, Math.PI * 2, false);
+	ctx.fillStyle = playerOutlineColor;
+	ctx.fill();
+	ctx.closePath();
+	
+	for (let i = 1; i < enemysLoaded + 1; i++) {
+		if (enemyAlive[i]) {
+			ctx.beginPath();
+			ctx.arc((((canvas.width / 2) - screenWidth / 8) + player.x + enemyX[i] / 10), (((canvas.height / 2) - screenHeight / 8) + player.y + enemyY[i] / 10), enemyRadius / 5, 0, Math.PI * 2, false);
+			ctx.fillStyle = enemyOutlineColor;
+			ctx.fill();
+			ctx.closePath();
+		}
+	}
+}
+
+function draw() {
+	clearCanvas();
+	if (!isPaused) {
+		makeCrosshair();
+		calcPlayerCoord();
+		acceleratePlayer();
+		doBoundary();
+		drawBG();
+		animateBullet();
+		enemyKill();
+		drawBadGuy();
+		enemyKill();
+		drawLine();
+		drawBorder();
+		playerKill();
+		drawPlayer();
+		drawPowerUp();
+		drawMiniMap()
+		superTimer--;
+	}
+	else {
+		makeCursor();
+		drawBG();
+		drawBorder();
+		drawPlayer();
+		drawMiniMap();
+		ctx.font = "bolder 72px Arial";
+		ctx.fillStyle = lineColor;
+		ctx.fillText("PAUSED", player.x - 150, player.y);
+	}
+	ctx.font = "16px Arial";
+	ctx.fillStyle = lineColor;
+	ctx.fillText("Lives: " + playerLives, 20 + player.x - canvas.width / 2, 30 + player.y - canvas.height / 2);
+	ctx.fillText("Points: " + playerPoints, 20 + player.x - canvas.width / 2, 54 + player.y - canvas.height / 2);
+	ctx.fillText("Super: " + powerUpsLeft, 20 + player.x - canvas.width / 2, 78 + player.y - canvas.height / 2);
+}
+
+var interval = setInterval(draw, 1);
+</script>
+
+</body>
+
+</html>
