@@ -21,11 +21,10 @@ var
 	player=[playerStartX,playerStartY,playerStartSize,playerColor],
 	enemies=[],
 	spawnWait=0,
-	score=0,
 	paused=false;
 	dead=true;
 
-document.getElementById("s").innerHTML="Score: "+score+"<br/>Highscore: "+highScore;
+document.getElementById("s").innerHTML="Score: "+Math.round(player[2])+"<br/>Highscore: "+Math.round(highScore);
 
 
 onmousemove=function(){if(!paused&&!dead){player[0]=event.x;player[1]=event.y}}
@@ -35,11 +34,10 @@ onclick=function(){
 		player[2]=playerStartSize;
 		player[0]=canvas.width/2;
 		player[1]=canvas.height/2;
-		score=0;
 		document.getElementById("c").style.cursor="none"
 		document.getElementById("s").style.cursor="none"
 		document.getElementById("p").innerHTML=[];
-		document.getElementById("s").innerHTML="Score: "+score+"<br/>Highscore: "+highScore;
+		document.getElementById("s").innerHTML="Score: "+Math.round(player[2])+"<br/>Highscore: "+Math.round(highScore);
 	}
 	dead=false;
 }
@@ -119,18 +117,17 @@ function killPlayer(){
 			if(player[2]>enemies[i][2]){
 				player[2]=Math.sqrt(Math.pow(enemies[i][2],2)/6+Math.pow(player[2],2));
 				enemies.splice(i,1);
-				score++;
-				document.getElementById("s").innerHTML="Score: "+score+"<br/>Highscore: "+highScore;
+				document.getElementById("s").innerHTML="Score: "+Math.round(player[2])+"<br/>Highscore: "+Math.round(highScore);
 				enemyRadMax=player[2]+70;
 			}
 			else{
-				if(score>highScore){
-					localStorage.setItem('record', score);
-					highScore=score;
+				if(player[2]>highScore){
+					localStorage.setItem('record', player[2]);
+					highScore=player[2];
 				}
 				document.getElementById("c").style.cursor="default";
 				document.getElementById("s").style.cursor="default";
-				document.getElementById("p").innerHTML="You Died!<br/>Click to Retry<br/>Score: "+score;
+				document.getElementById("p").innerHTML="You Died!<br/>Click to Retry<br/>Score: "+Math.round(player[2]);
 				dead=true;
 				paused=false;
 			}
