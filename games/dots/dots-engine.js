@@ -15,7 +15,7 @@ const
 var
 	enemyRadMin=7,
 	enemyRadMax=playerStartSize+70,
-	highScore=localStorage.getItem('record')||0,
+	highScore=localStorage.getItem('dRecord')||0,
 	playerStartX=canvas.width / 2,
 	playerStartY=canvas.height / 2,
 	player=[playerStartX,playerStartY,playerStartSize,playerColor],
@@ -122,7 +122,7 @@ function killPlayer(){
 			}
 			else{
 				if(player[2]>highScore){
-					localStorage.setItem('record', player[2]);
+					localStorage.setItem('dRecord', player[2]);
 					highScore=player[2];
 				}
 				document.getElementById("c").style.cursor="default";
