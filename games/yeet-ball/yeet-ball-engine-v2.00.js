@@ -5,7 +5,7 @@ var
 	ctx = canvas.getContext("2d"),
 	dimension = [document.clientWidth, document.clientHeight];
 	canvas.width = dimension[0],
-	canvas.height = dimension[1] - 94;
+	canvas.height = dimension[1];
 
 const
 	inMenu = 0,
@@ -40,7 +40,8 @@ const
 
 	menuPlayButtonRadius = canvas.height / 4,
 	menuPlayButtonX = canvas.width / 2,
-	menuPlayButtonY = canvas.height * (3 / 5);
+	menuPlayButtonY = canvas.height * (3 / 5),
+	ver = "v2.0.4";
 
 
 var
@@ -250,7 +251,7 @@ function doGame() {
 	ctx.fillText("Highscore: " + highScore, 20 + player.x - canvas.width / 2, -20 + player.y + canvas.height / 2);
 	ctx.font = "12px Arial";
 	ctx.textAlign = "right";
-	ctx.fillText("v2.0.0", -10 + player.x + canvas.width / 2, -10 + player.y + canvas.height / 2);
+	ctx.fillText(ver, -10 + player.x + canvas.width / 2, -10 + player.y + canvas.height / 2);
 //	ctx.fillText("Enemies/sec: " + (1000/(((enemySpawnConstant - (enemySpawnRate * spawnGradient)) < enemyWaitLimit)? enemyWaitLimit : (enemySpawnConstant - (enemySpawnRate * spawnGradient)))).toFixed(2), 20 + player.x - canvas.width / 2, 126 + player.y - canvas.height / 2);
 }
 
@@ -565,8 +566,8 @@ function drawMiniMap() {
 
 function main() {
 	dimension = [document.documentElement.clientWidth, document.documentElement.clientHeight];
-	canvas.width = dimension[0] - 300;
-	canvas.height = dimension[1] - 94;
+	canvas.width = dimension[0];
+	canvas.height = dimension[1];
 	clearCanvas();
 	switch (gameState) {
 		case inMenu:
