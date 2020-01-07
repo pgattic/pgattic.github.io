@@ -8,9 +8,9 @@ var
 const
 	playerColor="#922",
 	playerStartSize=10,
-	spawnRate=40,
-	enemyDMin=0.1,
-	enemyDMax=0.5;
+	spawnRate=10,
+	enemyDMin=0.4,
+	enemyDMax=2;
 
 var
 	enemyRadMin=7,
@@ -21,8 +21,9 @@ var
 	player=[playerStartX,playerStartY,playerStartSize,playerColor],
 	enemies=[],
 	spawnWait=0,
-	paused=false;
-	dead=true;
+	paused=false,
+	dead=true,
+	screen=canvas.style;
 
 document.getElementById("s").innerHTML="Score: "+Math.round(player[2])+"<br/>Highscore: "+Math.round(highScore);
 
@@ -144,12 +145,6 @@ function draw(){
 }
 
 function drawCircle(o){
-	if(dead||paused){
-		canvas.style.webkitFilter="blur(1px)";
-	}
-	else{
-		canvas.style.webkitFilter="blur(0)";
-	}
 	ctx.beginPath();
 	ctx.arc(o[0],o[1],o[2],0,Math.PI*2);
 	ctx.fillStyle=o[3];
@@ -167,10 +162,16 @@ function drawCircle(o){
 }
 
 function main(){
+	ctx.clearRect(0,0,canvas.width,canvas.height);
 	dimension=[document.documentElement.clientWidth,document.documentElement.clientHeight];
 	canvas.width=dimension[0];
 	canvas.height=dimension[1];	
-	ctx.clearRect(0,0,canvas.width,canvas.height);
+	if(dead||paused){
+		screen.filter="blur(1px)";
+	}
+	else{
+		screen.filter="blur(0)";
+	}
 	if(!paused&&!dead){
 		spawnEnemy();
 		killEnemy();
@@ -180,4 +181,4 @@ function main(){
 	draw();
 }
 
-var interval = setInterval(main, 1);
+var interval = setInterval(main, 20);
