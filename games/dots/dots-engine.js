@@ -34,6 +34,7 @@ onclick=function(){
 		player[2]=playerStartSize;
 		player[0]=canvas.width/2;
 		player[1]=canvas.height/2;
+		enemyRadMax=player[2]+70;
 		document.getElementById("c").style.cursor="none"
 		document.getElementById("s").style.cursor="none"
 		document.getElementById("p").innerHTML=[];
