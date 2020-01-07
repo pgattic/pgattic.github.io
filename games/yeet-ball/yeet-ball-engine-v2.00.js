@@ -41,7 +41,7 @@ const
 	menuPlayButtonRadius = canvas.height / 4,
 	menuPlayButtonX = canvas.width / 2,
 	menuPlayButtonY = canvas.height * (3 / 5),
-	ver = "v2.0.4";
+	ver = "v2.0.5";
 
 
 var
@@ -104,9 +104,9 @@ var
 	gameState = 1,
 	playerState = 0;
 
-/*if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
-	window.location.href = 'https://pgattic.github.io/games/yeet-ball-mobile';
-}*/
+if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
+	window.location.href = 'mobile';
+}
 
 document.onmousemove = function() {
 	mouseX = event.clientX - canvas.offsetLeft + player.x - canvas.width / 2;
