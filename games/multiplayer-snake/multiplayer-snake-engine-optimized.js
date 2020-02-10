@@ -5,7 +5,7 @@ const // internal constants
 	right = 4
 
 // user-friendly vars
-	gameSpeed = 75 // Milliseconds per frame. Therefore, a higher number is a slower game.
+	gameSpeed = 30 // Milliseconds per frame. Therefore, a higher number is a slower game.
 	unit = 24 // The unit used for calculating the width of the player's body and the size of the food. It is recommended to be a factor of 600.
 	foodColor = "#b0b"
 	foodLineColor = "#f0f"
@@ -48,6 +48,7 @@ var
 		foodY : [NaN],
 		foodSize : [0],
 		amtOfFood : 0,
+		timer : 0
 	}
 
 	player2 = {
@@ -75,6 +76,7 @@ var
 		foodY : [NaN],
 		foodSize : [0],
 		amtOfFood : 0,
+		timer : 0
 	}
 
 	player3 = {
@@ -102,6 +104,7 @@ var
 		foodY : [NaN],
 		foodSize : [0],
 		amtOfFood : 0,
+		timer : 0
 	}
 
 	player4 = {
@@ -129,6 +132,7 @@ var
 		foodY : [NaN],
 		foodSize : [0],
 		amtOfFood : 0,
+		timer : 0
 	}
 
 	dimension = [Math.floor(document.documentElement.clientWidth / unit) * unit, Math.floor(document.documentElement.clientHeight / unit) * unit];
@@ -194,27 +198,31 @@ function calculate1(playerN) {
 }
 
 function playerLocation(playerN) {
-	if (playerN.direction.length > 1) {
-		playerN.direction.shift();
-	}
-	if (playerN.direction[0] == up) {
-		playerN.bodyX.unshift(playerN.bodyX[0]);
-		playerN.bodyY.unshift(playerN.bodyY[0] - unit);
-	} else if (playerN.direction[0] == down) {
-		playerN.bodyX.unshift(playerN.bodyX[0]);
-		playerN.bodyY.unshift(playerN.bodyY[0] + unit);
-	} else if (playerN.direction[0] == left) {
-		playerN.bodyX.unshift(playerN.bodyX[0] - unit);
-		playerN.bodyY.unshift(playerN.bodyY[0]);
-	} else {
-		playerN.bodyX.unshift(playerN.bodyX[0] + unit);
-		playerN.bodyY.unshift(playerN.bodyY[0]);
-	}
-	while (playerN.bodyX.length > playerN.size) {
-		playerN.bodyX.pop();
-	}
-	while (playerN.bodyY.length > playerN.size) {
-		playerN.bodyY.pop();
+	playerN.timer++;
+	if(playerN.timer>=(playerN.size>100?100:playerN.size)/20+1){
+		if (playerN.direction.length > 1) {
+			playerN.direction.shift();
+		}
+		if (playerN.direction[0] == up) {
+			playerN.bodyX.unshift(playerN.bodyX[0]);
+			playerN.bodyY.unshift(playerN.bodyY[0] - unit);
+		} else if (playerN.direction[0] == down) {
+			playerN.bodyX.unshift(playerN.bodyX[0]);
+			playerN.bodyY.unshift(playerN.bodyY[0] + unit);
+		} else if (playerN.direction[0] == left) {
+			playerN.bodyX.unshift(playerN.bodyX[0] - unit);
+			playerN.bodyY.unshift(playerN.bodyY[0]);
+		} else {
+			playerN.bodyX.unshift(playerN.bodyX[0] + unit);
+			playerN.bodyY.unshift(playerN.bodyY[0]);
+		}
+		while (playerN.bodyX.length > playerN.size) {
+			playerN.bodyX.pop();
+		}
+		while (playerN.bodyY.length > playerN.size) {
+			playerN.bodyY.pop();
+		}
+		playerN.timer=0;
 	}
 }
 
