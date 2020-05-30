@@ -21,34 +21,24 @@
 	<meta charset="utf-8" />
 	<meta name="description" content="SaveState's Web Games">
 	<meta name="author" content="Preston Corless, SaveState">
+	<style>
+		canvas {
+			padding: 0;
+			background: #fefefe;
+			display: block;
+			margin: 0 auto;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			-ms-transform: translate(-50%, -50%);
+			transform: translate(-50%, -50%);
+		}
+	</style>
 </head>
 
 <body>
-	
 
-<div class="wrapper" style="margin: 0 auto; width: 1200px; position: relative;">
-	<canvas style="background-color:#eeeeee" id="Snake" width="1200" height="600" align="right"></canvas>
-	<div class="controls" style="position: absolute; top:0; left:0;">
-
-		<p>Go through wall: <input type="checkbox" id="gTWall"  onclick="goThroughWallToggle()"></p>
-		<p>Go through body: <input type="checkbox" id="gTBody"  onclick="goThroughBodyToggle()"></p>
-
-   </div>
-</div>
-	<script>
-
-		var // user-friendly vars
-			gameSpeed = 75 // Milliseconds per frame. Therefore, a higher number is a slower game.
-			unit = 24 // The unit used for calculating the width of the player's body and the size of the food. It is recommended to be a factor of 600.
-			playerColor = "#00c"
-			playerLineColor = "#22f"
-			foodColor = "green"
-			growthRate = 5 // How much you grow from getting food.
-			scoreColor = "black"
-			initialPlayerLength = 5
-			goThroughBody = false
-			goThroughWall = false
-	</script>
+	<canvas id="Snake" width="100%" height="100%">Sorry, your browser doesn't support HTML5 Canvas! Choose a different browser please!</canvas>
 
 	<script src="snake-engine.js"></script>
 
