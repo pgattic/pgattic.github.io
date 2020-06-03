@@ -41,6 +41,16 @@
 		<priority>0.80</priority>
 	</url>
 	<url>
+		<loc>https://pgattic.github.io/games/dots</loc>
+		<lastmod>2019-10-14</lastmod>
+		<priority>0.80</priority>
+	</url>
+	<url>
+		<loc>https://pgattic.github.io/games/snake-evolved</loc>
+		<lastmod>2020-06-02</lastmod>
+		<priority>0.80</priority>
+	</url>
+	<url>
 		<loc>https://pgattic.github.io/challenges/about</loc>
 		<lastmod>2019-10-17</lastmod>
 		<priority>0.80</priority>

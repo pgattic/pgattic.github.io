@@ -1,0 +1,167 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Snake Evolved</title>
+		<style>
+			* {
+				margin:0;
+			}
+			body{
+				background-color:#000;
+			}
+			canvas{
+				background-color:#555;
+				position:absolute;
+				transition: .25s;
+			}
+			#paused {
+				position: absolute;
+				text-align: center;
+				font: 60px Arial;
+				top: 50%;
+				width: 100%;
+				margin: -30px 0;
+			}
+			#a {
+				left: 0;
+				bottom: 50%;
+			}
+			#b {
+				left: 50%;
+				bottom: 50%;
+			}
+			#c {
+				left: 0;
+				bottom: 0;
+			}
+			#d {
+				left: 50%;
+				bottom: 0;
+			}
+			.score{
+				position:absolute;
+				font: 16px Arial;
+				padding:5px;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="1">Aw, man! looks like your browser doesn't support Canvas elements!</canvas>
+		<p id="a" class="score">Score: 200</p>
+
+		<canvas id="2" style="left: 50%"></canvas>
+		<p id="b" class="score">Score: 200</p>
+
+		<canvas id="3" style="top: 50%"></canvas>
+		<p id="c" class="score">Score: 200</p>
+
+		<canvas id="4" style="top: 50%; left: 50%"></canvas>
+		<p id="d" class="score">Score: 200</p>
+
+		<p id="paused" style="display: none">PAUSED</p>
+
+		<script>
+const
+	canvas = [document.getElementById("1"), document.getElementById("2"), document.getElementById("3"), document.getElementById("4")],
+	ctx = [canvas[0].getContext("2d"), canvas[1].getContext("2d"), canvas[2].getContext("2d"), canvas[3].getContext("2d")],
+	startX = 0,
+	startY = 0,
+	startDirection = [Math.PI / 2, Math.PI, 0, Math.PI * (3/2)]
+	mapSize = 1000,
+	startLength = 200,
+	turnSensitivity = 0.1,
+	playerSpeed = 2,
+	amtOfFood = 100,
+	sprintingAtrophy = 0.5,
+	playerSizeFloor = 150,
+	mouthSize = 10,
+	growthRate = 20,
+	numOfPlayers = 4,
+	startLocation = [[startX, startY - 200], [startX - 200, startY], [startX + 200, startY], [startX, startY + 200]],
+	scoreMeters = [document.getElementById("a"), document.getElementById("b"), document.getElementById("c"), document.getElementById("d")]
+
+var
+	players = [
+		{
+			location: [
+				startLocation[0]
+			],
+			direction: startDirection[0],
+			size: startLength,
+			boosting:false,
+			right: false,
+			left: false,
+			up: false,
+			color: "#f00",
+			boostColor: "#f66",
+			upKey: "w",
+			leftKey: "a",
+			rightKey: "d",
+		},
+		{
+			location: [
+				startLocation[1]
+			],
+			direction: startDirection[1],
+			size: startLength,
+			boosting:false,
+			right: false,
+			left: false,
+			up: false,
+			color: "#0a0",
+			boostColor: "#6a6",
+			upKey: "t",
+			leftKey: "f",
+			rightKey: "h",
+		},
+		{
+			location: [
+				startLocation[2]
+			],
+			direction: startDirection[2],
+			size: startLength,
+			boosting:false,
+			right: false,
+			left: false,
+			up: false,
+			color: "#00f",
+			boostColor: "#66f",
+			upKey: "i",
+			leftKey: "j",
+			rightKey: "l",
+		},
+		{
+			location: [
+				startLocation[3]
+			],
+			direction: startDirection[3],
+			size: startLength,
+			boosting:false,
+			right: false,
+			left: false,
+			up: false,
+			color: "#a0a",
+			boostColor: "#a6a",
+			upKey: "ArrowUp",
+			leftKey: "ArrowLeft",
+			rightKey: "ArrowRight",
+		},
+	],
+	food = [];
+
+function resize(){
+	canvas[0].width = innerWidth / 2 - 1;
+	canvas[0].height = innerHeight / 2 - 1;
+	canvas[1].width = innerWidth / 2;
+	canvas[1].height = innerHeight / 2 - 1;
+
+	canvas[2].width = innerWidth / 2 - 1;
+	canvas[2].height = innerHeight / 2;
+	canvas[3].width = innerWidth / 2;
+	canvas[3].height = innerHeight / 2;
+}
+		</script>
+		<script src="engine.js"></script>
+	</body>
+</html>
