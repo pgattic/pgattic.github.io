@@ -1,4 +1,17 @@
-paused = false;
+const
+	mapSize = 1000,
+	turnSensitivity = 0.1,
+	playerSpeed = 2,
+	amtOfFood = 100,
+	sprintingAtrophy = 0.5,
+	playerSizeFloor = 150,
+	mouthSize = 10,
+	growthRate = 20,
+	foodDropConstant = 30;
+
+var
+	paused = false,
+	food = [];
 
 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
 	alert('Are you on mobile? This game was created for PC users only, sorry!')
@@ -11,7 +24,7 @@ window.onresize = () => {
 resize();
 
 onkeydown = () => {
-	for (var e = 0; e < numOfPlayers; e++){
+	for (var e = 0; e < numOfPlayers; e++) {
 		switch (event.key) {
 			case players[e].upKey:
 				players[e].up = true;
@@ -24,17 +37,17 @@ onkeydown = () => {
 				break;
 		}
 	}
-	if (event.key ==  "Escape"){
+	if (event.key == "Escape") {
 		paused = !paused;
-		document.getElementById("paused").style.display=paused?"block":"none";
+		document.getElementById("paused").style.display = paused ? "block" : "none";
 		for (var i of canvas) {
-			i.style.filter=paused?"blur(1px)":"blur(0)";
+			i.style.filter = paused ? "blur(1px)" : "blur(0)";
 		}
 	}
 }
 
 onkeyup = () => {
-	for (var e = 0; e < numOfPlayers; e++){
+	for (var e = 0; e < numOfPlayers; e++) {
 		switch (event.key) {
 			case players[e].upKey:
 				players[e].up = false;
@@ -85,19 +98,24 @@ function killPlayer(e) {
 		doKill(e);
 	}
 	for (var i = 0; i < numOfPlayers; i++) {
-		if (i != e){
-			for (var c = 0; c < players[i].location.length; c++){
+		if (i != e) {
+			for (var c = 0; c < players[i].location.length; c++) {
 				var x = players[e].location[0][0] - players[i].location[c][0];
 				var y = players[e].location[0][1] - players[i].location[c][1];
 				if (Math.sqrt(x ** 2 + y ** 2) < mouthSize) {
 					doKill(e);
-				}		
+				}
 			}
 		}
 	}
 }
 
-function doKill(e){
+function doKill(e) {
+	for (var i = 0; i < players[e].location.length; i++) {
+		if (i % foodDropConstant == 0) {
+			food.push([players[e].location[i][0], players[e].location[i][1]])
+		}
+	}
 	players[e].location = [
 		startLocation[e]
 	];
@@ -119,17 +137,16 @@ function eatFood(e) {
 }
 
 function calculate() {
-	for (var e = 0; e < numOfPlayers; e++){
+	for (var e = 0; e < numOfPlayers; e++) {
 		rotatePlayer(e);
 		movePlayer(e);
 		if (players[e].up && players[e].size > playerSizeFloor) {
-			players[e].boosting=true;
+			players[e].boosting = true;
 			movePlayer(e);
 			players[e].size -= sprintingAtrophy;
 			scoreMeters[e].innerHTML = "Score: " + players[e].size;
-		}
-		else {
-			players[e].boosting=false
+		} else {
+			players[e].boosting = false
 		}
 		killPlayer(e);
 		eatFood(e);
@@ -146,7 +163,7 @@ function drawBG(e) {
 }
 
 function drawPlayer(e) {
-	for (var v = 0; v < numOfPlayers; v++){
+	for (var v = 0; v < numOfPlayers; v++) {
 		ctx[e].lineCap = "round";
 		ctx[e].lineWidth = 10;
 		ctx[e].beginPath();
@@ -154,9 +171,9 @@ function drawPlayer(e) {
 		for (var i = 0; i < players[v].location.length; i++) {
 			ctx[e].lineTo(players[v].location[i][0], players[v].location[i][1]);
 		}
-		ctx[e].strokeStyle = players[v].boosting? players[v].boostColor:players[v].color;
+		ctx[e].strokeStyle = players[v].boosting ? players[v].boostColor : players[v].color;
 		ctx[e].stroke();
-		ctx[e].closePath();	
+		ctx[e].closePath();
 	}
 
 
@@ -164,9 +181,9 @@ function drawPlayer(e) {
 	ctx[e].fillStyle = "black";
 	ctx[e].textAlign = "center";
 	ctx[e].fillText("▲", players[e].location[0][0], players[e].location[0][1] - 10);
-//	ctx[e].fillText("E", players[e].location[0][0] + 30, players[e].location[0][1]);/
-//	ctx[e].fillText("S", players[e].location[0][0], players[e].location[0][1] + 30);
-//	ctx[e].fillText("W", players[e].location[0][0] - 30, players[e].location[0][1]);
+	//	ctx[e].fillText("E", players[e].location[0][0] + 30, players[e].location[0][1]);/
+	//	ctx[e].fillText("S", players[e].location[0][0], players[e].location[0][1] + 30);
+	//	ctx[e].fillText("W", players[e].location[0][0] - 30, players[e].location[0][1]);
 
 }
 
@@ -189,7 +206,7 @@ function translateCanvas(e) {
 }
 
 function draw() {
-	for (var e = 0; e < numOfPlayers; e++){
+	for (var e = 0; e < numOfPlayers; e++) {
 		ctx[e].clearRect(-mapSize - 1000, -mapSize - 1000, mapSize * 2 + 2000, mapSize * 2 + 2000);
 		drawBG(e);
 		drawPlayer(e);

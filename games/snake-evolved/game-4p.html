@@ -3,26 +3,8 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Snake Evolved</title>
+		<link rel="stylesheet" href="style.css?ver=1" />
 		<style>
-			* {
-				margin:0;
-			}
-			body{
-				background-color:#000;
-			}
-			canvas{
-				background-color:#555;
-				position:absolute;
-				transition: .25s;
-			}
-			#paused {
-				position: absolute;
-				text-align: center;
-				font: 60px Arial;
-				top: 50%;
-				width: 100%;
-				margin: -30px 0;
-			}
 			#a {
 				left: 0;
 				bottom: 50%;
@@ -38,11 +20,6 @@
 			#d {
 				left: 50%;
 				bottom: 0;
-			}
-			.score{
-				position:absolute;
-				font: 16px Arial;
-				padding:5px;
 			}
 		</style>
 	</head>
@@ -61,6 +38,8 @@
 
 		<p id="paused" style="display: none">PAUSED</p>
 
+		<p id="version" style="position:absolute;bottom:5px;right:5px;font-size:12px">v1.1.4</p>
+
 		<script>
 const
 	canvas = [document.getElementById("1"), document.getElementById("2"), document.getElementById("3"), document.getElementById("4")],
@@ -68,18 +47,10 @@ const
 	startX = 0,
 	startY = 0,
 	startDirection = [Math.PI / 2, Math.PI, 0, Math.PI * (3/2)]
-	mapSize = 1000,
 	startLength = 200,
-	turnSensitivity = 0.1,
-	playerSpeed = 2,
-	amtOfFood = 100,
-	sprintingAtrophy = 0.5,
-	playerSizeFloor = 150,
-	mouthSize = 10,
-	growthRate = 20,
 	numOfPlayers = 4,
 	startLocation = [[startX, startY - 200], [startX - 200, startY], [startX + 200, startY], [startX, startY + 200]],
-	scoreMeters = [document.getElementById("a"), document.getElementById("b"), document.getElementById("c"), document.getElementById("d")]
+	scoreMeters = [document.getElementById("a"), document.getElementById("b"), document.getElementById("c"), document.getElementById("d")];
 
 var
 	players = [
@@ -147,8 +118,7 @@ var
 			leftKey: "ArrowLeft",
 			rightKey: "ArrowRight",
 		},
-	],
-	food = [];
+	];
 
 function resize(){
 	canvas[0].width = innerWidth / 2 - 1;
@@ -162,6 +132,6 @@ function resize(){
 	canvas[3].height = innerHeight / 2;
 }
 		</script>
-		<script src="engine.js"></script>
+		<script src="engine.js?ver=1"></script>
 	</body>
 </html>
