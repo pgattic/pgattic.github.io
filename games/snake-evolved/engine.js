@@ -7,11 +7,31 @@ const
 	playerSizeFloor = 150,
 	mouthSize = 10,
 	growthRate = 20,
-	foodDropConstant = 30;
+	foodDropConstant = 30,
+	snakeWidth = 10,
+	mapBorderWidth = 10,
+	foodRadius = 5,
+	spectateDuration = 200,
+	compassRadius = 10,
+	bgColor = "#fff",
+	mapBorderColor = "#000",
+	foodColor = "#080",
+	compassColor = "#000"
+	pauseKey = "Escape",
+	version = "v1.4.10";
 
 var
+	indexOfSpectate = 1,
+	playerResolution = 1,
+	playersInGame = [],
+	playerDrawRate = 2, // how many segments of the player are skipped, plus one. higher number = less resolution on their curvature. 
 	paused = false,
-	food = [];
+	food = [],
+	seconds = 0,
+	frames = 0,
+	spectateCounter = 0;
+
+document.getElementById("version").innerHTML = version;
 
 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
 	alert('Are you on mobile? This game was created for PC users only, sorry!')
@@ -35,9 +55,14 @@ onkeydown = () => {
 			case players[e].rightKey:
 				players[e].right = true;
 				break;
+			case players[e].spawnKey:
+				if (players[e].inGame) {
+					doKill(e);
+				}
+				players[e].inGame = !players[e].inGame;
 		}
 	}
-	if (event.key == "Escape") {
+	if (event.key == pauseKey) {
 		paused = !paused;
 		document.getElementById("paused").style.display = paused ? "block" : "none";
 		for (var i of canvas) {
@@ -60,6 +85,17 @@ onkeyup = () => {
 				break;
 		}
 	}
+}
+
+function doSpectateCounter () {
+	spectateCounter++;
+	playersInGame = [];
+	for (var e = 0; e < numOfPlayers; e++) {
+		if (players[e].inGame) {
+			playersInGame.push(e);
+		}
+	}
+	indexOfSpectate = playersInGame[parseInt(spectateCounter / spectateDuration) % playersInGame.length];
 }
 
 function rotatePlayer(e) {
@@ -86,7 +122,7 @@ function movePlayer(e) {
 function spawnFood() {
 	if (food.length < amtOfFood) {
 		var rad = Math.random() * Math.PI * 2;
-		var dist = Math.random() * mapSize;
+		var dist = Math.random() * (mapSize - foodRadius);
 		var x = Math.cos(rad) * dist;
 		var y = Math.sin(rad) * dist;
 		food.push([x, y]);
@@ -98,7 +134,7 @@ function killPlayer(e) {
 		doKill(e);
 	}
 	for (var i = 0; i < numOfPlayers; i++) {
-		if (i != e) {
+		if (i != e && players[i].inGame) {
 			for (var c = 0; c < players[i].location.length; c++) {
 				var x = players[e].location[0][0] - players[i].location[c][0];
 				var y = players[e].location[0][1] - players[i].location[c][1];
@@ -112,7 +148,7 @@ function killPlayer(e) {
 
 function doKill(e) {
 	for (var i = 0; i < players[e].location.length; i++) {
-		if (i % foodDropConstant == 0) {
+		if (i % foodDropConstant == 0 && !(players[e].location[i][0] == players[e].location[players[e].location.length - 1][0] && players[e].location[i][1] == players[e].location[players[e].location.length - 1][1] )) {
 			food.push([players[e].location[i][0], players[e].location[i][1]])
 		}
 	}
@@ -121,7 +157,6 @@ function doKill(e) {
 	];
 	players[e].direction = startDirection[e];
 	players[e].size = startLength;
-	scoreMeters[e].innerHTML = "Score: " + players[e].size;
 }
 
 function eatFood(e) {
@@ -131,69 +166,78 @@ function eatFood(e) {
 		if (Math.sqrt(x ** 2 + y ** 2) < mouthSize) {
 			food.splice(i, 1);
 			players[e].size += growthRate;
-			scoreMeters[e].innerHTML = "Score: " + players[e].size;
 		}
 	}
 }
 
 function calculate() {
+	doSpectateCounter();
 	for (var e = 0; e < numOfPlayers; e++) {
-		rotatePlayer(e);
-		movePlayer(e);
-		if (players[e].up && players[e].size > playerSizeFloor) {
-			players[e].boosting = true;
+		if (players[e].inGame) {
+			rotatePlayer(e);
 			movePlayer(e);
-			players[e].size -= sprintingAtrophy;
-			scoreMeters[e].innerHTML = "Score: " + players[e].size;
-		} else {
-			players[e].boosting = false
+			if (players[e].up && players[e].size > playerSizeFloor) {
+				players[e].boosting = true;
+				movePlayer(e);
+				players[e].size -= sprintingAtrophy;
+			} else {
+				players[e].boosting = false
+			}
+			killPlayer(e);
+			eatFood(e);
 		}
-		killPlayer(e);
-		eatFood(e);
 	}
 	spawnFood();
 }
 
 function drawBG(e) {
 	ctx[e].beginPath();
-	ctx[e].arc(0, 0, mapSize, 0, Math.PI * 2);
-	ctx[e].fillStyle = "white";
+	ctx[e].arc(0, 0, mapSize + snakeWidth, 0, Math.PI * 2);
+	ctx[e].fillStyle = bgColor;
 	ctx[e].fill();
+	ctx[e].lineWidth = mapBorderWidth;
+	ctx[e].strokeStyle = mapBorderColor;
+	ctx[e].stroke();
 	ctx[e].closePath();
 }
 
 function drawPlayer(e) {
 	for (var v = 0; v < numOfPlayers; v++) {
-		ctx[e].lineCap = "round";
-		ctx[e].lineWidth = 10;
-		ctx[e].beginPath();
-		ctx[e].moveTo(players[v].location[0][0], players[v].location[0][1]);
-		for (var i = 0; i < players[v].location.length; i++) {
-			ctx[e].lineTo(players[v].location[i][0], players[v].location[i][1]);
+		if (players[v].inGame) {
+			ctx[e].lineCap = "round";
+			ctx[e].lineWidth = snakeWidth;
+			ctx[e].strokeStyle = players[v].boosting ? players[v].boostColor : players[v].color;
+			ctx[e].beginPath();
+			ctx[e].moveTo(players[v].location[0][0], players[v].location[0][1]);
+			for (var i = 0; i < players[v].location.length; i += playerDrawRate) {
+				if (i < players[v].location.length) {
+					ctx[e].lineTo(players[v].location[i][0], players[v].location[i][1]);
+				}
+			}
+			ctx[e].lineTo(players[v].location[players[v].location.length - 1][0], players[v].location[players[v].location.length - 1][1])
+			ctx[e].stroke();
+			ctx[e].closePath();
 		}
-		ctx[e].strokeStyle = players[v].boosting ? players[v].boostColor : players[v].color;
-		ctx[e].stroke();
-		ctx[e].closePath();
 	}
 
 
-	ctx[e].font = "16px Arial";
-	ctx[e].fillStyle = "black";
-	ctx[e].textAlign = "center";
-	ctx[e].fillText("▲", players[e].location[0][0], players[e].location[0][1] - 10);
-	//	ctx[e].fillText("E", players[e].location[0][0] + 30, players[e].location[0][1]);/
-	//	ctx[e].fillText("S", players[e].location[0][0], players[e].location[0][1] + 30);
-	//	ctx[e].fillText("W", players[e].location[0][0] - 30, players[e].location[0][1]);
-
+	if (players[e].inGame) {
+		ctx[e].font = "16px Arial";
+		ctx[e].fillStyle = compassColor;
+		ctx[e].textAlign = "center";
+		ctx[e].fillText("▲", players[e].location[0][0], players[e].location[0][1] - compassRadius);	
+	}
 }
 
 function drawFood(e) {
 	for (var i of food) {
-		ctx[e].beginPath();
-		ctx[e].arc(i[0], i[1], 5, 0, Math.PI * 2);
-		ctx[e].fillStyle = "green";
-		ctx[e].fill();
-		ctx[e].closePath();
+//		if ((Math.sqrt((players[e].location[0][0] - i[0]) ** 2 + (players[e].location[0][1] - i[1]) ** 2)) < (Math.sqrt((canvas[e].width / 2) ** 2 + (canvas[e].height / 2) ** 2))) { // This if statement checks to see if food is within the viewport of the player
+			ctx[e].beginPath();
+			ctx[e].arc(i[0], i[1], foodRadius, 0, Math.PI * 2);
+			ctx[e].fillStyle = foodColor;
+			ctx[e].fill();
+			ctx[e].closePath();
+//		}
 	}
 }
 
@@ -201,21 +245,40 @@ function translateCanvas(e) {
 	ctx[e].restore();
 	ctx[e].save();
 	ctx[e].translate(canvas[e].width / 2, canvas[e].height / 2);
-	ctx[e].rotate(players[e].direction - Math.PI / 2);
-	ctx[e].translate(-players[e].location[0][0], -players[e].location[0][1]);
+	if (players[e].inGame) {
+		ctx[e].rotate(players[e].direction - Math.PI / 2);
+		ctx[e].translate(-players[e].location[0][0], -players[e].location[0][1]);
+		scoreMeters[e].innerHTML = "Score: " + players[e].size;
+	}
+	else if (playersInGame.length !== 0) {
+		ctx[e].translate(-players[indexOfSpectate].location[0][0], -players[indexOfSpectate].location[0][1]);		
+	}
+	if (!players[e].inGame) {
+		var keys = (players[e].upKey + players[e].leftKey + players[e].downKey + players[e].rightKey).toUpperCase();
+		if (keys.length > 4) {
+			keys = "the arrow keys"
+		}
+		scoreMeters[e].innerHTML = `Press "${players[e].spawnKey}" to join! Use ${keys} to control your player!`;
+	}
 }
 
 function draw() {
 	for (var e = 0; e < numOfPlayers; e++) {
-		ctx[e].clearRect(-mapSize - 1000, -mapSize - 1000, mapSize * 2 + 2000, mapSize * 2 + 2000);
+		ctx[e].clearRect(-mapSize - innerWidth / 2, -mapSize - innerHeight / 2, mapSize * 2 + innerWidth, mapSize * 2 + 2000 + innerHeight);
 		drawBG(e);
-		drawPlayer(e);
 		drawFood(e);
+		drawPlayer(e);
 		translateCanvas(e);
 	}
 }
 
 function main() {
+	if (new Date().getSeconds() != seconds) {
+		document.getElementById("framerate").innerHTML = "FPS: " + frames;
+		frames = 0;
+		seconds = new Date().getSeconds();
+	}
+	frames++;
 	if (!paused) {
 		calculate();
 	}
