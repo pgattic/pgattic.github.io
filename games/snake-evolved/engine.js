@@ -19,7 +19,7 @@ const
 	foodColor = "#080",
 	compassColor = "#000"
 	pauseKey = "Escape",
-	version = "v1.4.12";
+	version = "v1.4.13";
 
 var
 	indexOfSpectate = 1,
@@ -259,7 +259,7 @@ function translateCanvas(e) {
 		if (keys.length > 4) {
 			keys = "the arrow keys"
 		}
-		scoreMeters[e].innerHTML = `Press "${players[e].spawnKey}" to join! Use ${keys} to control your player!`;
+		scoreMeters[e].innerHTML = `Press ${players[e].spawnKey} to join! Use ${keys} to control your player!`;
 		ctx[e].scale(spectateZoom, spectateZoom);
 	}
 }
