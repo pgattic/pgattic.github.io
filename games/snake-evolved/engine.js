@@ -17,15 +17,17 @@ const
 	bgColor = "#fff",
 	mapBorderColor = "#000",
 	foodColor = "#080",
-	compassColor = "#000"
+	compassColor = "#000",
 	pauseKey = "Escape",
-	version = "v1.4.13";
+	spectatorRotationVelocity = 0.005,
+	version = "v1.4.16";
 
 var
 	indexOfSpectate = 1,
+	spectatorRotate = 0,
 	playerResolution = 1,
 	playersInGame = [],
-	playerDrawRate = 2, // how many segments of the player are skipped, plus one. higher number = less resolution on their curvature. 
+	playerDrawRate = 10, // how many segments of the player are skipped, plus one. higher number = less resolution on their curvature. 
 	paused = false,
 	food = [],
 	seconds = 0,
@@ -46,7 +48,7 @@ resize();
 
 onkeydown = () => {
 	for (var e = 0; e < numOfPlayers; e++) {
-		switch (event.key) {
+		switch (event.key.toUpperCase()) {
 			case players[e].upKey:
 				players[e].up = true;
 				break;
@@ -74,7 +76,7 @@ onkeydown = () => {
 
 onkeyup = () => {
 	for (var e = 0; e < numOfPlayers; e++) {
-		switch (event.key) {
+		switch (event.key.toUpperCase()) {
 			case players[e].upKey:
 				players[e].up = false;
 				break;
@@ -173,6 +175,7 @@ function eatFood(e) {
 
 function calculate() {
 	doSpectateCounter();
+	spectatorRotate += spectatorRotationVelocity;
 	for (var e = 0; e < numOfPlayers; e++) {
 		if (players[e].inGame) {
 			rotatePlayer(e);
@@ -252,10 +255,11 @@ function translateCanvas(e) {
 		scoreMeters[e].innerHTML = "Score: " + players[e].size;
 	}
 	else if (playersInGame.length !== 0) {
+		ctx[e].rotate(spectatorRotate);
 		ctx[e].translate(-players[indexOfSpectate].location[0][0] * spectateZoom, -players[indexOfSpectate].location[0][1] * spectateZoom);		
 	}
 	if (!players[e].inGame) {
-		var keys = (players[e].upKey + players[e].leftKey + players[e].downKey + players[e].rightKey).toUpperCase();
+		var keys = players[e].upKey + players[e].leftKey + players[e].downKey + players[e].rightKey;
 		if (keys.length > 4) {
 			keys = "the arrow keys"
 		}
