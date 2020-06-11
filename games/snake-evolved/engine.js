@@ -1,5 +1,5 @@
 const
-	mapSize = 1000,
+	mapSize = 650,
 	turnSensitivity = 0.1,
 	playerSpeed = 2,
 	amtOfFood = 100,
@@ -19,7 +19,7 @@ const
 	foodColor = "#080",
 	compassColor = "#000"
 	pauseKey = "Escape",
-	version = "v1.4.11";
+	version = "v1.4.12";
 
 var
 	indexOfSpectate = 1,
