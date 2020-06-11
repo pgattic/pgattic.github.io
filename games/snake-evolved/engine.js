@@ -259,7 +259,7 @@ function translateCanvas(e) {
 		if (keys.length > 4) {
 			keys = "the arrow keys"
 		}
-		scoreMeters[e].innerHTML = `Press ${players[e].spawnKey} to join! Use ${keys} to control your player!`;
+		scoreMeters[e].innerHTML = `Press ${players[e].spawnKey} to join! Use ${keys} to control your snake!`;
 		ctx[e].scale(spectateZoom, spectateZoom);
 	}
 }
