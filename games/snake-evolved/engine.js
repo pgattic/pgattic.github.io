@@ -27,7 +27,7 @@ var
 	spectatorRotate = 0,
 	playerResolution = 1,
 	playersInGame = [],
-	playerDrawRate = 10, // how many segments of the player are skipped, plus one. higher number = less resolution on their curvature. 
+	playerDrawRate = 2, // how many segments of the player are skipped, plus one. higher number = less resolution on their curvature. 
 	paused = false,
 	food = [],
 	seconds = 0,
