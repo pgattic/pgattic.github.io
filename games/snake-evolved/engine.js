@@ -13,12 +13,13 @@ const
 	foodRadius = 5,
 	spectateDuration = 200,
 	compassRadius = 10,
+	spectateZoom = 0.5,
 	bgColor = "#fff",
 	mapBorderColor = "#000",
 	foodColor = "#080",
 	compassColor = "#000"
 	pauseKey = "Escape",
-	version = "v1.4.10";
+	version = "v1.4.11";
 
 var
 	indexOfSpectate = 1,
@@ -251,7 +252,7 @@ function translateCanvas(e) {
 		scoreMeters[e].innerHTML = "Score: " + players[e].size;
 	}
 	else if (playersInGame.length !== 0) {
-		ctx[e].translate(-players[indexOfSpectate].location[0][0], -players[indexOfSpectate].location[0][1]);		
+		ctx[e].translate(-players[indexOfSpectate].location[0][0] * spectateZoom, -players[indexOfSpectate].location[0][1] * spectateZoom);		
 	}
 	if (!players[e].inGame) {
 		var keys = (players[e].upKey + players[e].leftKey + players[e].downKey + players[e].rightKey).toUpperCase();
@@ -259,6 +260,7 @@ function translateCanvas(e) {
 			keys = "the arrow keys"
 		}
 		scoreMeters[e].innerHTML = `Press "${players[e].spawnKey}" to join! Use ${keys} to control your player!`;
+		ctx[e].scale(spectateZoom, spectateZoom);
 	}
 }
 
