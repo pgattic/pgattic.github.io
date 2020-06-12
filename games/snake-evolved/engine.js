@@ -1,13 +1,14 @@
 const
 	mapSize = 650,
 	turnSensitivity = 0.1,
+	startLength = 20,
 	playerSpeed = 2,
 	amtOfFood = 100,
 	sprintingAtrophy = 0.5,
-	playerSizeFloor = 150,
+	playerSizeFloor = 15,
 	mouthSize = 10,
-	growthRate = 20,
-	foodDropConstant = 30,
+	growthRate = 5,
+	foodDropConstant = 8,
 	snakeWidth = 10,
 	mapBorderWidth = 10,
 	foodRadius = 5,
@@ -20,7 +21,7 @@ const
 	compassColor = "#000",
 	pauseKey = "Escape",
 	spectatorRotationVelocity = 0.005,
-	version = "Copyright SaveState. v1.5.0";
+	version = "Copyright SaveState. v1.5.4";
 
 var
 	indexOfSpectate = 1,
@@ -32,12 +33,206 @@ var
 	food = [],
 	seconds = 0,
 	frames = 0,
-	spectateCounter = 0;
+	spectateCounter = 0,
+	
+	canvas,
+	ctx,
+	startDirection,
+	startLocation,
+	scoreMeters,
+	players;
 
+switch (numOfPlayers) {
+	case 1:
+		canvas = [document.getElementById("1")];
+		ctx = [canvas[0].getContext("2d")];
+		startDirection = [Math.PI / 2];
+		startLocation = [[0, 0]];
+		scoreMeters = [document.getElementById("a")];
+		players = [
+			{
+				location: [
+					startLocation[0]
+				],
+				direction: startDirection[0],
+				size: startLength,
+				boosting:false,
+				right: false,
+				left: false,
+				up: false,
+				color: ["#f00", "#a00"],
+				boostColor: ["#f66", "#a66"],
+				upKey: "ARROWUP",
+				leftKey: "ARROWLEFT",
+				downKey: "ARROWDOWN",
+				rightKey: "ARROWRIGHT",
+				spawnKey: "1",
+				inGame: true,
+			},
+		];
+		break;
+	case 2:
+		canvas = [document.getElementById("1"), document.getElementById("2")];
+		ctx = [canvas[0].getContext("2d"), canvas[1].getContext("2d")];
+		startDirection = [Math.PI, 0];
+		startLocation = [[-200, 0], [200, 0]];
+		scoreMeters = [document.getElementById("a"), document.getElementById("b"), document.getElementById("c"), document.getElementById("d")];
+		players = [
+			{
+				location: [
+					startLocation[0]
+				],
+				direction: startDirection[0],
+				size: startLength,
+				boosting:false,
+				right: false,
+				left: false,
+				up: false,
+				color: ["#f00", "#a00"],
+				boostColor: ["#f66", "#a66"],
+				upKey: "W",
+				leftKey: "A",
+				downKey: "S",
+				rightKey: "D",
+				spawnKey: "1",
+				inGame: false,
+			},
+			{
+				location: [
+					startLocation[1]
+				],
+				direction: startDirection[1],
+				size: startLength,
+				boosting:false,
+				right: false,
+				left: false,
+				up: false,
+				color: ["#0a0", "#060"],
+				boostColor: ["#6a6", "#363"],
+				upKey: "ARROWUP",
+				leftKey: "ARROWLEFT",
+				downKey: "ARROWDOWN",
+				rightKey: "ARROWRIGHT",
+				spawnKey: "2",
+				inGame: false,
+			},
+		];
+		break;
+	case 4:
+		canvas = [document.getElementById("1"), document.getElementById("2"), document.getElementById("3"), document.getElementById("4")];
+		ctx = [canvas[0].getContext("2d"), canvas[1].getContext("2d"), canvas[2].getContext("2d"), canvas[3].getContext("2d")];
+		startDirection = [Math.PI / 2, Math.PI, 0, Math.PI * (3/2)];
+		startLocation = [[0, -200], [-200, 0], [200, 0], [0, 200]];
+		scoreMeters = [document.getElementById("a"), document.getElementById("b"), document.getElementById("c"), document.getElementById("d")];
+		players = [
+			{
+				location: [
+					startLocation[0]
+				],
+				direction: startDirection[0],
+				size: startLength,
+				boosting:false,
+				right: false,
+				left: false,
+				up: false,
+				color: ["#f00", "#a00"],
+				boostColor: ["#f66", "#a66"],
+				upKey: "W",
+				leftKey: "A",
+				downKey: "S",
+				rightKey: "D",
+				spawnKey: "1",
+				inGame: false,
+			},
+			{
+				location: [
+					startLocation[1]
+				],
+				direction: startDirection[1],
+				size: startLength,
+				boosting:false,
+				right: false,
+				left: false,
+				up: false,
+				color: ["#0a0", "#060"],
+				boostColor: ["#6a6", "#363"],
+				upKey: "T",
+				leftKey: "F",
+				downKey: "G",
+				rightKey: "H",
+				spawnKey: "2",
+				inGame: false,
+			},
+			{
+				location: [
+					startLocation[2]
+				],
+				direction: startDirection[2],
+				size: startLength,
+				boosting:false,
+				right: false,
+				left: false,
+				up: false,
+				color: ["#00f", "#00a"],
+				boostColor: ["#66f", "#66a"],
+				upKey: "I",
+				leftKey: "J",
+				downKey: "K",
+				rightKey: "L",
+				spawnKey: "3",
+				inGame: false,
+			},
+			{
+				location: [
+					startLocation[3]
+				],
+				direction: startDirection[3],
+				size: startLength,
+				boosting:false,
+				right: false,
+				left: false,
+				up: false,
+				color: ["#a0a", "#606"],
+				boostColor: ["#a6a", "#636"],
+				upKey: "ARROWUP",
+				leftKey: "ARROWLEFT",
+				downKey: "ARROWDOWN",
+				rightKey: "ARROWRIGHT",
+				spawnKey: "4",
+				inGame: false,
+			},
+		];
+		break;
+}
 document.getElementById("version").innerHTML = version;
 
 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
 	alert('Are you on mobile? This game was created for PC users only, sorry!')
+}
+
+function resize() {
+	switch (numOfPlayers) {
+		case 1:
+			canvas[0].width = innerWidth;
+			canvas[0].height = innerHeight;
+			break;
+		case 2:
+			canvas[0].width = innerWidth / 2 - 1;
+			canvas[0].height = innerHeight;
+			canvas[1].width = innerWidth / 2;
+			canvas[1].height = innerHeight;
+			break;
+		case 4:
+			canvas[0].width = innerWidth / 2 - 1;
+			canvas[0].height = innerHeight / 2 - 1;
+			canvas[1].width = innerWidth / 2;
+			canvas[1].height = innerHeight / 2 - 1;
+			canvas[2].width = innerWidth / 2 - 1;
+			canvas[2].height = innerHeight / 2;
+			canvas[3].width = innerWidth / 2;
+			canvas[3].height = innerHeight / 2;
+			break;
+	}
 }
 
 window.onresize = () => {
@@ -123,7 +318,7 @@ function movePlayer(e) {
 }
 
 function spawnFood() {
-	while (food.length < amtOfFood) {
+	if (food.length < amtOfFood) {
 		var rad = Math.random() * Math.PI * 2;
 		var dist = Math.random() * (mapSize - foodRadius);
 		food.push([Math.floor(Math.cos(rad) * dist), Math.floor(Math.sin(rad) * dist)]);

@@ -50,46 +50,7 @@
 
 		<p style="position:absolute;top:5px;right:5px">Press Esc to Pause!</p>
 
-		<script>
-const
-	canvas = [document.getElementById("1")],
-	ctx = [canvas[0].getContext("2d")],
-	startX = 0,
-	startY = 0,
-	startDirection = [Math.PI / 2],
-	startLength = 200,
-	numOfPlayers = 1,
-	startLocation = [[startX, startY]],
-	scoreMeters = [document.getElementById("a")];
-
-var
-	players = [
-		{
-			location: [
-				startLocation[0]
-			],
-			direction: startDirection[0],
-			size: startLength,
-			boosting:false,
-			right: false,
-			left: false,
-			up: false,
-			color: ["#f00", "#a00"],
-			boostColor: ["#f66", "#a66"],
-			upKey: "ARROWUP",
-			leftKey: "ARROWLEFT",
-			downKey: "ARROWDOWN",
-			rightKey: "ARROWRIGHT",
-			spawnKey: "1",
-			inGame: true,
-		},
-	];
-
-function resize(){
-	canvas[0].width = innerWidth;
-	canvas[0].height = innerHeight;
-}
-		</script>
+		<script>const numOfPlayers = 1;</script>
 		<script src="engine.js"></script>
 	</body>
 </html>
