@@ -21,7 +21,7 @@ const
 	compassColor = "#000",
 	pauseKey = "Escape",
 	spectatorRotationVelocity = 0.005,
-	version = "Copyright SaveState. v1.5.5";
+	version = "Copyright SaveState. v1.5.6";
 
 var
 	indexOfSpectate = 1,
@@ -211,19 +211,19 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phon
 }
 
 function resize() {
-	for (var i = 0; i < canvas.length; i++) {
+	for (var i of canvas) {
 		switch (numOfPlayers) {
 			case 1:
-				canvas[i].width = innerWidth;
-				canvas[i].height = innerHeight;
+				i.width = innerWidth;
+				i.height = innerHeight;
 				break;
 			case 2:
-				canvas[i].height = innerHeight;
-				canvas[i].width = innerWidth / 2;
+				i.height = innerHeight;
+				i.width = innerWidth / 2;
 				break;
 			case 4:
-				canvas[i].height = innerHeight / 2;
-				canvas[i].width = innerWidth / 2;
+				i.height = innerHeight / 2;
+				i.width = innerWidth / 2;
 				break;
 		}
 	}
