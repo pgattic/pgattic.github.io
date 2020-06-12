@@ -20,7 +20,7 @@ const
 	compassColor = "#000",
 	pauseKey = "Escape",
 	spectatorRotationVelocity = 0.005,
-	version = "Copyright SaveState. v1.4.18";
+	version = "Copyright SaveState. v1.5.0";
 
 var
 	indexOfSpectate = 1,
@@ -123,12 +123,10 @@ function movePlayer(e) {
 }
 
 function spawnFood() {
-	if (food.length < amtOfFood) {
+	while (food.length < amtOfFood) {
 		var rad = Math.random() * Math.PI * 2;
 		var dist = Math.random() * (mapSize - foodRadius);
-		var x = Math.cos(rad) * dist;
-		var y = Math.sin(rad) * dist;
-		food.push([x, y]);
+		food.push([Math.floor(Math.cos(rad) * dist), Math.floor(Math.sin(rad) * dist)]);
 	}
 }
 
@@ -197,7 +195,6 @@ function calculate() {
 function drawBG(e) {
 	ctx[e].beginPath();
 	ctx[e].arc(0, 0, mapSize + snakeWidth, 0, Math.PI * 2);
-//	ctx[e].strokeStyle = grd;//players[v].boosting ? players[v].boostColor : players[v].color;
 	ctx[e].fillStyle = makeGradient(bgColor, e);
 	ctx[e].fill();
 	ctx[e].lineWidth = mapBorderWidth;
@@ -216,9 +213,7 @@ function drawPlayer(e) {
 			ctx[e].beginPath();
 			ctx[e].moveTo(players[v].location[0][0], players[v].location[0][1]);
 			for (var i = 0; i < players[v].location.length; i += playerDrawRate) {
-				if (i < players[v].location.length) {
-					ctx[e].lineTo(players[v].location[i][0], players[v].location[i][1]);
-				}
+				ctx[e].lineTo(players[v].location[i][0], players[v].location[i][1]);
 			}
 			ctx[e].lineTo(players[v].location[players[v].location.length - 1][0], players[v].location[players[v].location.length - 1][1])
 			ctx[e].stroke();
@@ -245,9 +240,10 @@ function drawFood(e) {
 //		if ((Math.sqrt((players[e].location[0][0] - i[0]) ** 2 + (players[e].location[0][1] - i[1]) ** 2)) < (Math.sqrt((canvas[e].width / 2) ** 2 + (canvas[e].height / 2) ** 2))) { // This if statement checks to see if food is within the viewport of the player
 			ctx[e].beginPath();
 			ctx[e].arc(i[0], i[1], foodRadius, 0, Math.PI * 2);
+//			ctx[e].rect(i[0] - 4, i[1] - 4, 8, 8);
 			ctx[e].fillStyle = foodColor;
 			ctx[e].fill();
-			ctx[e].closePath();
+//			ctx[e].closePath();
 //		}
 	}
 }
