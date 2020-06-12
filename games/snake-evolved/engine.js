@@ -14,13 +14,13 @@ const
 	spectateDuration = 200,
 	compassRadius = 10,
 	spectateZoom = 0.5,
-	bgColor = "#fff",
+	bgColor = ["#fff", "#aaa"],
 	mapBorderColor = "#000",
 	foodColor = "#080",
 	compassColor = "#000",
 	pauseKey = "Escape",
 	spectatorRotationVelocity = 0.005,
-	version = "v1.4.16";
+	version = "Copyright SaveState. v1.4.18";
 
 var
 	indexOfSpectate = 1,
@@ -197,7 +197,8 @@ function calculate() {
 function drawBG(e) {
 	ctx[e].beginPath();
 	ctx[e].arc(0, 0, mapSize + snakeWidth, 0, Math.PI * 2);
-	ctx[e].fillStyle = bgColor;
+//	ctx[e].strokeStyle = grd;//players[v].boosting ? players[v].boostColor : players[v].color;
+	ctx[e].fillStyle = makeGradient(bgColor, e);
 	ctx[e].fill();
 	ctx[e].lineWidth = mapBorderWidth;
 	ctx[e].strokeStyle = mapBorderColor;
@@ -210,7 +211,8 @@ function drawPlayer(e) {
 		if (players[v].inGame) {
 			ctx[e].lineCap = "round";
 			ctx[e].lineWidth = snakeWidth;
-			ctx[e].strokeStyle = players[v].boosting ? players[v].boostColor : players[v].color;
+			var targetColor = players[v].boosting ? players[v].boostColor : players[v].color;
+			ctx[e].strokeStyle = makeGradient(targetColor, e);
 			ctx[e].beginPath();
 			ctx[e].moveTo(players[v].location[0][0], players[v].location[0][1]);
 			for (var i = 0; i < players[v].location.length; i += playerDrawRate) {
@@ -220,6 +222,11 @@ function drawPlayer(e) {
 			}
 			ctx[e].lineTo(players[v].location[players[v].location.length - 1][0], players[v].location[players[v].location.length - 1][1])
 			ctx[e].stroke();
+			ctx[e].closePath();
+			ctx[e].beginPath();
+			ctx[e].arc(players[v].location[0][0], players[v].location[0][1], snakeWidth / 4, 0, Math.PI * 2);
+			ctx[e].fillStyle = compassColor;
+			ctx[e].fill();
 			ctx[e].closePath();
 		}
 	}
@@ -256,7 +263,7 @@ function translateCanvas(e) {
 	}
 	else if (playersInGame.length !== 0) {
 		ctx[e].rotate(spectatorRotate);
-		ctx[e].translate(-players[indexOfSpectate].location[0][0] * spectateZoom, -players[indexOfSpectate].location[0][1] * spectateZoom);		
+		ctx[e].translate(-players[indexOfSpectate].location[0][0] * spectateZoom, -players[indexOfSpectate].location[0][1] * spectateZoom);
 	}
 	if (!players[e].inGame) {
 		var keys = players[e].upKey + players[e].leftKey + players[e].downKey + players[e].rightKey;
@@ -276,6 +283,13 @@ function draw() {
 		drawPlayer(e);
 		translateCanvas(e);
 	}
+}
+
+function makeGradient(colors, e) {
+	var grd = ctx[e].createRadialGradient(0, 0, 0, 0, 0, mapSize);
+	grd.addColorStop(0, colors[0]);
+	grd.addColorStop(1, colors[1]);
+	return grd;
 }
 
 function main() {
