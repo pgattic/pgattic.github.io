@@ -21,7 +21,7 @@ const
 	compassColor = "#000",
 	pauseKey = "Escape",
 	spectatorRotationVelocity = 0.005,
-	version = "Copyright SaveState. v1.5.4";
+	version = "Copyright SaveState. v1.5.5";
 
 var
 	indexOfSpectate = 1,
@@ -211,27 +211,21 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phon
 }
 
 function resize() {
-	switch (numOfPlayers) {
-		case 1:
-			canvas[0].width = innerWidth;
-			canvas[0].height = innerHeight;
-			break;
-		case 2:
-			canvas[0].width = innerWidth / 2 - 1;
-			canvas[0].height = innerHeight;
-			canvas[1].width = innerWidth / 2;
-			canvas[1].height = innerHeight;
-			break;
-		case 4:
-			canvas[0].width = innerWidth / 2 - 1;
-			canvas[0].height = innerHeight / 2 - 1;
-			canvas[1].width = innerWidth / 2;
-			canvas[1].height = innerHeight / 2 - 1;
-			canvas[2].width = innerWidth / 2 - 1;
-			canvas[2].height = innerHeight / 2;
-			canvas[3].width = innerWidth / 2;
-			canvas[3].height = innerHeight / 2;
-			break;
+	for (var i = 0; i < canvas.length; i++) {
+		switch (numOfPlayers) {
+			case 1:
+				canvas[i].width = innerWidth;
+				canvas[i].height = innerHeight;
+				break;
+			case 2:
+				canvas[i].height = innerHeight;
+				canvas[i].width = innerWidth / 2;
+				break;
+			case 4:
+				canvas[i].height = innerHeight / 2;
+				canvas[i].width = innerWidth / 2;
+				break;
+		}
 	}
 }
 
