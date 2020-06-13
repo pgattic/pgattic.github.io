@@ -187,29 +187,21 @@ function doSuper() {
 	}
 }
 
-function doMenu() {
-}
-
 function doGame() {
-	ctx.shadowColor = shadowColor;
 	if (!isPaused) {
 		ctx.translate(-player.x + canvas.width / 2 - player.xVel, -player.y + canvas.height / 2 - player.yVel);
 		makeCrosshair();
 		calcPlayerCoord();
 		acceleratePlayer();
 		doBoundary();
-		ctx.shadowBlur = 0;
 		drawBG();
-		ctx.shadowBlur = lowEnd?0:4;
 		animateBullet();
 		enemyKill();
 		drawBadGuy();
 		drawBorder();
 		playerKill();
 		drawPowerUp();
-		ctx.shadowBlur = 0;
 		drawMapBorder();
-		ctx.shadowBlur = lowEnd?0:4;
 		drawLine();
 		drawPlayer();
 		drawMiniMap();
@@ -228,13 +220,9 @@ function doGame() {
 	else {
 		ctx.translate(-player.x + canvas.width / 2, -player.y + canvas.height / 2);
 		makeCursor();
-		ctx.shadowBlur = 0;
 		drawBG();
-		ctx.shadowBlur = lowEnd?0:4;
 		drawBorder();
-		ctx.shadowBlur = 0;
 		drawMapBorder();
-		ctx.shadowBlur = lowEnd?0:4;
 		drawPlayer();
 		drawMiniMap();
 		ctx.font = "bolder 72px Arial";
@@ -513,7 +501,6 @@ function drawMiniMap() {
 	ctx.fillStyle = bgColor;
 	ctx.fill();
 	ctx.closePath();
-	ctx.shadowBlur = 0;
 	for (let i = 1; i < 8; i++) {
 		ctx.beginPath();
 		ctx.moveTo(((canvas.width / 2) - screenWidth / 8) + player.x + (screenWidth / 80) * i, ((canvas.height / 2) - screenHeight / 8) + player.y);
