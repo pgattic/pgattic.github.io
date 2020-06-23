@@ -21,7 +21,7 @@ const
 	compassColor = "#000",
 	pauseKey = "Escape",
 	spectatorRotationVelocity = 0.005,
-	version = "Copyright SaveState. v1.5.6";
+	version = "Copyright SaveState. v1.5.7";
 
 var
 	indexOfSpectate = 1,
