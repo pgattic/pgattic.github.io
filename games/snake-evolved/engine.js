@@ -34,6 +34,7 @@ var
 	seconds = 0,
 	frames = 0,
 	spectateCounter = 0,
+	relativeGameSpeed,
 	
 	canvas,
 	ctx,
@@ -292,16 +293,16 @@ function doSpectateCounter () {
 
 function rotatePlayer(e) {
 	if (players[e].left) {
-		players[e].direction += turnSensitivity;
+		players[e].direction += turnSensitivity * relativeGameSpeed;
 	}
 	if (players[e].right) {
-		players[e].direction -= turnSensitivity;
+		players[e].direction -= turnSensitivity * relativeGameSpeed;
 	}
 }
 
 function movePlayer(e) {
-	var x = Math.cos(players[e].direction) * playerSpeed;
-	var y = Math.sin(players[e].direction) * playerSpeed;
+	var x = Math.cos(players[e].direction) * playerSpeed * relativeGameSpeed;
+	var y = Math.sin(players[e].direction) * playerSpeed * relativeGameSpeed;
 	players[e].location.unshift([players[e].location[0][0] + x, players[e].location[0][1] - y]);
 	if (players[e].location.length > players[e].size) {
 		players[e].location.pop();
@@ -480,6 +481,7 @@ function makeGradient(colors, e) {
 function main() {
 	if (new Date().getSeconds() != seconds) {
 		document.getElementById("framerate").innerHTML = "FPS: " + frames;
+		relativeGamespeed = 60 / frames;
 		frames = 0;
 		seconds = new Date().getSeconds();
 	}
