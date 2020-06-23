@@ -21,7 +21,7 @@ const
 	compassColor = "#000",
 	pauseKey = "Escape",
 	spectatorRotationVelocity = 0.005,
-	version = "Copyright SaveState. v1.6.4";
+	version = "Copyright SaveState. v1.6.5";
 
 var
 	indexOfSpectate = 1,
@@ -359,12 +359,14 @@ function doKill(e) {
 }
 
 function eatFood(e) {
-	for (var i = 0; i < food.length; i++) {
-		var x = players[e].location[0][0] - food[i][0];
-		var y = players[e].location[0][1] - food[i][1];
-		if (Math.sqrt(x ** 2 + y ** 2) < mouthSize) {
-			food.splice(i, 1);
-			players[e].size += growthRate;
+	for (var q = 0; q < players[e].location.length; q++) {
+		for (var i = 0; i < food.length; i++) {
+			var x = players[e].location[q][0] - food[i][0];
+			var y = players[e].location[q][1] - food[i][1];
+			if (Math.sqrt(x ** 2 + y ** 2) < mouthSize) {
+				food.splice(i, 1);
+				players[e].size += growthRate;
+			}
 		}
 	}
 }
