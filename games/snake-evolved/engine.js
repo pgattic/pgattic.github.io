@@ -21,7 +21,7 @@ const
 	compassColor = "#000",
 	pauseKey = "Escape",
 	spectatorRotationVelocity = 0.005,
-	version = "Copyright SaveState. v1.6.0";
+	version = "Copyright SaveState. v1.6.1";
 
 var
 	indexOfSpectate = 1,
@@ -425,7 +425,7 @@ function drawPlayer(e) {
 }
 
 function calcSnakeWidth(v) {
-	return Math.sqrt(players[v].size);
+	return (Math.sqrt(players[v].size) / 3) + 5;
 }
 
 function drawFood(e) {
