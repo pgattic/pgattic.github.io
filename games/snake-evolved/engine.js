@@ -21,7 +21,7 @@ const
 	compassColor = "#000",
 	pauseKey = "Escape",
 	spectatorRotationVelocity = 0.005,
-	version = "Copyright SaveState. v1.5.8";
+	version = "Copyright SaveState. v1.5.9";
 
 var
 	indexOfSpectate = 1,
@@ -490,7 +490,7 @@ function main() {
 		calculate();
 	}
 	draw();
-	requestAnimationFrame(main);
+//	requestAnimationFrame(main);
 }
 
-requestAnimationFrame(main);
+setInterval(main, 1);
