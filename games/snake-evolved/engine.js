@@ -4,7 +4,7 @@ const
 	startLength = 20,
 	playerSpeed = 2,
 	amtOfFood = 100,
-	sprintingAtrophy = 0.5,
+	sprintingAtrophy = 0.25,
 	playerSizeFloor = 15,
 	mouthSize = 10,
 	growthRate = 5,
@@ -21,7 +21,7 @@ const
 	compassColor = "#000",
 	pauseKey = "Escape",
 	spectatorRotationVelocity = 0.005,
-	version = "Copyright SaveState. v1.5.9";
+	version = "Copyright SaveState. v1.6.0";
 
 var
 	indexOfSpectate = 1,
@@ -397,7 +397,7 @@ function drawPlayer(e) {
 	for (var v = 0; v < numOfPlayers; v++) {
 		if (players[v].inGame) {
 			ctx[e].lineCap = "round";
-			ctx[e].lineWidth = snakeWidth;
+			ctx[e].lineWidth = calcSnakeWidth(v);
 			var targetColor = players[v].boosting ? players[v].boostColor : players[v].color;
 			ctx[e].strokeStyle = makeGradient(targetColor, e);
 			ctx[e].beginPath();
@@ -416,13 +416,16 @@ function drawPlayer(e) {
 		}
 	}
 
-
 	if (players[e].inGame) {
 		ctx[e].font = "16px Arial";
 		ctx[e].fillStyle = compassColor;
 		ctx[e].textAlign = "center";
 		ctx[e].fillText("▲", players[e].location[0][0], players[e].location[0][1] - compassRadius);	
 	}
+}
+
+function calcSnakeWidth(v) {
+	return Math.sqrt(players[v].size);
 }
 
 function drawFood(e) {
