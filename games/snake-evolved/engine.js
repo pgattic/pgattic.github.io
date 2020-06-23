@@ -21,7 +21,7 @@ const
 	compassColor = "#000",
 	pauseKey = "Escape",
 	spectatorRotationVelocity = 0.005,
-	version = "Copyright SaveState. v1.6.1";
+	version = "Copyright SaveState. v1.6.2";
 
 var
 	indexOfSpectate = 1,
@@ -320,6 +320,16 @@ function spawnFood() {
 	}
 }
 
+function constrict(e) {
+	var playerCopy = players[e];
+	for (var i = 1; i < players[e].location.length - 1; i++) {
+		var x = (((playerCopy.location[i - 1][0] + playerCopy.location[i + 1][0]) / 2) + players[e].location[i][0]) / 2;
+		var y = (((playerCopy.location[i - 1][1] + playerCopy.location[i + 1][1]) / 2) + players[e].location[i][1]) / 2;
+		players[e].location[i][0] = x;
+		players[e].location[i][1] = y;
+	}
+}
+
 function killPlayer(e) {
 	if (Math.sqrt(players[e].location[0][0] ** 2 + players[e].location[0][1] ** 2) > mapSize) {
 		doKill(e);
@@ -373,8 +383,9 @@ function calculate() {
 				movePlayer(e);
 				players[e].size -= sprintingAtrophy;
 			} else {
-				players[e].boosting = false
+				players[e].boosting = false;
 			}
+			constrict(e);
 			killPlayer(e);
 			eatFood(e);
 		}
