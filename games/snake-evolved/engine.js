@@ -504,7 +504,7 @@ function main() {
 		calculate();
 	}
 	draw();
-//	requestAnimationFrame(main);
+	requestAnimationFrame(main);
 }
 
-setInterval(main, 1);
+requestAnimationFrame(main);
