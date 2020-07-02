@@ -6,7 +6,7 @@ const
 	amtOfFood = 100,
 	sprintingAtrophy = 0.25,
 	playerSizeFloor = 15,
-	mouthSize = 10,
+	bodyConsumptionRadius = 2,
 	growthRate = 5,
 	foodDropConstant = 8,
 	snakeWidth = 10,
@@ -21,7 +21,7 @@ const
 	compassColor = "#000",
 	pauseKey = "Escape",
 	spectatorRotationVelocity = 0.005,
-	version = "Copyright SaveState. v1.6.5";
+	version = "Copyright SaveState. v1.8.0";
 
 var
 	indexOfSpectate = 1,
@@ -337,7 +337,7 @@ function killPlayer(e) {
 			for (var c = 0; c < players[i].location.length; c++) {
 				var x = players[e].location[0][0] - players[i].location[c][0];
 				var y = players[e].location[0][1] - players[i].location[c][1];
-				if (Math.sqrt(x ** 2 + y ** 2) < mouthSize) {
+				if (Math.sqrt(x ** 2 + y ** 2) < calcSnakeWidth(e) / 2) {
 					doKill(e);
 				}
 			}
@@ -359,11 +359,20 @@ function doKill(e) {
 }
 
 function eatFood(e) {
+	for (var i = 0; i < food.length; i++) {
+		var x = players[e].location[0][0] - food[i][0];
+		var y = players[e].location[0][1] - food[i][1];
+		if (Math.sqrt(x ** 2 + y ** 2) < calcSnakeWidth(e) / 2 + foodRadius) {
+			food.splice(i, 1);
+			players[e].size += growthRate;
+		}
+	}
+
 	for (var q = 0; q < players[e].location.length; q++) {
 		for (var i = 0; i < food.length; i++) {
 			var x = players[e].location[q][0] - food[i][0];
 			var y = players[e].location[q][1] - food[i][1];
-			if (Math.sqrt(x ** 2 + y ** 2) < mouthSize) {
+			if (Math.sqrt(x ** 2 + y ** 2) < bodyConsumptionRadius) {
 				food.splice(i, 1);
 				players[e].size += growthRate;
 			}
@@ -420,7 +429,7 @@ function drawPlayer(e) {
 			ctx[e].stroke();
 			ctx[e].closePath();
 			ctx[e].beginPath();
-			ctx[e].arc(players[v].location[0][0], players[v].location[0][1], snakeWidth / 4, 0, Math.PI * 2);
+			ctx[e].arc(players[v].location[0][0], players[v].location[0][1], calcSnakeWidth(v) / 4, 0, Math.PI * 2);
 			ctx[e].fillStyle = compassColor;
 			ctx[e].fill();
 			ctx[e].closePath();
@@ -428,10 +437,10 @@ function drawPlayer(e) {
 	}
 
 	if (players[e].inGame) {
-		ctx[e].font = "16px Arial";
+		ctx[e].font = calcSnakeWidth(e) * 1.5 + "px Arial";
 		ctx[e].fillStyle = compassColor;
 		ctx[e].textAlign = "center";
-		ctx[e].fillText("▲", players[e].location[0][0], players[e].location[0][1] - compassRadius);	
+		ctx[e].fillText("▲", players[e].location[0][0], players[e].location[0][1] - calcSnakeWidth(e) );	
 	}
 }
 
@@ -458,6 +467,7 @@ function translateCanvas(e) {
 	ctx[e].translate(canvas[e].width / 2, canvas[e].height / 2);
 	if (players[e].inGame) {
 		ctx[e].rotate(players[e].direction - Math.PI / 2);
+		ctx[e].scale(playerScale(e), playerScale(e));
 		ctx[e].translate(-players[e].location[0][0], -players[e].location[0][1]);
 		scoreMeters[e].innerHTML = "Score: " + players[e].size;
 	}
@@ -473,6 +483,10 @@ function translateCanvas(e) {
 		scoreMeters[e].innerHTML = `Press ${players[e].spawnKey} to join! Use ${keys} to control your snake!`;
 		ctx[e].scale(spectateZoom, spectateZoom);
 	}
+}
+
+function playerScale(e) {
+	return 10 / calcSnakeWidth(e);
 }
 
 function draw() {
