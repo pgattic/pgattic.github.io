@@ -20,7 +20,7 @@ const
 	foodColor = "#080",
 	pauseKey = "Escape",
 	spectatorRotationVelocity = 0.005,
-	version = "Copyright SaveState. v1.9.0";
+	version = "Copyright SaveState. v1.9.3";
 
 var
 	indexOfSpectate = 1,
@@ -76,7 +76,7 @@ switch (numOfPlayers) {
 					startLocation[1]
 				],
 				direction: startDirection[1],
-				size: startLength,
+				size: generateAILength(),
 				boosting:false,
 				right: false,
 				left: false,
@@ -91,7 +91,7 @@ switch (numOfPlayers) {
 					startLocation[2]
 				],
 				direction: startDirection[2],
-				size: startLength,
+				size: generateAILength(),
 				boosting:false,
 				right: false,
 				left: false,
@@ -106,7 +106,7 @@ switch (numOfPlayers) {
 					startLocation[3]
 				],
 				direction: startDirection[3],
-				size: startLength,
+				size: generateAILength(),
 				boosting:false,
 				right: false,
 				left: false,
@@ -282,6 +282,10 @@ function resize() {
 	}
 }
 
+function generateAILength() {
+	return Math.floor(Math.random() * 1980) + 20;
+}
+
 window.onresize = () => {
 	resize();
 }
@@ -359,7 +363,6 @@ function calcAI(e) {
 				selectedFood = i;
 			}
 		}
-		console.log(selectedFood);
 		var a = food[selectedFood][0] - players[e].location[0][0];
 		var b = food[selectedFood][1] - players[e].location[0][1];
 		var an = a * Math.cos(players[e].direction) - b * Math.sin(players[e].direction);
@@ -479,7 +482,7 @@ function killPlayer(e) {
 			for (var c = 0; c < players[i].location.length; c++) {
 				var x = players[e].location[0][0] - players[i].location[c][0];
 				var y = players[e].location[0][1] - players[i].location[c][1];
-				if (Math.sqrt(x ** 2 + y ** 2) < calcSnakeWidth(e) / 2) {
+				if (Math.sqrt(x ** 2 + y ** 2) < (calcSnakeWidth(e) + calcSnakeWidth(i)) / 2) {
 					doKill(e);
 				}
 			}
