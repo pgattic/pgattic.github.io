@@ -18,10 +18,9 @@ const
 	bgColor = ["#fff", "#aaa"],
 	mapBorderColor = "#000",
 	foodColor = "#080",
-	compassColor = "#000",
 	pauseKey = "Escape",
 	spectatorRotationVelocity = 0.005,
-	version = "Copyright SaveState. v1.8.0";
+	version = "Copyright SaveState. v1.9.0";
 
 var
 	indexOfSpectate = 1,
@@ -41,14 +40,15 @@ var
 	startDirection,
 	startLocation,
 	scoreMeters,
-	players;
+	players,
+	selectedFood = 0;
 
 switch (numOfPlayers) {
 	case 1:
 		canvas = [document.getElementById("1")];
 		ctx = [canvas[0].getContext("2d")];
-		startDirection = [Math.PI / 2];
-		startLocation = [[0, 0]];
+		startDirection = [Math.PI / 2, Math.PI, 0, Math.PI * (3/2)];
+		startLocation = [[0, -200], [-200, 0], [200, 0], [0, 200]];
 		scoreMeters = [document.getElementById("a")];
 		players = [
 			{
@@ -69,6 +69,52 @@ switch (numOfPlayers) {
 				rightKey: "ARROWRIGHT",
 				spawnKey: "1",
 				inGame: true,
+				cpu: false,
+			},
+			{
+				location: [
+					startLocation[1]
+				],
+				direction: startDirection[1],
+				size: startLength,
+				boosting:false,
+				right: false,
+				left: false,
+				up: false,
+				color: ["#0a0", "#060"],
+				boostColor: ["#6a6", "#363"],
+				inGame: true,
+				cpu: true,
+			},
+			{
+				location: [
+					startLocation[2]
+				],
+				direction: startDirection[2],
+				size: startLength,
+				boosting:false,
+				right: false,
+				left: false,
+				up: false,
+				color: ["#00f", "#00a"],
+				boostColor: ["#66f", "#66a"],
+				inGame: true,
+				cpu: true,
+			},
+			{
+				location: [
+					startLocation[3]
+				],
+				direction: startDirection[3],
+				size: startLength,
+				boosting:false,
+				right: false,
+				left: false,
+				up: false,
+				color: ["#a0a", "#606"],
+				boostColor: ["#a6a", "#636"],
+				inGame: true,
+				cpu: true,
 			},
 		];
 		break;
@@ -97,6 +143,7 @@ switch (numOfPlayers) {
 				rightKey: "D",
 				spawnKey: "1",
 				inGame: false,
+				cpu: false,
 			},
 			{
 				location: [
@@ -116,6 +163,7 @@ switch (numOfPlayers) {
 				rightKey: "ARROWRIGHT",
 				spawnKey: "2",
 				inGame: false,
+				cpu: false,
 			},
 		];
 		break;
@@ -144,6 +192,7 @@ switch (numOfPlayers) {
 				rightKey: "D",
 				spawnKey: "1",
 				inGame: false,
+				cpu: false,
 			},
 			{
 				location: [
@@ -163,6 +212,7 @@ switch (numOfPlayers) {
 				rightKey: "H",
 				spawnKey: "2",
 				inGame: false,
+				cpu: false,
 			},
 			{
 				location: [
@@ -182,6 +232,7 @@ switch (numOfPlayers) {
 				rightKey: "L",
 				spawnKey: "3",
 				inGame: false,
+				cpu: false,
 			},
 			{
 				location: [
@@ -201,6 +252,7 @@ switch (numOfPlayers) {
 				rightKey: "ARROWRIGHT",
 				spawnKey: "4",
 				inGame: false,
+				cpu: false,
 			},
 		];
 		break;
@@ -291,6 +343,96 @@ function doSpectateCounter () {
 	indexOfSpectate = playersInGame[parseInt(spectateCounter / spectateDuration) % playersInGame.length];
 }
 
+function calcAI(e) {
+	if (players[e].cpu && food.length > 0) {
+		players[e].left = false;
+		players[e].right = false;
+		players[e].up = false;
+		var closeDistance = mapSize * 2;
+		var selectedFood;
+		for (var i = 0; i < food.length; i++) {
+			var x = food[i][0] - players[e].location[0][0];
+			var y = food[i][1] - players[e].location[0][1];
+			var d = Math.sqrt(x ** 2 + y ** 2);
+			if (d < closeDistance) {
+				closeDistance = d;
+				selectedFood = i;
+			}
+		}
+		console.log(selectedFood);
+		var a = food[selectedFood][0] - players[e].location[0][0];
+		var b = food[selectedFood][1] - players[e].location[0][1];
+		var an = a * Math.cos(players[e].direction) - b * Math.sin(players[e].direction);
+		var bn = a * Math.sin(players[e].direction) + b * Math.cos(players[e].direction);
+		if (bn > 0) {
+			players[e].right = true;
+		}
+		else if (bn < 0) {
+			players[e].left = true;
+		}
+		if (Math.abs(bn) < calcSnakeWidth(e) / 2 + foodRadius && an > 0) {
+			players[e].left = false;
+			players[e].right = false;
+		}
+		if (an < 0 && an > - 40 && Math.abs(bn) < 30) {
+			players[e].left = false;
+			players[e].right = false;
+		}
+		var selectedBody;
+		var closeBodyDist = 300;
+		var selectedPlayer;
+		for (var i = 0; i < players.length; i++) {
+			if (e != i) {
+				var c = players[i].location[0][0] - food[selectedFood][0];
+				var f = players[i].location[0][1] - food[selectedFood][1];
+				var g = Math.sqrt(c **2 + f ** 2);
+				if (g - 10 < closeDistance) {
+					players[e].up = true;
+				}
+				for (var q = 0; q < players[i].location.length; q++) {
+					var x = players[i].location[q][0] - players[e].location[0][0];
+					var y = players[i].location[q][1] - players[e].location[0][1];
+					var d = Math.sqrt(x ** 2 + y ** 2);
+					if (d < closeBodyDist) {
+						closeBodyDist = d;
+						selectedBody = q;
+						selectedPlayer = i;
+					}		
+				}
+			}
+		}
+		if (closeBodyDist < 40) {
+			var x = players[selectedPlayer].location[selectedBody][0] - players[e].location[0][0];
+			var y = players[selectedPlayer].location[selectedBody][1] - players[e].location[0][1];
+			var xn = x * Math.cos(players[e].direction) - y * Math.sin(players[e].direction);
+			var yn = x * Math.sin(players[e].direction) + y * Math.cos(players[e].direction);
+			players[e].up = false;
+			if (yn < 0) {
+				players[e].right = true;
+				players[e].left = false;
+			}
+			else if (yn > 0) {
+				players[e].left = true;
+				players[e].right = false;
+			}
+		}
+		if (Math.sqrt(players[e].location[0][0] ** 2 + players[e].location[0][1] ** 2) > mapSize - 30) {
+			var x = 0 - players[e].location[0][0];
+			var y = 0 - players[e].location[0][1];
+			var xn = x * Math.cos(players[e].direction) - y * Math.sin(players[e].direction);
+			var yn = x * Math.sin(players[e].direction) + y * Math.cos(players[e].direction);
+			if (yn > 0) {
+				players[e].right = true;
+				players[e].left = false;
+			}
+			else if (yn < 0) {
+				players[e].left = true;
+				players[e].right = false;
+			}
+		}
+	}
+}
+
 function rotatePlayer(e) {
 	if (players[e].left) {
 		players[e].direction += turnSensitivity * relativeGameSpeed;
@@ -315,7 +457,7 @@ function movePlayer(e) {
 function spawnFood() {
 	if (food.length < amtOfFood) {
 		var rad = Math.random() * Math.PI * 2;
-		var dist = Math.random() * (mapSize - foodRadius);
+		var dist = Math.random() * (mapSize - foodRadius * 4);
 		food.push([Math.floor(Math.cos(rad) * dist), Math.floor(Math.sin(rad) * dist)]);
 	}
 }
@@ -332,7 +474,7 @@ function killPlayer(e) {
 	if (Math.sqrt(players[e].location[0][0] ** 2 + players[e].location[0][1] ** 2) > mapSize) {
 		doKill(e);
 	}
-	for (var i = 0; i < numOfPlayers; i++) {
+	for (var i = 0; i < players.length; i++) {
 		if (i != e && players[i].inGame) {
 			for (var c = 0; c < players[i].location.length; c++) {
 				var x = players[e].location[0][0] - players[i].location[c][0];
@@ -383,8 +525,9 @@ function eatFood(e) {
 function calculate() {
 	doSpectateCounter();
 	spectatorRotate += spectatorRotationVelocity;
-	for (var e = 0; e < numOfPlayers; e++) {
+	for (var e = 0; e < players.length; e++) {
 		if (players[e].inGame) {
+			calcAI(e);
 			rotatePlayer(e);
 			movePlayer(e);
 			if (players[e].up && players[e].size > playerSizeFloor) {
@@ -414,7 +557,7 @@ function drawBG(e) {
 }
 
 function drawPlayer(e) {
-	for (var v = 0; v < numOfPlayers; v++) {
+	for (var v = 0; v < players.length; v++) {
 		if (players[v].inGame) {
 			ctx[e].lineCap = "round";
 			ctx[e].lineWidth = calcSnakeWidth(v);
@@ -430,7 +573,7 @@ function drawPlayer(e) {
 			ctx[e].closePath();
 			ctx[e].beginPath();
 			ctx[e].arc(players[v].location[0][0], players[v].location[0][1], calcSnakeWidth(v) / 4, 0, Math.PI * 2);
-			ctx[e].fillStyle = compassColor;
+			ctx[e].fillStyle = compassColor(v);
 			ctx[e].fill();
 			ctx[e].closePath();
 		}
@@ -438,10 +581,22 @@ function drawPlayer(e) {
 
 	if (players[e].inGame) {
 		ctx[e].font = calcSnakeWidth(e) * 1.5 + "px Arial";
-		ctx[e].fillStyle = compassColor;
+		ctx[e].fillStyle = compassColor(v);
 		ctx[e].textAlign = "center";
 		ctx[e].fillText("▲", players[e].location[0][0], players[e].location[0][1] - calcSnakeWidth(e) );	
 	}
+}
+
+function compassColor(e) {
+	var size = 0;
+	var leader = 0;
+	for (var i = 0; i < players.length; i++) {
+		if (players[i].size > players[leader].size) {
+			leader = i;
+			size = players[i].size;
+		}
+	}
+	return leader == e ? "#ff0" : "#000";
 }
 
 function calcSnakeWidth(v) {
