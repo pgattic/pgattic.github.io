@@ -20,7 +20,7 @@ const
 	foodColor = "#080",
 	pauseKey = "Escape",
 	spectatorRotationVelocity = 0.005,
-	version = "Copyright SaveState. v1.9.3";
+	version = "Copyright SaveState. v1.9.5";
 
 var
 	indexOfSpectate = 1,
@@ -627,7 +627,7 @@ function translateCanvas(e) {
 		ctx[e].rotate(players[e].direction - Math.PI / 2);
 		ctx[e].scale(playerScale(e), playerScale(e));
 		ctx[e].translate(-players[e].location[0][0], -players[e].location[0][1]);
-		scoreMeters[e].innerHTML = "Score: " + players[e].size;
+		scoreMeters[e].innerHTML = "Score: " + Math.floor(players[e].size);
 	}
 	else if (playersInGame.length !== 0) {
 		ctx[e].rotate(spectatorRotate);
