@@ -2,67 +2,38 @@
 <urlset	xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
 		<loc>https://pgattic.github.io</loc>
-		<lastmod>2019-09-24</lastmod>
+		<lastmod>2022-08-16</lastmod>
 		<priority>1.00</priority>
 	</url>
 	<url>
-		<loc>https://pgattic.github.io/games/snake</loc>
-		<lastmod>2019-09-24</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://pgattic.github.io/games/multiplayer-snake</loc>
-		<lastmod>2019-09-24</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://pgattic.github.io/games/yeet-ball</loc>
-		<lastmod>2019-09-24</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://pgattic.github.io/games/yeet-ball-classic</loc>
-		<lastmod>2019-09-24</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://pgattic.github.io/games/pong</loc>
-		<lastmod>2019-10-01</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://pgattic.github.io/games/4p-pong</loc>
-		<lastmod>2019-10-14</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://pgattic.github.io/games/8p-flappy-bird</loc>
-		<lastmod>2019-10-14</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://pgattic.github.io/games/dots</loc>
-		<lastmod>2019-10-14</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://pgattic.github.io/games/snake-evolved</loc>
-		<lastmod>2020-06-02</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://pgattic.github.io/challenges/about</loc>
-		<lastmod>2019-10-17</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://pgattic.github.io/blog</loc>
-		<lastmod>2019-12-17</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
 		<loc>https://pgattic.github.io/about-me</loc>
-		<lastmod>2019-09-24</lastmod>
+		<lastmod>2022-08-16</lastmod>
+		<priority>1.00</priority>
+	</url>
+	<url>
+		<loc>https://pgattic.github.io/games</loc>
+		<lastmod>2022-08-16</lastmod>
 		<priority>0.80</priority>
+	</url>
+	<url>
+		<loc>https://pgattic.github.io/other</loc>
+		<lastmod>2022-08-16</lastmod>
+		<priority>0.50</priority>
+	</url>
+
+	<url>
+		<loc>https://pgattic.github.io/multiplayer-snake</loc>
+		<lastmod>2022-08-17</lastmod>
+		<priority>0.20</priority>
+	</url>
+	<url>
+		<loc>https://pgattic.github.io/platformer</loc>
+		<lastmod>2022-08-02</lastmod>
+		<priority>0.20</priority>
+	</url>
+	<url>
+		<loc>https://pgattic.github.io/html5-golf</loc>
+		<lastmod>2022-08-02</lastmod>
+		<priority>0.30</priority>
 	</url>
 </urlset>

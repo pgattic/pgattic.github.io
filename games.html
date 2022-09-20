@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<title>Games - pgattic</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="icon" type="image/png" href="img/favicon-32x32.png" sizes="32x32" />
+		<link rel="icon" type="image/png" href="img/favicon-16x16.png" sizes="16x16" />
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-114106362-3"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+
+			gtag('config', 'UA-114106362-3');
+		</script>
+	</head>
+	<body>
+		<header id="header">
+			<a id="title" href="/">pgattic.github.io</a>
+			<ul id="navbar">
+				<li><a href="/">Home</a></li>
+				<li><a href="about-me">About</a></li>
+				<li><a href="games" id="current">Games</a></li>
+				<li><a href="html5-golf" target="_blank">Code Golfing ↱</a></li>
+				<li><a href="other">Other</a></li>
+				<li><a id="darkBtn">☀️</a></li>
+			</ul>
+		</header>
+		<main>
+			<article>
+				<h1>My HTML5 Games 🎮</h1>
+				<p>Here are the web-based games I have made. These aren't the only games I have made, though! You can see other kinds of games I have made <a href="other">here</a>!</p>
+				<p>Many games previously here have been temporarily removed, as I am reorganizing things, but things will be back better soon! However, all of the games here have received significant updates recently, so try them out!</p>
+				<div class="gallery">
+					<!--<a href="multiplayer-snake" style="background-image: url('img/snake-thumb.png')">
+						<h2>Snake</h2>
+					</a>-->
+					<a href="multiplayer-snake" style="background-image: url('img/multiplayer-snake-thumb.png')">
+						<h2>Multiplayer Snake</h2>
+					</a>
+					<!--<a href="yeet-ball" style="background-image: url('img/yeet-ball-thumb.png')">
+						<h2>Yeet Ball</h2>
+					</a>
+					<a href="pong" style="background-image: url('img/pong-thumb.png')">
+						<h2>Pong</h2>
+					</a>
+					<a href="4p-pong" style="background-image: url('img/4p-pong-thumb.png')">
+						<h2>4-Player Pong</h2>
+					</a>
+					<a href="8p-flappy-bird" style="background-image: url('img/flappy-bird-thumb.png')">
+						<h2>8-Player Flappy Bird</h2>
+					</a>-->
+					<a href="snake-evolved" style="background-image: url('img/snake-evolved-thumb.png')">
+						<h2>Snake Evolved</h2>
+					</a>
+					<a href="dots" style="background-image: url('img/dots-thumb.png')">
+						<h2>Dots</h2>
+					</a>
+					<a href="platformer" style="background-image: url('img/platformer-thumb.png')">
+						<h2>Platformer</h2>
+					</a>
+				</div>
+			</article>
+		</main>
+		<footer>
+			<div>
+				2018 - <span id="year"></span>. Hand-crafted in HTML5 by Preston Corless. <a href="https://github.com/pgattic/pgattic.github.io" target="_blank">Source Code</a>
+			</div>
+		</footer>
+	</body>
+	<script src="js/script.js"></script>
+</html>
