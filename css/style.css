@@ -26,7 +26,11 @@ header * {
 	user-select: none;
 }
 
-
+.extern-nav {
+	width: 14px;
+	height: 14px;
+	margin: -1px;
+}
 
 #title {
 	padding: 12px;
@@ -101,6 +105,7 @@ header * {
 .gallery > a:hover {
 	background-color: #ddd;
 }
+
 .gallery > a {
 	width: 240px;
 	height: 128px;
@@ -134,7 +139,7 @@ header * {
 	transition: 0.2s;
 	position: absolute;
 	left: 50%;
-	transform: translate(-50%, 98px);
+	transform: translate(-50%, 90px);
 	background-color: transparent;
 	padding: 8px;
 	visibility: hidden;
@@ -166,11 +171,6 @@ header * {
 
 h2 {
 	text-decoration: underline;
-}
-
-#extern {
-	fill: blue;
-	color: red;
 }
 
 .gallery > a > h2 {
@@ -216,6 +216,9 @@ a {
 	color: var(--link-color);
 }
 
+hr {
+	margin: 12px 0;
+}
 
 h1 img {
 	object-fit:cover;
@@ -244,7 +247,11 @@ footer div {
 	font-size: 20px;
 }
 
-#blog * {
+#blog p {
+	margin: 8px 0;
+}
+
+#blog li {
 	margin: 8px 0;
 }
 
