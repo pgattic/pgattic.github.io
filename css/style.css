@@ -4,7 +4,6 @@ body {
 	font-family: "Roboto", sans-serif;
 	color: var(--text-color);
 	background-color: var(--bg-color);
-	transition: 0.2s;
 	margin: 0;
 }
 
@@ -18,7 +17,6 @@ header {
 	border-bottom: 1px solid var(--nav-border);
 	box-shadow: 0 0 8px var(--shadow-color);
 	font-weight: bold;
-	transition: 0.2s;
 }
 
 header * {
@@ -38,7 +36,6 @@ header * {
 	display:inline-block;
 	text-decoration: none;
 	color: inherit;
-	transition: 0.2s;
 }
 
 #bgGame {
