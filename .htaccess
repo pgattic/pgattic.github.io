@@ -4,3 +4,7 @@ ErrorDocument 404 /404.html
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^([^\.]+)$ $1.html [NC,L]
+
+<filesMatch ".(css|jpg|jpeg|png|gif|js|ico|webp)$">
+	Header set Cache-Control max-age=15552000, public
+</filesMatch>
