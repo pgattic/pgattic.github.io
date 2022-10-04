@@ -43,12 +43,5 @@ $("#darkBtn").onclick = (e) => {
 
 refreshColors();
 
-
-document.body.style="margin-top: " + ($("#header").offsetHeight) + "px";
-
-window.onresize = () => {
-	document.body.style="margin-top: " + ($("#header").offsetHeight) + "px";
-}
-
 $("#year").innerText = new Date().getFullYear();
 

@@ -9,7 +9,7 @@ body {
 
 
 header {
-	position: fixed;
+	position: sticky;
 	width: 100%;
 	left: 0;
 	top: 0;
@@ -17,6 +17,7 @@ header {
 	border-bottom: 1px solid var(--nav-border);
 	box-shadow: 0 0 8px var(--shadow-color);
 	font-weight: bold;
+	overflow: auto;
 }
 
 header * {
@@ -189,7 +190,7 @@ main {
 
 h1 {
 	font-size: 48px;
-	margin: 16px 0;
+	margin: 0 0 16px 0;
 	background-color: var(--nav-hover);
 	padding: 12px 24px;
 	border-radius: 16px;
