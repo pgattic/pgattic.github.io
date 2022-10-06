@@ -80,6 +80,9 @@ header * {
 	background-color: var(--nav-hover);
 }
 
+#about-me-title {
+	margin: 8px 12px 12px 0;
+}
 
 #profile {
 	width: 96px;
@@ -87,7 +90,6 @@ header * {
 	object-fit: cover;
 	display: inline-block;
 	border-radius: 50%;
-	margin: 8px 24px 0 24px;
 	padding: 0;
 	vertical-align: top;
 	box-shadow: 0 0 5px var(--shadow-color);
