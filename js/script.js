@@ -11,7 +11,7 @@ const
 	navHover = ["#bdb","#343"],
 	navSelected = ["#ccc","#333"],
 	navBorder = ["#7c7", "#585"],
-	linkColor = ["#5a5", "#7b7"],
+	linkColor = ["#292", "#7b7"],
 	shadowColor = ["#aaa", "#000"],
 	btnEmoji = ["☀️","🌙"];
 
