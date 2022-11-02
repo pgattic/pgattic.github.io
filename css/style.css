@@ -218,6 +218,7 @@ a {
 
 hr {
 	margin: 12px 0;
+	width: 100%;
 }
 
 h1 img {
@@ -242,6 +243,7 @@ footer div {
 
 #blog h2 {
 	text-decoration: none;
+	width: fit-content;
 }
 #blog p, #blog li {
 	font-size: 20px;
@@ -249,6 +251,7 @@ footer div {
 
 #blog p {
 	margin: 8px 0;
+	text-indent: 24px;
 }
 
 #blog li {
@@ -258,4 +261,45 @@ footer div {
 #blog img {
 	object-fit:cover;
 	max-width:100%;
+}
+
+.blog-img {
+	width: 385px;
+}
+
+.blog-img img {
+	width: 100%;
+	border-radius: 8px;
+}
+
+#blog .blog-img p {
+	font-size: 16px;
+	text-align: center;
+	font-style: italic;
+	text-indent: 0;
+	line-height: 18px;
+}
+
+.img-r {
+	float: right;
+	margin-left: 16px;
+}
+
+.img-l {
+	float: left;
+	margin-right: 16px;
+}
+
+@media only screen and (max-width: 600px) {
+	.img-r, .img-l {
+		float: initial;
+		text-align:center;
+		margin:0;
+	}
+	.blog-img {
+		width: 100%;
+	}
+	.blog-img img {
+		width: 375px;
+	}
 }
