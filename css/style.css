@@ -99,7 +99,7 @@ header * {
 	display: flex;
 	flex-wrap: wrap;
 	width: 100%;
-	justify-content:center;
+	justify-content: center;
 }
 
 .gallery > a:hover {
@@ -138,7 +138,6 @@ header * {
 .bubble span {
 	transition: 0.2s;
 	position: absolute;
-	left: 50%;
 	transform: translate(-50%, 90px);
 	background-color: transparent;
 	padding: 8px;
@@ -146,8 +145,9 @@ header * {
 	border-radius: 8px;
 	border: 1px solid transparent;
 	box-shadow: 0 0 8px transparent;
+	margin-left: 36px;
 
-	width:0;
+	width: 0;
 }
 
 .bubble:hover {
@@ -308,5 +308,12 @@ footer div {
 	}
 	.blog-img img {
 		width: 375px;
+	}
+}
+
+@media only screen and (max-width: 900px) {
+	.bubble span {
+		left:50%;
+		margin-left: 0;
 	}
 }
