@@ -32,7 +32,7 @@ header * {
 }
 
 #title {
-	padding: 12px;
+	margin: 9px;
 	font-size: 24px;
 	display:inline-block;
 	text-decoration: none;
@@ -61,8 +61,8 @@ header * {
 }
 
 #navbar li {
-	margin:0;
-	padding:0;
+	margin: 0;
+	padding: 0;
 }
 
 #navbar li a {
@@ -71,7 +71,7 @@ header * {
 	text-decoration: none;
 	color: inherit;
 	transition: 0.2s;
-	font-size:16px;
+	font-size: 16px;
 	line-height: 1;
 }
 
@@ -222,9 +222,9 @@ hr {
 }
 
 h1 img {
-	object-fit:cover;
-	max-width:100%;
-	height:100%;
+	object-fit: cover;
+	max-width: 100%;
+	height: 100%;
 }
 
 footer {
@@ -266,8 +266,8 @@ footer div {
 }
 
 #blog img {
-	object-fit:cover;
-	max-width:100%;
+	object-fit: cover;
+	max-width: 100%;
 }
 
 .blog-img {
@@ -300,8 +300,8 @@ footer div {
 @media only screen and (max-width: 600px) {
 	.img-r, .img-l {
 		float: initial;
-		text-align:center;
-		margin:0;
+		text-align: center;
+		margin: 0;
 	}
 	.blog-img {
 		width: 100%;
@@ -313,7 +313,7 @@ footer div {
 
 @media only screen and (max-width: 900px) {
 	.bubble span {
-		left:50%;
+		left: 50%;
 		margin-left: 0;
 	}
 }
