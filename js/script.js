@@ -3,39 +3,32 @@
 const
 	$=(x)=>{return document.querySelector(x)},
 	rootColors = $(":root").style,
-	
-	cScheme = ["light", "dark"],
-	textColor = ["#444", "#ccc"],
-	bgColor = ["#fff","#111"],
-	navColor = ["#eee","#222"],
-	navHover = ["#bdb","#343"],
-	navSelected = ["#ccc","#333"],
-	navBorder = ["#7c7", "#585"],
-	linkColor = ["#272", "#7b7"],
-	shadowColor = ["#aaa", "#000"],
-	btnEmoji = ["☀️","🌙"];
+	colors = {
+		"--text-color": ["#444", "#ccc"],
+		"--bg-color": ["#fff","#111"],
+		"--nav-color": ["#eee","#222"],
+		"--nav-hover": ["#bdb","#343"],
+		"--nav-selected": ["#ccc","#333"],
+		"--nav-border": ["#7c7", "#585"],
+		"--link-color": ["#272", "#7b7"],
+		"--shadow-color": ["#aaa", "#000"]
+	};
 
-var
-	darkMode = Number(localStorage.getItem("darkMode")) || 0; // 0 for light mode, 1 for dark mode
+let darkMode = Number(localStorage.getItem("darkMode")) || 0; // 0 for light mode, 1 for dark mode
 
 function refreshColors() {
-	var i = Number(darkMode);
-	$(":root").style="color-scheme: " + cScheme[i];
-	rootColors.setProperty("--text-color", textColor[i]);
-	rootColors.setProperty("--bg-color", bgColor[i]);
-	rootColors.setProperty("--nav-color", navColor[i]);
-	rootColors.setProperty("--nav-hover", navHover[i]);
-	rootColors.setProperty("--nav-selected", navSelected[i]);
-	rootColors.setProperty("--nav-border", navBorder[i]);
-	rootColors.setProperty("--link-color", linkColor[i]);
-	rootColors.setProperty("--shadow-color", shadowColor[i]);
-	$("#darkBtn").innerText = btnEmoji[darkMode];
-	for (var e=0; e<document.getElementsByClassName("extern-nav").length; e++) {
-		document.getElementsByClassName("extern-nav")[e].src = (i==0?"svg/external-link-light.svg":"svg/external-link-dark.svg");
+	let modeString = darkMode ? "dark": "light";
+	rootColors.setProperty("color-scheme", modeString);
+	for (let c of Object.keys(colors)) {
+		rootColors.setProperty(c, colors[c][darkMode]);
+	}
+	$("#darkBtn").innerText = darkMode ? "🌙" : "☀️";
+	for (let e = 0; e < document.getElementsByClassName("extern-nav").length; e++) {
+		document.getElementsByClassName("extern-nav")[e].src = `svg/external-link-${modeString}.svg`;
 	}
 }
 
-$("#darkBtn").onclick = (e) => {
+$("#darkBtn").onclick = () => {
 	darkMode = Number(!darkMode);
 	localStorage.setItem("darkMode", darkMode);
 	refreshColors();
@@ -44,4 +37,3 @@ $("#darkBtn").onclick = (e) => {
 refreshColors();
 
 $("#year").innerText = new Date().getFullYear();
-

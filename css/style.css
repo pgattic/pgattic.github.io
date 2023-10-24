@@ -80,6 +80,10 @@ header * {
 	background-color: var(--nav-hover);
 }
 
+#darkBtn {
+	cursor: pointer;
+}
+
 #about-me-title {
 	margin: 8px 12px 12px 0;
 }
