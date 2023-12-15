@@ -39,14 +39,14 @@ header * {
 	color: inherit;
 }
 
-#bgGame {
+/* #bgGame {
 	position: fixed;
 	width: 100%;
 	height: 80%;
 	left: 0;
 	z-index: -1;
 	border: none;
-}
+} */
 
 #current {
 	background-color: var(--nav-selected);
@@ -106,24 +106,35 @@ header * {
 	justify-content: center;
 }
 
-.gallery > a:hover {
-	background-color: #ddd;
-}
-
-.gallery > a {
-	width: 240px;
-	height: 128px;
-	margin: 4px;
-	padding: 8px;
+.gallery-item {
+	width: 280px;
+	margin: 8px;
 	border-radius: 8px;
 	text-decoration: none;
 	color: inherit;
-	background-size: cover;
-	background-color: #fff;
-	background-blend-mode: multiply;
+	transition: all 0.2s;
+	overflow: hidden;
+	background-color: #eee;
+}
+
+.gallery-item:hover {
+	transform: scale(1.05,1.05);
 	box-shadow: 0 0 8px var(--shadow-color);
-	border: 1px solid var(--nav-border);
-	transition: 0.2s;
+}
+
+.gallery-item img {
+	width: 100%;
+	height: 120px;
+	object-fit: cover;
+}
+
+.gallery-item h3 {
+	margin: 2px 8px;
+}
+
+.gallery-item p {
+	margin: 0 8px 8px;
+	font-size: 16px;
 }
 
 .bubble {
@@ -150,12 +161,11 @@ header * {
 	border: 1px solid transparent;
 	box-shadow: 0 0 8px transparent;
 	margin-left: 36px;
-
 	width: 0;
 }
 
 .bubble:hover {
-	background-color: var(--nav-hover)
+	transform: scale(1.1,1.1);
 }
 
 .bubble:hover span {
@@ -175,6 +185,7 @@ header * {
 
 h2 {
 	text-decoration: underline;
+	text-decoration-thickness: 3px;
 }
 
 .gallery > a > h2 {
@@ -188,7 +199,7 @@ h2 {
 }
 
 main {
-	max-width: 800px;
+	max-width: 900px;
 	margin: auto;
 	padding: 24px;
 }
