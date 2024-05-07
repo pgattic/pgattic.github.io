@@ -127,7 +127,7 @@ header * {
 }
 
 .bubble {
-	background-color: var(--nav-selected);
+	background-color: var(--bubble-bg);
 	box-shadow: 0 0 8px var(--shadow-color);
 	width: auto;
 	height: auto;

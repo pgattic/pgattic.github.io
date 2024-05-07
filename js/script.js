@@ -11,6 +11,7 @@ const
 		"--nav-selected": ["#ccc","#333"],
 		"--nav-border": ["#7c7", "#585"],
 		"--link-color": ["#272", "#7b7"],
+		"--bubble-bg": ["#ccc", "#444"],
 		"--shadow-color": ["#aaa", "#000"]
 	};
 
