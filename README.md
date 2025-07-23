@@ -1,6 +1,7 @@
+
 # pgattic.dev
 
-Hello! This is the source code for my personal website/blog, all handwritten in HTML and CSS.
+Hello! This is the source code for my personal website/blog, made in HTML, CSS, and Markdown using [Zola Static Site Engine](https://www.getzola.org/).
 
-Visit the site [here](https://pgattic.dev)!
+View the site [here](https://pgattic.dev)!
 

@@ -1,0 +1,59 @@
+<svg width="210" height="210" viewBox="-1 -1 21 21" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<rect fill="#333" x="-1" y="-1" width="21" height="21"/>
+<circle fill="#333" cx="9.5" cy="9.5" r="10.5"/>
+<g> <!-- p -->
+	<path d="
+		M 1.5 12
+		v -3.75
+		a 0.25 0.25 0 0 1 0.25 -0.25
+		h 2.75
+		a 1 1 0 0 1 0 2
+		h -2.5
+	" stroke="black" fill="transparent" stroke-linecap="round" stroke-width="3"/>
+	<path d="
+		M 1.5 12
+		v -3.75
+		a 0.25 0.25 0 0 1 0.25 -0.25
+		h 2.75
+		a 1 1 0 0 1 0 2
+		h -2.5
+	" stroke="white" fill="transparent" stroke-linecap="round"/>
+</g>
+<g> <!-- g -->
+	<path d="
+		M 7.5 12
+		h 3
+		a 1 1 0 0 0 1 -1
+		v -2.75
+		a 0.25 0.25 0 0 0 -0.25 -0.25
+		h -2.75
+		a 1 1 0 0 0 0 2
+		h 2.5
+	" stroke="black" fill="transparent" stroke-linecap="round" stroke-width="3"/>
+	<path d="
+		M 7.5 12
+		h 3
+		a 1 1 0 0 0 1 -1
+		v -2.75
+		a 0.25 0.25 0 0 0 -0.25 -0.25
+		h -2.75
+		a 1 1 0 0 0 0 2
+		h 2.5
+	" stroke="white" fill="transparent" stroke-linecap="round"/>
+</g>
+<g> <!-- c -->
+	<path d="
+		M 17.5 8
+		h -3
+		a 1 1 0 0 0 0 2
+		h 3
+	" stroke="black" fill="transparent" stroke-linecap="round" stroke-width="3"/>
+	<path d="
+		M 17.5 8
+		h -3
+		a 1 1 0 0 0 0 2
+		h 3
+	" stroke="white" fill="transparent" stroke-linecap="round"/>
+</g>
+</svg> 
+

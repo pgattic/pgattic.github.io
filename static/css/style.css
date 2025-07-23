@@ -1,0 +1,76 @@
+
+:root {
+  color-scheme: light dark;
+  font-family: "Roboto", sans-serif;
+  --h-color: light-dark(#171717, #ffffff);
+  --text-color: light-dark(#404040, #d4d4d4);
+  color: var(--text-color);
+}
+
+h1, h2, h3, h4 {
+  color: var(--h-color);
+}
+
+body {
+  background: light-dark(#f4f4f5, #18181b);
+  margin: 0;
+
+  #header-container {
+    background: light-dark(#e4e4e7, #27272a);
+    display: block;
+    header {
+      margin: 0 auto;
+      padding: 16px;
+      max-width: 1000px;
+      height: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      div {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        a {
+          text-decoration: none;
+          color: var(--text-color);
+        }
+        #home-a {
+          text-decoration: none;
+          color: light-dark(#000, #fff);
+          font-size: 24px;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+  section {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 16px;
+
+    h1 {
+      margin: 0 0 16px;
+    }
+    h2 {
+      margin: 0 0 12px;
+    }
+    p {
+    }
+    footer {
+      margin: 0 auto;
+      width: fit-content;
+    }
+    img {
+      max-width: 100%;
+      display: block;
+      margin: 0 auto;
+    }
+    ul {
+      /* padding-left: 24px; */
+    }
+    pre {
+      padding: 8px;
+    }
+  }
+}
+
