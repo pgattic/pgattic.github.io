@@ -1,5 +1,6 @@
-# pgattic.github.io
+# pgattic.dev
 
-Hey guys! Here is the code for my web site! I wrote all of the HTML/CSS/JS code myself, avoiding the temptation to copy css layouts or other things. 
+Hello! This is the source code for my personal website/blog, all handwritten in HTML and CSS.
 
-Visit the site [here](https://pgattic.github.io)!
+Visit the site [here](https://pgattic.dev)!
+

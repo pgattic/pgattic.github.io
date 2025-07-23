@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset	xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
-		<loc>https://pgattic.github.io</loc>
+		<loc>https://pgattic.dev</loc>
 		<lastmod>2022-08-16</lastmod>
 		<priority>1.00</priority>
 	</url>
 	<url>
-		<loc>https://pgattic.github.io/about-me</loc>
+		<loc>https://pgattic.dev/about-me</loc>
 		<lastmod>2022-08-16</lastmod>
 		<priority>1.00</priority>
 	</url>
 	<url>
-		<loc>https://pgattic.github.io/games</loc>
+		<loc>https://pgattic.dev/games</loc>
 		<lastmod>2022-08-16</lastmod>
 		<priority>0.80</priority>
 	</url>
 	<url>
-		<loc>https://pgattic.github.io/other</loc>
+		<loc>https://pgattic.dev/other</loc>
 		<lastmod>2022-08-16</lastmod>
 		<priority>0.50</priority>
 	</url>
 
 	<url>
-		<loc>https://pgattic.github.io/multiplayer-snake</loc>
+		<loc>https://pgattic.dev/multiplayer-snake</loc>
 		<lastmod>2022-08-17</lastmod>
 		<priority>0.20</priority>
 	</url>
 	<url>
-		<loc>https://pgattic.github.io/platformer</loc>
+    <loc>https://pgattic.dev/platformer</loc>
 		<lastmod>2022-08-02</lastmod>
 		<priority>0.20</priority>
 	</url>
 	<url>
-		<loc>https://pgattic.github.io/html5-golf</loc>
+		<loc>https://pgattic.dev/html5-golf</loc>
 		<lastmod>2022-08-02</lastmod>
 		<priority>0.30</priority>
 	</url>
