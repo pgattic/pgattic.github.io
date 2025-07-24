@@ -1,25 +1,97 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/svg" href="/icon.svg" />
-    <link rel="stylesheet" href="/css/style.css" />
+    <meta name="author" content="Preston Corless">
+    <meta name="description" content="{% block description %}pgattic's personal website and blog{% endblock description %}">
     <title>{% block title %}Untitled{% endblock title %} | {{ config.extra.site_name }}</title>
+    <link rel="icon" type="image/svg" href="/icon.svg">
+    <style>
+:root {
+  color-scheme: light dark;
+  font-family: "Roboto", sans-serif;
+  --h-color: light-dark(#171717, #ffffff);
+  --text-color: light-dark(#404040, #d4d4d4);
+  color: var(--text-color);
+}
+
+h1, h2, h3, h4 { color: var(--h-color); }
+
+body {
+  background: light-dark(#f4f4f5, #18181b);
+  margin: 0;
+
+  #header-container {
+    background: light-dark(#e4e4e7, #27272a);
+    display: block;
+    header {
+      margin: 0 auto;
+      padding: 16px;
+      max-width: 900px;
+      height: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      div {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        a {
+          text-decoration: none;
+          color: var(--text-color);
+        }
+        #home-a {
+          text-decoration: none;
+          color: light-dark(#000, #fff);
+          font-size: 24px;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+  section {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 16px;
+
+    h1 {
+      margin: 0 0 16px;
+      font-size: 2em;
+    }
+    h2 {
+      margin: 0 0 12px;
+    }
+    footer {
+      margin: 0 auto;
+      width: fit-content;
+    }
+    img {
+      max-width: 100%;
+      display: block;
+      margin: 0 auto;
+    }
+    pre {
+      padding: 8px;
+    }
+    .img-desc {
+      font-style: italic;
+      text-align: center;
+    }
+  }
+}
+    </style>
   </head>
   <body>
     <div id="header-container">
       <header>
         <div id="header-left">
-          <a id="home-a" href="https://pgattic.dev">
-            pgattic.dev
-          </a>
+          <a id="home-a" href="https://pgattic.dev">pgattic.dev</a>
         </div>
         <div id="header-right">
           <a href="/">Home</a>
           <a href="/blog">Blog</a>
           <a href="https://github.com/pgattic" target="_blank">Projects</a>
-          <a href="/about">About</a>
         </div>
       </header>
     </div>
@@ -28,9 +100,7 @@
         {% block content %}{% endblock content %}
       </div>
       <footer>&copy; 2018 - <span id="year">Now</span> Preston Corless. <a href="https://github.com/pgattic/pgattic.github.io">Source Code</a></footer>
-      <script>
-document.getElementById("year").textContent = new Date().getFullYear();
-      </script>
+      <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
     </section>
   </body>
 </html>
