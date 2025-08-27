@@ -16,7 +16,7 @@
   color: var(--text-color);
 }
 
-h1, h2, h3, h4 { color: var(--h-color); }
+h1, h2, h3, h4, h5, h6 { color: var(--h-color); }
 
 body {
   background: light-dark(#f4f4f5, #18181b);
@@ -86,6 +86,34 @@ body {
     }
   }
 }
+
+/* Make headings a positioning context */
+h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] { position: relative; }
+
+/* Anchor: hang outside the left edge and stay hidden until hover/focus */
+.zola-anchor {
+  position: absolute;
+  left: 0;
+  transform: translateX(-100%);
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity .15s ease;
+  padding-right: .25rem;
+  font-weight: 600;
+  color: light-dark(#888, #444);
+}
+
+/* Show on hover of the heading or when the anchor is keyboard-focused */
+h1[id]:hover .zola-anchor,
+h2[id]:hover .zola-anchor,
+h3[id]:hover .zola-anchor,
+h4[id]:hover .zola-anchor,
+h5[id]:hover .zola-anchor,
+h6[id]:hover .zola-anchor,
+.zola-anchor:focus-visible {
+  opacity: 1;
+}
+
     </style>
   </head>
   <body>
