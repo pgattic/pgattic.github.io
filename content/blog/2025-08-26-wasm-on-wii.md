@@ -11,7 +11,7 @@ Today, I am pleased to announce that I have successfully ported the engine to th
 ![Legendary Console Lineup](/wasm-nds-wii.jpg)
 *One game. 4 Systems. No modifications, thanks to the power of WebAssembly!*
 
-## Big-Endian in a Small-Endian World
+## Big-Endian in a Little-Endian World
 
 When I first had the WASM3 library all compiled and imported into my Wii code, I was really excited to see if it would work first try! However, to my confusion, calling platform-side rendering functions directly from the engine worked fine, but calling them from the WASM environment seemed to not work fully. When called from WebAssembly, functions to check if a given button was pressed always returned true, and rectangles wouldn't render. At first it made me feel like there was some bug in WASM3 that I had discovered, when in fact it was because I wasn't taking endianness into account.
 
