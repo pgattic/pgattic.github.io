@@ -9,7 +9,7 @@ template = "index.html"
 
 I code, do gymnastics, play the guitar, and do a little fishing!
 
-I am an Eagle Scout, a former competitive gymnast, and a lifelong member of the Church of Jesus Christ of Latter-Day Saints. I graduated from the International Academy of Macomb in 2020 and then served a two-year mission for my church in 🇸🇻 El Salvador.
+I am an Eagle Scout, a former competitive gymnast, and a lifelong member of the Church of Jesus Christ of Latter-Day Saints. I graduated high school with an International Baccalaureate (IB) diploma in 2020, served a two-year mission for my church in 🇸🇻 El Salvador from 2020-2022, and earned my Bachelor's degree in Computer Science at BYU&ndash;Idaho from 2022-2025.
 
 I have had an interest in programming since I was about 12, when I began to learn how to create games for the NES in 6502 assembly. I finally finished my first game about 3 years later, and then moved on to other languages. Since then, I have developed a love of coding. My journey has taken me through many technologies, like Linux, JavaScript, C#, Kotlin, and eventually Rust!
 
@@ -47,12 +47,4 @@ I graduated with my Bachelor's degree in Computer Science from [BYU-Idaho](https
 | <img src="/svg/erlang-logo.svg" alt="Erlang Logo" height="32"> | I learned <b style="color:#a90533">Erlang</b> through my Computer Science major at BYU-Idaho. To up my mastery of Erlang, I rewrote some of my side projects in it. | [V2X](https://github.com/pgattic/v2x-erl) |
 | <img src="/svg/dart-logo.svg" alt="Dart Logo" height="32"> | My team learned <b style="color:#29B6F6">Flutter</b> and <b style="color:#29B6F6">Dart</b> for [BYU-Idaho's Fall 2023 Hackathon](https://byuihack.org) for our submission, which took first place in its category! My friend and I also used Flutter for our senior project at BYU-Idaho. | [Neighborhood Nexus](https://github.com/pgattic/neighbor_nexus), [Bazapp](https://github.com/pgattic/bazapp) |
 | <img src="/svg/rust-logo.svg" alt="Rust Logo" height="32"> | I taught myself <b style="color:#f74c00">Rust</b> for the reference implementation of my [Cairn project](https://github.com/pgattic/cairn)'s code interpreter, and since then have used it for many personal projects. I chose Rust because I wanted to learn more about good memory management practices and because the functional programming ideology is something that I am personally very interested in. | [Cairn](https://github.com/pgattic/cairn), [Canon](https://github.com/pgattic/libcanon), [WASMCarts](https://github.com/pgattic/wasm-experiment) |
-
-
-## Important Links
-
-- Print-friendly [resume](https://pgattic.dev/pgattic/resume) (only print first page if the QR code is not desired)
-- [GitHub Profile](https://github.com/pgattic)
-- [LinkedIn](https://linkedin.com/in/pgattic)
-
 
