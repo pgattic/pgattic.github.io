@@ -4,6 +4,8 @@ date = 2025-08-26
 template = "blog-page.html"
 +++
 
+# WASM on Wii!
+
 Over the past year I have been running [a little experiment](https://github.com/pgattic/wasm-experiment) (read my first blog post about it [here](@/blog/2025-03-03-the-wasm-experiment.md)). So far, it has successfully produced a lightweight, cross-platform Fantasy Console similar to the [PICO-8](https://www.lexaloffle.com/pico-8.php) but powered by WebAssembly rather than Lua.
 
 Today, I am pleased to announce that I have successfully ported the engine to the Wii, giving it full feature parity with Linux, the Nintendo DS, and the DSi! The performance is great, and I'll share some things I learned along the way.

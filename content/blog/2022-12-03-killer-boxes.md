@@ -4,6 +4,8 @@ date = 2022-12-03
 template = "blog-page.html"
 +++
 
+# "Killer Boxes" of doom!
+
 ![Killer Boxes Selfie](/me-jack-circuit.jpg)
 
 *Jack and I with the completed project*

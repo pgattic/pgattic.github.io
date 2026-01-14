@@ -4,6 +4,8 @@ date = 2025-03-03
 template = "blog-page.html"
 +++
 
+# The WASM Experiment
+
 If WebAssembly is meant to be a fast and memory-efficient bytecode, what are the chances of getting old gaming systems to execute code compiled to it? And would that open up the door for running Rust or Golang on the Nintendo DS?
 
 Just the thought of taking Rust code I wrote and running it on my very own Nintendo DS gives me the chills. In the past I have tried out projects like [MicroLua DS](https://www.gamebrew.org/wiki/Micro_Lua_DS) to make small-scale games for the Nintendo DS, but it just didn't quite satisfy my hunger to make the Nintendo DS run with new technology. I took a look at [cargo-nds](https://github.com/SeleDreams/cargo-nds) and was impressed but saw that it was still missing any substantial tooling or examples. And that was when WebAssembly came to mind.

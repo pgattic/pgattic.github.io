@@ -56,11 +56,17 @@ body {
     padding: 16px;
 
     h1 {
-      margin: 0 0 16px;
+      margin: 16px 0;
       font-size: 2em;
     }
     h2 {
       margin: 0 0 12px;
+    }
+    p {
+      line-height: 1.4em;
+    }
+    li {
+      line-height: 1.4em;
     }
     img {
       max-width: 100%;
@@ -115,9 +121,9 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] { position: relative; }
   text-decoration: none;
   opacity: 0;
   transition: opacity .15s ease;
-  padding-right: .25rem;
+  padding-right: .5rem;
   font-weight: 600;
-  color: light-dark(#888, #444);
+  color: light-dark(#888, #555);
 }
 
 /* Show on hover of the heading or when the anchor is keyboard-focused */
@@ -142,7 +148,7 @@ h6[id]:hover .zola-anchor,
         <div id="header-right">
           <a href="/blog">Blog</a>
           <a href="https://github.com/pgattic" target="_blank">Projects</a>
-          <a href="/resume">Resume</a>
+          <a href="/resume.html">Resume</a>
         </div>
       </header>
     </div>
