@@ -8,9 +8,10 @@ compile_sass = false
 build_search_index = false
 
 [markdown]
-highlight_code = true
-highlight_theme = "kronuz"
 insert_anchor_links = "left"
+
+# [markdown.highlighting]
+# highlight_theme = "kronuz"
 
 [extra]
 site_name = "pgattic.dev"
