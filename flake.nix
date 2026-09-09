@@ -1,21 +1,19 @@
 {
   description = "Personal Site Development Flake";
+
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    utils.url = "github:numtide/flake-utils";
+    nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst";
+    flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
-  outputs = { self, nixpkgs, utils }: utils.lib.eachDefaultSystem (
-    system: let
-      pkgs = import nixpkgs { inherit system; };
-    in {
-      devShell = with pkgs; mkShell {
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+    systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
+    perSystem = { pkgs, ... }: {
+      devShells.default = pkgs.mkShell {
         buildInputs = [
-          zola
+          pkgs.zola
         ];
       };
-    }
-  );
+    };
+  };
 }
-
-
